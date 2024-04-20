@@ -48,7 +48,7 @@ class build_ext_with_cmake(build_ext):
             os.mkdir("lib")
         config = "Debug" if self.debug else "Release"
         cmake_args = [
-          f"-DCMAKE_INSTALL_PREFIX={os.path.abspath('.')}",
+          f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}",
           f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={os.path.abspath('lib')}",
           f"-DCMAKE_BUILD_TYPE={config}",
         ]
@@ -60,6 +60,7 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["cmake", f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn(["cmake", "--build", "."] + build_args)
+            self.spawn(["ls", "-lR", ".."])
             self.spawn(["cmake", "--install", "."])
         os.chdir(cwd)
         if ext.name == "HDDM": # finish construction of the hddm module
