@@ -44,8 +44,6 @@ class build_ext_with_cmake(build_ext):
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
-        if not os.path.isdir("lib"):
-            os.mkdir("lib")
         config = "Debug" if self.debug else "Release"
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}",
