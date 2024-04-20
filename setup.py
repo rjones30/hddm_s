@@ -12,7 +12,7 @@ sources = {
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
   "hdf5.tag": "tags/hdf5-1_10_8",
   "xrootd.url": "https://github.com/xrootd/xrootd.git",
-  "xrootd.tag": "tags/v4.12.5",
+  "xrootd.tag": "tags/v5.3.4",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "tags/4.30.1",
 }
