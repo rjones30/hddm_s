@@ -57,10 +57,10 @@ class build_ext_with_cmake(build_ext):
           "--", "-j4"
         ]
         os.chdir(build_temp)
-        self.spawn(["cmake3", f"../{ext.name}"] + cmake_args)
+        self.spawn(["cmake", f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
-            self.spawn(["cmake3", "--build", "."] + build_args)
-            self.spawn(["cmake3", "--install", "."])
+            self.spawn(["cmake", "--build", "."] + build_args)
+            self.spawn(["cmake", "--install", "."])
         os.chdir(cwd)
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = cwd
