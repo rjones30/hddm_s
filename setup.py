@@ -66,7 +66,7 @@ class build_ext_with_cmake(build_ext):
             os.environ['HDDM_DIR'] = cwd
             for mod in templates:
                 self.spawn(["ldd", "bin/hddm-cpp"])
-                self.spawn(["echo", "LD_LIBRRAY_PATH", "is", os.environ['LD_LIBRARRY_PATH']])
+                self.spawn(["echo", "LD_LIBRARY_PATH", "is", os.environ['LD_LIBRARY_PATH']])
                 self.spawn(["bin/hddm-cpp", templates[mod]])
                 self.spawn(["bin/hddm-py", templates[mod]])
                 self.spawn(["python3", f"setup_{mod}.py"])
