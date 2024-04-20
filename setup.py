@@ -47,7 +47,6 @@ class build_ext_with_cmake(build_ext):
         config = "Debug" if self.debug else "Release"
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}",
-          #f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={os.path.abspath('lib')}",
           f"-DCMAKE_BUILD_TYPE={config}",
         ]
         build_args = [
@@ -66,6 +65,8 @@ class build_ext_with_cmake(build_ext):
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = cwd
             for mod in templates:
+                self.spawn(["ldd", "bin/hddm-cpp"])
+                self.spawn(["echo", "LD_LIBRRAY_PATH", "is", os.environ['LD_LIBRARRY_PATH']])
                 self.spawn(["bin/hddm-cpp", templates[mod]])
                 self.spawn(["bin/hddm-py", templates[mod]])
                 self.spawn(["python3", f"setup_{mod}.py"])
