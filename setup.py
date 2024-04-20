@@ -57,7 +57,6 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["cmake", f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn(["cmake", "--build", "."] + build_args)
-            self.spawn(["du", "-sh", f"{cwd}"])
             self.spawn(["cmake", "--install", "."])
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
@@ -66,8 +65,6 @@ class build_ext_with_cmake(build_ext):
             os.environ['HDDM_DIR'] = cwd
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/lib:{cwd}/lib64"
             for mod in templates:
-                self.spawn(["ldd", "bin/hddm-cpp"])
-                self.spawn(["echo", "LD_LIBRARY_PATH", "is", os.environ['LD_LIBRARY_PATH']])
                 self.spawn(["bin/hddm-cpp", templates[mod]])
                 self.spawn(["bin/hddm-py", templates[mod]])
                 self.spawn(["python3", f"setup_{mod}.py"])
