@@ -84,7 +84,8 @@ setuptools.setup(
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    packages = setuptools.find_packages(),
+    #packages = setuptools.find_packages(),
+    packages = templates.keys(),
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
