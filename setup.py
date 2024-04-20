@@ -87,7 +87,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     #packages = setuptools.find_packages(),
     packages = templates.keys(),
-    package_dir = {"": "modules"}
+    package_dir = {"": "modules"},
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
