@@ -49,7 +49,7 @@ class build_ext_with_cmake(build_ext):
         config = "Debug" if self.debug else "Release"
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}",
-          f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={os.path.abspath('lib')}",
+          #f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={os.path.abspath('lib')}",
           f"-DCMAKE_BUILD_TYPE={config}",
         ]
         build_args = [
