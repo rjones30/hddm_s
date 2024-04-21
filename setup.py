@@ -86,16 +86,15 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     #packages = setuptools.find_packages(),
-    packages = templates.keys(),
-    package_dir = {"": "modules"},
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
-    packages = [],                        # Name of the python package
+    packages = template.keys(),             # Name of the python package
     package_dir = {                         # Directory of the source code of the package
+      "": "modules",
     },
     install_requires = [],                  # Install other dependencies if any
     ext_modules = [
