@@ -46,7 +46,7 @@ class build_ext_with_cmake(build_ext):
             os.mkdir(build_temp)
         config = "Debug" if self.debug else "Release"
         cmake_args = [
-          f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}",
+          f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DCMAKE_BUILD_TYPE={config}",
         ]
         build_args = [
@@ -61,7 +61,6 @@ class build_ext_with_cmake(build_ext):
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
-        os.mkdir(f"{cwd}/modules")
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = cwd
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/lib:{cwd}/lib64"
@@ -69,9 +68,6 @@ class build_ext_with_cmake(build_ext):
                 self.spawn(["bin/hddm-cpp", templates[mod]])
                 self.spawn(["bin/hddm-py", templates[mod]])
                 self.spawn(["python3", f"setup_{mod}.py"])
-                for content in os.listdir(cwd):
-                   for solib in re.finditer(r".*/\.so$"):
-                       os.rename(solib, f"modules/{solib}")
 
 
 with open("README.md", "r") as fh:
@@ -85,17 +81,14 @@ setuptools.setup(
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    #packages = setuptools.find_packages(),
+    packages = setuptools.find_packages(),
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
-    packages = templates.keys(),            # Name of the python package
-    package_dir = {                         # Directory of the source code of the package
-      "": "modules",
-    },
+    #packages = templates.keys(),            # Name of the python package
     install_requires = [],                  # Install other dependencies if any
     ext_modules = [
       CMakeExtension("xerces-c"),
