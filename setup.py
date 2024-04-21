@@ -63,7 +63,7 @@ class build_ext_with_cmake(build_ext):
         os.chdir(cwd)
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = cwd
-            os.environ['LD_LIBRARY_PATH'] += f":{cwd}/lib:{cwd}/lib64"
+            os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
             for mod in templates:
                 self.spawn(["bin/hddm-cpp", templates[mod]])
                 self.spawn(["bin/hddm-py", templates[mod]])
