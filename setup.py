@@ -92,7 +92,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
-    packages = template.keys(),             # Name of the python package
+    packages = templates.keys(),            # Name of the python package
     package_dir = {                         # Directory of the source code of the package
       "": "modules",
     },
