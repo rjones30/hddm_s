@@ -18,8 +18,8 @@ license = {text = "MIT License"}
 keywords = ["hddm", "GlueX", "Gluex", "gluex", "hdgeant4", "hdgeant"]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Intended Audience :: high school and college science students",
-  "Topic :: Software Development :: Scientific Data Analysis",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Physics",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
 ]
