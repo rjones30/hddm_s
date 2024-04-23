@@ -67,7 +67,7 @@ class build_ext_with_cmake(build_ext):
             for models in templates:
                 for model in models:
                     self.spawn(["build/bin/hddm-cpp", model])
-                    self.spawn(["build/bin/hddm-py", model]])
+                    self.spawn(["build/bin/hddm-py", model])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
                     self.spawn(["python3", f"setup_{mod}.py"])
 
