@@ -94,7 +94,7 @@ setuptools.setup(
     ext_modules = [
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
-      CMakeExtension("xrootd"),
+      #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
     ],
     cmdclass = {
