@@ -65,6 +65,7 @@ class build_ext_with_cmake(build_ext):
             os.environ['HDDM_DIR'] = f"{cwd}/build"
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
             for mod in templates:
+                self.spawn(["ls -lR"])
                 self.spawn(["build/bin/hddm-cpp", templates[mod]])
                 self.spawn(["build/bin/hddm-py", templates[mod]])
                 self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
