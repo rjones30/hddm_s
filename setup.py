@@ -65,9 +65,9 @@ class build_ext_with_cmake(build_ext):
             os.environ['HDDM_DIR'] = f"{cwd}/build"
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
             for models in templates:
-                for mod in models:
-                    self.spawn(["build/bin/hddm-cpp", models[mod]])
-                    self.spawn(["build/bin/hddm-py", models[mod]])
+                for model in models:
+                    self.spawn(["build/bin/hddm-cpp", model])
+                    self.spawn(["build/bin/hddm-py", model]])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
                     self.spawn(["python3", f"setup_{mod}.py"])
 
@@ -85,6 +85,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     packages = setuptools.find_packages(),
     package_data = templates,
+    include_package_data = True,
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -92,7 +93,7 @@ setuptools.setup(
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
     #packages = templates.keys(),           # Name of the python package
-    install_requires = [],                  # Install other dependencies if any
+    install_requires = ["setuptools-git"],  # Install other dependencies if any
     ext_modules = [
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
