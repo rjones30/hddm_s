@@ -66,7 +66,6 @@ class build_ext_with_cmake(build_ext):
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
             for models in templates:
                 for mod in models:
-                    self.spawn(["ls", "-lR"])
                     self.spawn(["build/bin/hddm-cpp", models[mod]])
                     self.spawn(["build/bin/hddm-py", models[mod]])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
