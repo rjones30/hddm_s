@@ -64,8 +64,8 @@ class build_ext_with_cmake(build_ext):
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = f"{cwd}/build"
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
-            for models in templates:
-                for model in models:
+            for module in templates:
+                for model in templates[module]:
                     self.spawn(["build/bin/hddm-cpp", model])
                     self.spawn(["build/bin/hddm-py", model])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
@@ -93,7 +93,10 @@ setuptools.setup(
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
     #packages = templates.keys(),           # Name of the python package
-    install_requires = ["setuptools-git"],  # Install other dependencies if any
+    install_requires = [                    # Install other dependencies if any
+      "setuptools-git",
+      "xrootd",
+   ],
     ext_modules = [
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
