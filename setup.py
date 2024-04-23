@@ -3,7 +3,7 @@ import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
 
 templates = {
-  "hddm_s": "event.xml"
+  "hddm_s": ["event.xml"],
 }
 
 sources = {
@@ -64,12 +64,13 @@ class build_ext_with_cmake(build_ext):
         if ext.name == "HDDM": # finish construction of the hddm module
             os.environ['HDDM_DIR'] = f"{cwd}/build"
             os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
-            for mod in templates:
-                self.spawn(["ls -lR"])
-                self.spawn(["build/bin/hddm-cpp", templates[mod]])
-                self.spawn(["build/bin/hddm-py", templates[mod]])
-                self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
-                self.spawn(["python3", f"setup_{mod}.py"])
+            for models in templates:
+                for mod in models:
+                    self.spawn(["ls", "-lR"])
+                    self.spawn(["build/bin/hddm-cpp", models[mod]])
+                    self.spawn(["build/bin/hddm-py", models[mod]])
+                    self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{mod}.py"])
+                    self.spawn(["python3", f"setup_{mod}.py"])
 
 
 with open("README.md", "r") as fh:
@@ -84,6 +85,7 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     packages = setuptools.find_packages(),
+    package_data = templates,
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
