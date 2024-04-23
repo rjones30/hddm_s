@@ -11,8 +11,8 @@ sources = {
   "xerces-c.tag": "tags/v3.2.5",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
   "hdf5.tag": "tags/hdf5-1_10_8",
-  "xrootd.url": "https://github.com/xrootd/xrootd.git",
-  "xrootd.tag": "tags/v5.6.9",
+#  "xrootd.url": "https://github.com/xrootd/xrootd.git",
+#  "xrootd.tag": "tags/v5.6.9",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "tags/4.30.1",
 }
@@ -89,7 +89,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
-    #packages = templates.keys(),            # Name of the python package
+    #packages = templates.keys(),           # Name of the python package
     install_requires = [],                  # Install other dependencies if any
     ext_modules = [
       CMakeExtension("xerces-c"),
