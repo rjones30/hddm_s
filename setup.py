@@ -1,4 +1,5 @@
 import os
+import glob
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
 
@@ -70,6 +71,10 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["build/bin/hddm-py", model])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{module}.py"])
                     self.spawn(["python3", f"setup_{module}.py"])
+                    self.spawn(["mkdir", module])
+                    for soname in glob.glob("*.so"):
+                        self.spawn(["mv", soname, module])
+                    self.spawn(["mv", module])
 
 
 with open("README.md", "r") as fh:
