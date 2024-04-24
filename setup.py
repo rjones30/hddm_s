@@ -74,8 +74,10 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["python3", f"setup_{module}.py"])
                     for soname in glob.glob("*.so"):
                         self.spawn(["chmod", "+x", soname])
-                        for libname in glob.glob("build/lib.*"):
-                            self.spawn(["cp", soname, libname])
+
+    def copy_extensions_to_source(self):
+        self.spawn(["echo", "entry to copy_extensions_to_source()"])
+        super().copy_extensions_to_source()
 
 
 with open("README.md", "r") as fh:
@@ -83,7 +85,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0",
+    version = "1.0.17",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -107,7 +109,6 @@ setuptools.setup(
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-      CMakeExtension("hddm-s"),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
