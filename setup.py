@@ -30,6 +30,7 @@ class build_ext_with_cmake(build_ext):
         for ext in self.extensions:
             self.build_with_cmake(ext)
         super().run()
+        self.spawn(["echo", "entry to my own copy_extensions_to_source()"])
 
     def build_with_cmake(self, ext):
         cwd = os.getcwd()
@@ -75,17 +76,13 @@ class build_ext_with_cmake(build_ext):
                     for soname in glob.glob("*.so"):
                         self.spawn(["chmod", "+x", soname])
 
-    def copy_extensions_to_source(self):
-        self.spawn(["echo", "entry to copy_extensions_to_source()"])
-        super().copy_extensions_to_source()
-
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.17",
+    version = "1.0.18",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
