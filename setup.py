@@ -71,10 +71,8 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["build/bin/hddm-py", model])
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{module}.py"])
                     self.spawn(["python3", f"setup_{module}.py"])
-                    self.spawn(["mkdir", module])
                     for soname in glob.glob("*.so"):
                         self.spawn(["mv", soname, module])
-                    self.spawn(["mv", module])
 
 
 with open("README.md", "r") as fh:
@@ -90,7 +88,6 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     packages = setuptools.find_packages(),
     package_data = templates,
-    include_package_data = False,
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
