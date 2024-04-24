@@ -72,7 +72,8 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{module}.py"])
                     self.spawn(["python3", f"setup_{module}.py"])
                     for soname in glob.glob("*.so"):
-                        self.spawn(["mv", soname, module])
+                        for libname in glob.glob("build/lib.*"):
+                            self.spawn(["cp", soname, libname])
 
 
 with open("README.md", "r") as fh:
