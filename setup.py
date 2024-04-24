@@ -40,6 +40,7 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["git", "checkout", sources[ext.name + ".tag"]])
             os.chdir(cwd)
         else:
+            return 0
             raise Exception("missing sources",
                             f"no package sources specified for {ext.name}")
         build_temp = f"build.{ext.name}"
@@ -106,6 +107,7 @@ setuptools.setup(
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
+      CMakeExtension("hddm-s"),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
