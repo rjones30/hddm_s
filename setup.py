@@ -2,6 +2,7 @@ import os
 import glob
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
+from setuptools.command.install_lib import install_lib as install_lib
 
 templates = {
   "hddm_s": ["event.xml"],
@@ -30,7 +31,6 @@ class build_ext_with_cmake(build_ext):
         for ext in self.extensions:
             self.build_with_cmake(ext)
         super().run()
-        self.spawn(["echo", "entry to my own copy_extensions_to_source()"])
 
     def build_with_cmake(self, ext):
         cwd = os.getcwd()
@@ -77,12 +77,19 @@ class build_ext_with_cmake(build_ext):
                         self.spawn(["chmod", "+x", soname])
 
 
+class install_ext_solibs(install_lib):
+
+    def run(self):
+        self.spawn(["echo", "running my own install_ext_solibs"])
+        super().run()
+        self.spawn(["echo", "exiting from my own install_ext_solibs"])
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.18",
+    version = "1.0.19",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -109,5 +116,6 @@ setuptools.setup(
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
+      "install": install_ext_solibs,
     }
 )
