@@ -89,7 +89,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.19",
+    version = "1.0.20",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -116,6 +116,6 @@ setuptools.setup(
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
-      "install": install_ext_solibs,
+      "install_lib": install_ext_solibs,
     }
 )
