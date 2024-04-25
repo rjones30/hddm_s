@@ -85,7 +85,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.22",
+    version = "1.0.23",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -114,7 +114,7 @@ setuptools.setup(
            library_dirs = ["build/lib", "build/lib64"],
            libraries = ["xstream", "bz2", "z"],
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
-           sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
+           sources = ["hddm_s++.cpp", "pyhddm_s.cpp"]),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
