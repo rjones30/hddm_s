@@ -65,31 +65,27 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         if ext.name == "HDDM": # finish construction of the hddm module
-            os.environ['HDDM_DIR'] = f"{cwd}/build"
-            os.environ['LD_LIBRARY_PATH'] += f":{cwd}/build/lib:{cwd}/build/lib64"
             for module in templates:
                 for model in templates[module]:
-                    self.spawn(["build/bin/hddm-cpp", model])
-                    self.spawn(["build/bin/hddm-py", model])
-                    self.spawn(["sed", "-i", "s/os\.path\.realpath(__file__)/'.'/", f"setup_{module}.py"])
-                    self.spawn(["python3", f"setup_{module}.py"])
-                    for soname in glob.glob("*.so"):
-                        self.spawn(["chmod", "+x", soname])
+                    os.chdir(module)
+                    self.spawn(["../build/bin/hddm-cpp", model])
+                    self.spawn(["../build/bin/hddm-py", model])
+                    self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
 
 
 class install_ext_solibs(install_lib):
 
     def run(self):
-        self.spawn(["echo", "running my own install_ext_solibs"])
+        self.spawn(["echo", "entry to install_ext_solibs"])
         super().run()
-        self.spawn(["echo", "exiting from my own install_ext_solibs"])
+        self.spawn(["echo", "exit from install_ext_solibs"])
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.20",
+    version = "1.0.21",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -113,6 +109,12 @@ setuptools.setup(
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
+      Extension("libhddm_s",
+                include_dirs = ["hddm_s", "build/include"],
+                library_dirs = ["build/lib", "build/lib64"],
+                libraries = ["xstream", "bz2", "z"],
+                extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
+                sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
