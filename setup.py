@@ -1,4 +1,5 @@
 import os
+import re
 import glob
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
@@ -76,16 +77,24 @@ class build_ext_with_cmake(build_ext):
 class install_ext_solibs(install_lib):
 
     def run(self):
-        self.spawn(["echo", "entry to install_ext_solibs"])
         super().run()
-        self.spawn(["echo", "exit from install_ext_solibs"])
+        for wheel in glob.glob("build/bdist.*/wheel"):
+            for solib in os.listdir(wheel):
+                for ext in re.finditer("^([^/]*).cpython.*", solib):
+                    if ext[:3] == "lib" and ext[3:] in templates:
+                        extmod = re.sub(ext, ext[3:], solib)
+                        self.spawn(["mv", f"{wheel}/{solib}",
+                                          f"{wheel}/{extmod}"])
+                    else:
+                        self.spawn(["rm", f"{wheel}/{solib}"])
+ 
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.32",
+    version = "1.0.33",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
