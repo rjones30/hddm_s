@@ -95,13 +95,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.34",
+    version = "1.0.35",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    packages = setuptools.find_packages(),
+    packages = templates.keys(),
     package_data = templates,
     classifiers = [
         "Programming Language :: Python :: 3",
@@ -119,7 +119,7 @@ setuptools.setup(
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-      setuptools.Extension("libhddm_s",
+      setuptools.Extension("hddm_s",
            include_dirs = [".", "../build/include"],
            library_dirs = ["../build/lib", "../build/lib64"],
            libraries = ["xstream", "bz2", "z", 
