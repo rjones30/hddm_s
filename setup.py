@@ -81,12 +81,7 @@ class install_ext_solibs(install_lib):
         for wheel in glob.glob("build/bdist.*/wheel"):
             for solib in os.listdir(wheel):
                 for mext in re.finditer("^([^/]*).cpython.*", solib):
-                    ext = mext.group(1)
-                    if ext[:3] == "lib" and ext[3:] in templates:
-                        extmod = re.sub(ext, ext[3:], solib)
-                        self.spawn(["mv", f"{wheel}/{solib}",
-                                          f"{wheel}/{extmod}"])
-                    else:
+                    if not mext.group(1) in templates:
                         self.spawn(["rm", f"{wheel}/{solib}"])
  
 
@@ -95,7 +90,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.35",
+    version = "1.0.36",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
