@@ -45,6 +45,14 @@ class build_ext_with_cmake(build_ext):
             return 0
             raise Exception("missing sources",
                             f"no package sources specified for {ext.name}")
+        
+        if self.find_executable("cmake"):
+            cmake = "cmake"
+        else:
+            # Only happens on Windows, try to install it
+            self.spawn(["scripts/install_cmake.bat"])
+            cmake = "cmake.exe"
+
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
@@ -58,10 +66,10 @@ class build_ext_with_cmake(build_ext):
           "--", "-j4"
         ]
         os.chdir(build_temp)
-        self.spawn(["cmake", f"../{ext.name}"] + cmake_args)
+        self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
-            self.spawn(["cmake", "--build", "."] + build_args)
-            self.spawn(["cmake", "--install", "."])
+            self.spawn([cmake, "--build", "."] + build_args)
+            self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
@@ -90,7 +98,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.36",
+    version = "1.0.37",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
