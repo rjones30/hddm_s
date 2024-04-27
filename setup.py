@@ -68,6 +68,7 @@ class build_ext_with_cmake(build_ext):
         os.chdir(build_temp)
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
+          f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
         ]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
