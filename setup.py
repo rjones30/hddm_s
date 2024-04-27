@@ -1,6 +1,7 @@
 import os
 import re
 import glob
+import shutil
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
 from setuptools.command.install_lib import install_lib as install_lib
@@ -46,7 +47,7 @@ class build_ext_with_cmake(build_ext):
             raise Exception("missing sources",
                             f"no package sources specified for {ext.name}")
         
-        if self.spawn.find_executable("cmake"):
+        if shutil.which("cmake"):
             cmake = "cmake"
         else:
             # Only happens on Windows, try to install it
@@ -98,7 +99,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.38",
+    version = "1.0.39",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
