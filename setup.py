@@ -47,22 +47,22 @@ class build_ext_with_cmake(build_ext):
             raise Exception("missing sources",
                             f"no package sources specified for {ext.name}")
         
+        cmake_config = "Debug" if self.debug else "Release"
         if shutil.which("cmake"):
             cmake = "cmake"
-            build_args = ["--config", config, "--", "-j4"]
+            build_args = ["--config", cmake_config, "--", "-j4"]
         else:
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = "cmake.exe"
-            build_args = ["--config", config]
+            build_args = ["--config", cmake_config]
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
-        config = "Debug" if self.debug else "Release"
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
-          f"-DCMAKE_BUILD_TYPE={config}",
+          f"-DCMAKE_BUILD_TYPE={cmake_config}",
         ]
         os.chdir(build_temp)
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
