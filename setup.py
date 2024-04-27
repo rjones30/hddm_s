@@ -50,7 +50,6 @@ class build_ext_with_cmake(build_ext):
         if shutil.which("cmake"):
             cmake = "cmake"
             build_args = ["--config", config, "--", "-j4"]
-        ]
         else:
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
