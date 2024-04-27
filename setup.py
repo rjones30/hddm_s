@@ -14,7 +14,7 @@ sources = {
   "zlib.url": "https://github.com/libarchive/zlib.git",
   "zlib.tag": "tags/v1.3",
   "bzip2.url": "https://github.com/libarchive/bzip2.git",
-  "bzip2.tag": "tags/bzip2-1.0.8",
+  "bzip2.tag": "",
   "xerces-c.url": "https://github.com/apache/xerces-c.git",
   "xerces-c.tag": "tags/v3.2.5",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
@@ -44,7 +44,9 @@ class build_ext_with_cmake(build_ext):
             if not os.path.isdir(ext.name):
                 self.spawn(["git", "clone", sources[ext.name + ".url"]])
             os.chdir(ext.name)
-            self.spawn(["git", "checkout", sources[ext.name + ".tag"]])
+            tag = sources[ext.name + ".tag"]
+            if tag:
+                self.spawn(["git", "checkout", tag])
             os.chdir(cwd)
         else:
             return 0
@@ -63,11 +65,11 @@ class build_ext_with_cmake(build_ext):
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
+        os.chdir(build_temp)
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
         ]
-        os.chdir(build_temp)
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args)
@@ -82,6 +84,7 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["../build/bin/hddm-cpp", model])
                     self.spawn(["../build/bin/hddm-py", model])
                     self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
+                    os.chdir(cwd)
 
 
 class install_ext_solibs(install_lib):
