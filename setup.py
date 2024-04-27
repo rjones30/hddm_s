@@ -11,6 +11,10 @@ templates = {
 }
 
 sources = {
+  "zlib.url": "https://github.com/libarchive/zlib.git",
+  "zlib.tag": "tags/v1.3",
+  "bzip2.url": "https://github.com/libarchive/bzip2.git",
+  "bzip2.tag": "tags/bzip2-1.0.8",
   "xerces-c.url": "https://github.com/apache/xerces-c.git",
   "xerces-c.tag": "tags/v3.2.5",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
@@ -116,6 +120,8 @@ setuptools.setup(
       "xrootd",
    ],
     ext_modules = [
+      CMakeExtension("zlib"),
+      CMakeExtension("bzip2"),
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
