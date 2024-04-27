@@ -48,14 +48,13 @@ class build_ext_with_cmake(build_ext):
                             f"no package sources specified for {ext.name}")
         
         cmake_config = "Debug" if self.debug else "Release"
+        build_args = ["--config", cmake_config]
         if shutil.which("cmake"):
             cmake = "cmake"
-            build_args = ["--config", cmake_config, "--", "-j4"]
         else:
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = "cmake.exe"
-            build_args = ["--config", cmake_config]
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
