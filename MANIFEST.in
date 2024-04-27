@@ -1,1 +1,2 @@
-include hddm_s/event.xml
+include models/*.xml
+include scripts/*.bat

@@ -46,7 +46,7 @@ class build_ext_with_cmake(build_ext):
             raise Exception("missing sources",
                             f"no package sources specified for {ext.name}")
         
-        if self.find_executable("cmake"):
+        if self.spawn.find_executable("cmake"):
             cmake = "cmake"
         else:
             # Only happens on Windows, try to install it
@@ -98,7 +98,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.37",
+    version = "1.0.38",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
