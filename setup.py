@@ -71,8 +71,6 @@ class build_ext_with_cmake(build_ext):
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
         ]
-        if ext.name == "HDDM":
-            cmake_args += ["SHOWBUILD=1"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args)
@@ -81,6 +79,8 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         if ext.name == "HDDM": # finish construction of the hddm module
+            for lib in glob.glob("build/lib*"):
+                os.environ['LD_LIBRARY_PATH'] += f":{cwd}/{lib}"
             for module in templates:
                 for model in templates[module]:
                     os.chdir(module)
