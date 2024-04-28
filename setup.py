@@ -22,7 +22,7 @@ sources = {
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
-  "HDDM.tag": "tags/4.30.1",
+  "HDDM.tag": "tags/4.30.2",
 }
 
 class CMakeExtension(setuptools.Extension):
@@ -71,6 +71,8 @@ class build_ext_with_cmake(build_ext):
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
         ]
+        if ext.name == "HDDM":
+            cmake_args += ["SHOWBUILD=1"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args)
