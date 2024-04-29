@@ -77,7 +77,7 @@ class build_ext_with_cmake(build_ext):
         ]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
-            self.spawn([cmake, "--build", "."] + build_args + "-j4")
+            self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
