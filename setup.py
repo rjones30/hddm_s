@@ -77,7 +77,7 @@ class build_ext_with_cmake(build_ext):
         ]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
-            self.spawn([cmake, "--build", "."] + build_args)
+            self.spawn([cmake, "--build", "."] + build_args + "-j4")
             self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
@@ -143,7 +143,7 @@ setuptools.setup(
                         ":libhdf5_hl.a", ":libhdf5.a",
                        ],
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
-           sources = ["hddm_s++.cpp", "pyhddm_s.cpp"]),
+           sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
