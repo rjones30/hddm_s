@@ -22,7 +22,7 @@ sources = {
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
-  "HDDM.tag": "tags/4.30.2",
+  "HDDM.tag": "",
 }
 
 class CMakeExtension(setuptools.Extension):
