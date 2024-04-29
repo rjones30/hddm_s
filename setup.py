@@ -34,8 +34,12 @@ class CMakeExtension(setuptools.Extension):
 class build_ext_with_cmake(build_ext):
 
     def run(self):
+        build_extension_solibs = []
         for ext in self.extensions:
             self.build_with_cmake(ext)
+            if ext.name in templates:
+                build_extensions_solibs.append(ext)
+        self.extensions = build_extension_solibs
         super().run()
 
     def build_with_cmake(self, ext):
@@ -98,7 +102,7 @@ class install_ext_solibs(install_lib):
             for solib in os.listdir(wheel):
                 for mext in re.finditer("^([^/]*).cpython.*", solib):
                     if not mext.group(1) in templates:
-                        self.spawn(["rm", f"{wheel}/{solib}"])
+                        self.spawn(["rm", "-f", f"{wheel}/{solib}"])
  
 
 with open("README.md", "r") as fh:
