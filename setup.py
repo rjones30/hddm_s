@@ -149,6 +149,8 @@ setuptools.setup(
            libraries = ["xstream", "bz2", "z", 
                         "build/lib/libhdf5_hl.a",
                         "build/lib/libhdf5.a",
+                        "build/lib/libbz2.a",
+                        "build/lib/libz.a",
                        ],
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
