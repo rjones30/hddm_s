@@ -89,14 +89,14 @@ class build_ext_with_cmake(build_ext):
                         os.environ[ldpath] += f":{cwd}/{lib}"
                     else:
                         os.environ[ldpath] = f":{cwd}/{lib}"
-            presets = ["DYLD_PRINT_LIBRARIES=1",
-                       "DYLD_PRINT_LIBRARIES_POST_LAUNCH=1",
-                       "DYLD_PRINT_RPATHS=1"]
+            os.environ["DYLD_PRINT_LIBRARIES"] = "1"
+            os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH" = "1"
+            os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
                     os.chdir(module)
-                    self.spawn(presets + ["../build/bin/hddm-cpp", model])
-                    self.spawn(presets + ["../build/bin/hddm-py", model])
+                    self.spawn(["../build/bin/hddm-cpp", model])
+                    self.spawn(["../build/bin/hddm-py", model])
                     self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
                     os.chdir(cwd)
 
