@@ -92,7 +92,7 @@ class build_ext_with_cmake(build_ext):
             for module in templates:
                 for model in templates[module]:
                     os.chdir(module)
-                    self.spawn(["ldd", "../build/bin/hddm-cpp"])
+                    self.spawn(["otool", "-L ", "../build/bin/hddm-cpp"])
                     self.spawn(["../build/bin/hddm-cpp", model])
                     self.spawn(["ldd", "../build/bin/hddm-py"])
                     self.spawn(["../build/bin/hddm-py", model])
