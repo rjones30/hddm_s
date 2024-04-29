@@ -89,9 +89,9 @@ class build_ext_with_cmake(build_ext):
                         os.environ[ldpath] += f":{cwd}/{lib}"
                     else:
                         os.environ[ldpath] = f":{cwd}/{lib}"
-            os.environ["DYLD_PRINT_LIBRARIES"] = "1"
-            os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH"] = "1"
-            os.environ["DYLD_PRINT_RPATHS"] = "1"
+            #os.environ["DYLD_PRINT_LIBRARIES"] = "1"
+            #os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH"] = "1"
+            #os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
                     os.chdir(module)
@@ -147,7 +147,8 @@ setuptools.setup(
            include_dirs = ["hddm_s", "build/include"],
            library_dirs = ["build/lib", "build/lib64"],
            libraries = ["xstream", "bz2", "z", 
-                        ":libhdf5_hl.a", ":libhdf5.a",
+                        "build/lib/libhdf5_hl.a",
+                        "build/lib/libhdf5.a",
                        ],
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
