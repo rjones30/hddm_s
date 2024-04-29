@@ -90,7 +90,7 @@ class build_ext_with_cmake(build_ext):
                     else:
                         os.environ[ldpath] = f":{cwd}/{lib}"
             os.environ["DYLD_PRINT_LIBRARIES"] = "1"
-            os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH" = "1"
+            os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH"] = "1"
             os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
