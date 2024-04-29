@@ -86,9 +86,9 @@ class build_ext_with_cmake(build_ext):
             for lib in glob.glob("build/lib*"):
                 for ldpath in ["LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"]:
                     if ldpath in os.environ:
-                    os.environ[ldpath] += f":{cwd}/{lib}"
-                else:
-                    os.environ[ldpath] = f":{cwd}/{lib}"
+                        os.environ[ldpath] += f":{cwd}/{lib}"
+                    else:
+                        os.environ[ldpath] = f":{cwd}/{lib}"
             for module in templates:
                 for model in templates[module]:
                     os.chdir(module)
