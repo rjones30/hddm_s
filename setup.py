@@ -137,7 +137,7 @@ setuptools.setup(
       #CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
-           include_dirs = [".", "build/include"],
+           include_dirs = ["hddm_s", "build/include"],
            library_dirs = ["build/lib", "build/lib64"],
            libraries = ["xstream", "bz2", "z", 
                         ":libhdf5_hl.a", ":libhdf5.a",
