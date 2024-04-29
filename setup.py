@@ -38,7 +38,7 @@ class build_ext_with_cmake(build_ext):
         for ext in self.extensions:
             self.build_with_cmake(ext)
             if ext.name in templates:
-                build_extensions_solibs.append(ext)
+                build_extension_solibs.append(ext)
         self.extensions = build_extension_solibs
         super().run()
 
