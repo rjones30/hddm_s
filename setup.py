@@ -24,7 +24,7 @@ sources = {
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
   "pthreads.url": "https://github.com/robinrowe/libunistd.git",
-  "pthreads.tag": "v1.2",
+  "pthreads.tag": "",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
 }
