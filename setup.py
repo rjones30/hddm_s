@@ -23,8 +23,8 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
-  "pthreads.url": "https://github.com/coapp-packages/pthreads.git",
-  "pthreads.tag": "",
+  "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git"
+  "pthread-win32.tag": "version-3.1.0-release",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
 }
@@ -47,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if "pthreads" in ext.name and not "Windows" in platform.system():
+        if "win" in ext.name and not "Windows" in platform.system():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -149,7 +149,7 @@ setuptools.setup(
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
-      CMakeExtension("pthreads"),
+      CMakeExtension("pthread-win32"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
            include_dirs = ["hddm_s", "build/include"],
