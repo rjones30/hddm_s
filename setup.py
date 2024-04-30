@@ -80,10 +80,11 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
+          f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
-            self.spawn([cmake, "--build", ".", "VERBOSE=1"] + build_args + ["-j4"])
+            self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
