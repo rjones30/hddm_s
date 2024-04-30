@@ -23,7 +23,7 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
-  "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git"
+  "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git",
   "pthread-win32.tag": "version-3.1.0-release",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
