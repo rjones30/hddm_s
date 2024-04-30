@@ -23,8 +23,8 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
-  "pthreads.url": "https://github.com/robinrowe/libunistd.git",
-  "pthreads.tag": "",
+  "pthread.url": "https://github.com/robinrowe/libunistd.git",
+  "pthread.tag": "",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
 }
@@ -47,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if "pthreads" in ext.name and not "windows" in platform.system():
+        if "pthread" in ext.name and not "Windows" in platform.system():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -148,6 +148,7 @@ setuptools.setup(
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
+      CMakeExtension("pthread"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
            include_dirs = ["hddm_s", "build/include"],
@@ -157,6 +158,7 @@ setuptools.setup(
                         "build/lib/libxstream.a",
                         "build/lib/libbz2.a",
                         "build/lib/libz.a",
+                        "build/lib/libpthread.a",
                        ],
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
