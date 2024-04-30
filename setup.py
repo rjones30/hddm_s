@@ -47,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if "pthreads" in ext.name and not "Windows" in platform.system():
+        if "pthreads" in ext.name and not "windows" in platform.system():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
