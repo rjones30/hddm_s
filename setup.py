@@ -23,8 +23,8 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
 #  "xrootd.tag": "tags/v5.6.9",
-  "libunistd.url": "https://github.com/robinrowe/libunistd.git",
-  "libunistd.tag": "",
+  "pthreads.url": "https://github.com/coapp-packages/pthreads.git",
+  "pthreads.tag": "",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
 }
@@ -47,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if "libunistd" in ext.name and not "Windows" in platform.system():
+        if "pthreads" in ext.name and not "Windows" in platform.system():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -88,6 +88,7 @@ class build_ext_with_cmake(build_ext):
             os.chdir(cwd)
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
+        self.spawn(["ls", "-l", "-R", "build"])
         if ext.name == "HDDM": # finish construction of the hddm module
             for lib in glob.glob("build/lib*"):
                 for ldpath in ["LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"]:
@@ -148,7 +149,7 @@ setuptools.setup(
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
       #CMakeExtension("xrootd"),
-      CMakeExtension("libunistd"),
+      CMakeExtension("pthreads"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
            include_dirs = ["hddm_s", "build/include"],
