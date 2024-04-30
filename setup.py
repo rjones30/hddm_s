@@ -2,6 +2,8 @@ import os
 import re
 import glob
 import shutil
+import platform
+
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
 from setuptools.command.install_lib import install_lib as install_lib
@@ -45,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if ext.name == "pthreads" and platform.system() != "Windows":
+        if "pthreads" in ext.name and not "Windows" in platform.system():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
