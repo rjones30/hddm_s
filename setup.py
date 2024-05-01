@@ -125,7 +125,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.45",
+    version = "1.0.46",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
