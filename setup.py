@@ -15,7 +15,7 @@ templates = {
 sources = {
   "zlib.url": "https://github.com/libarchive/zlib.git",
   "zlib.tag": "tags/v1.3",
-  "bzip2.url": "https://github.com/libarchive/bzip2.git",
+  "bzip2.url": "https://gitlab.com/bzip2/bzip2.git",
   "bzip2.tag": "",
   "xerces-c.url": "https://github.com/apache/xerces-c.git",
   "xerces-c.tag": "tags/v3.2.5",
