@@ -133,6 +133,24 @@ class install_ext_solibs(install_lib):
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+if "Windows" in platform.system():
+    extension_libraries = ["build\\lib\\libhdf5_hl.lib",
+                           "build\\lib\\libhdf5.lib",
+                           "build\\lib\\xstream.lib",
+                           "build\\lib\\bz2.lib",
+                           "build\\lib\\zlibstatic.lib",
+                           "build\\lib\\xerces-c_3.lib",
+                           "build\\lib\\libpthreadVC3.lib",
+                          ]
+else:
+    extension_libraries = ["build/lib/libhdf5_hl.a",
+                           "build/lib/libhdf5.a",
+                           "build/lib/libxstream.a",
+                           "build/lib/libbz2.a",
+                           "build/lib/libz.a",
+                           "build/lib/libxerces-c.a",
+                           "build/lib/libpthread.a",
+                          ]
 setuptools.setup(
     name = "hddm_s",
     version = "1.0.61",
@@ -165,13 +183,7 @@ setuptools.setup(
       setuptools.Extension("hddm_s",
            include_dirs = ["hddm_s", "build/include"],
            library_dirs = ["build/lib", "build/lib64"],
-           libraries = ["build/lib/libhdf5_hl.a",
-                        "build/lib/libhdf5.a",
-                        "build/lib/libxstream.a",
-                        "build/lib/libbz2.a",
-                        "build/lib/libz.a",
-                        "build/lib/libpthread.a",
-                       ],
+           libraries = extension_libraries,
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
     ],
