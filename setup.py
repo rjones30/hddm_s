@@ -134,8 +134,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 if "Windows" in platform.system():
-    extension_include_dirs = ["hddm_s", "build\include"]
-    extension_library_dirs = ["build\\lib"],
+    extension_include_dirs = ["hddm_s", "build\\include"]
+    extension_library_dirs = ["build\\lib",]
     extension_libraries = ["libhdf5_hl.lib",
                            "libhdf5.lib",
                            "xstream.lib",
