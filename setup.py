@@ -136,13 +136,13 @@ with open("README.md", "r") as fh:
 if "Windows" in platform.system():
     extension_include_dirs = ["hddm_s", "build\\include"]
     extension_library_dirs = ["build\\lib",]
-    extension_libraries = ["libhdf5_hl.lib",
-                           "libhdf5.lib",
-                           "xstream.lib",
-                           "bz2.lib",
-                           "zlibstatic.lib",
-                           "xerces-c_3.lib",
-                           "libpthreadVC3.lib",
+    extension_libraries = ["libhdf5_hl",
+                           "libhdf5",
+                           "xstream",
+                           "bz2",
+                           "zlibstatic",
+                           "xerces-c_3",
+                           "libpthreadVC3",
                           ]
 else:
     extension_include_dirs = ["hddm_s", "build/include"]
