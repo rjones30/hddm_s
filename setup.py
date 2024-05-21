@@ -134,15 +134,19 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 if "Windows" in platform.system():
-    extension_libraries = ["build\\lib\\libhdf5_hl.lib",
-                           "build\\lib\\libhdf5.lib",
-                           "build\\lib\\xstream.lib",
-                           "build\\lib\\bz2.lib",
-                           "build\\lib\\zlibstatic.lib",
-                           "build\\lib\\xerces-c_3.lib",
-                           "build\\lib\\libpthreadVC3.lib",
+    extension_include_dirs = ["hddm_s", "build\include"]
+    extension_library_dirs = ["build\\lib"],
+    extension_libraries = ["libhdf5_hl.lib",
+                           "libhdf5.lib",
+                           "xstream.lib",
+                           "bz2.lib",
+                           "zlibstatic.lib",
+                           "xerces-c_3.lib",
+                           "libpthreadVC3.lib",
                           ]
 else:
+    extension_include_dirs = ["hddm_s", "build/include"]
+    extension_library_dirs = ["build/lib", "build/lib64"]
     extension_libraries = ["build/lib/libhdf5_hl.a",
                            "build/lib/libhdf5.a",
                            "build/lib/libxstream.a",
@@ -181,8 +185,8 @@ setuptools.setup(
       CMakeExtension("pthread-win32"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
-           include_dirs = ["hddm_s", "build/include"],
-           library_dirs = ["build/lib", "build/lib64"],
+           include_dirs = extension_include_dirs,
+           library_dirs = extension_library_dirs,
            libraries = extension_libraries,
            extra_compile_args = ["-std=c++11", "-DHDF5_SUPPORT"],
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
