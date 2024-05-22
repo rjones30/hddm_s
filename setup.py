@@ -3,6 +3,7 @@ import re
 import glob
 import shutil
 import platform
+import sysconfig
 
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
@@ -90,6 +91,7 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         self.spawn(["ls", "-l", "-R", "build"])
+        print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
             if "Windows" in platform.system():
                 if "PATH" in os.environ:
