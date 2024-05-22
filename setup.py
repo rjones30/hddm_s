@@ -2,7 +2,6 @@ import os
 import re
 import glob
 import shutil
-import platform
 import sysconfig
 
 import setuptools
@@ -48,7 +47,7 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
     def build_with_cmake(self, ext):
-        if "win" in ext.name and not "Windows" in platform.system():
+        if "win" in ext.name and not "win" in sysconfig.get_platform():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -83,6 +82,8 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
+        if sysconfig.platform() == "win32":
+            cmake_args += ["-A", "Win32"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
@@ -93,7 +94,7 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
-            if "Windows" in platform.system():
+            if "win" in sysconfig.platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += ";../build/bin"
                 else:
@@ -135,7 +136,7 @@ class install_ext_solibs(install_lib):
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-if "Windows" in platform.system():
+if "win" in sysconfig.platform():
     extension_include_dirs = ["hddm_s", "build\\include"]
     extension_library_dirs = ["build\\lib",]
     extension_libraries = ["libhdf5_hl",
