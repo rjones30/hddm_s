@@ -82,7 +82,7 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
-        if sysconfig.platform() == "win32":
+        if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
@@ -94,7 +94,7 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
-            if "win" in sysconfig.platform():
+            if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += ";../build/bin"
                 else:
@@ -136,7 +136,7 @@ class install_ext_solibs(install_lib):
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-if "win" in sysconfig.platform():
+if "win" in sysconfig.get_platform():
     extension_include_dirs = ["hddm_s", "build\\include"]
     extension_library_dirs = ["build\\lib",]
     extension_libraries = ["libhdf5_hl",
