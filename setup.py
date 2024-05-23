@@ -146,6 +146,7 @@ if "win" in sysconfig.get_platform():
                            "zlibstatic",
                            "xerces-c_3",
                            "libpthreadVC3",
+                           "ws2_32",
                           ]
 else:
     extension_include_dirs = ["hddm_s", "build/include"]
