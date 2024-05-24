@@ -160,14 +160,14 @@ else:
     extension_libraries = ["hdf5_hl",
                            "hdf5",
                            "xstream",
-                           "bz2-static",
+                           "bz2_static",
                            "z",
                            "xerces-c",
                            "pthread",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.72",
+    version = "1.0.73",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
