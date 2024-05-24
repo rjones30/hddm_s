@@ -17,8 +17,8 @@ sources = {
   "zlib.tag": "",
   "bzip2.url": "https://github.com/rjones30/bzip2.git",
   "bzip2.tag": "",
-  "xerces-c.url": "https://github.com/apache/xerces-c.git",
-  "xerces-c.tag": "tags/v3.2.5",
+  "xerces-c.url": "https://github.com/rjones30/xerces-c.git",
+  "xerces-c.tag": "",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
   "hdf5.tag": "tags/hdf5-1_10_8",
 #  "xrootd.url": "https://github.com/xrootd/xrootd.git",
@@ -167,7 +167,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.71",
+    version = "1.0.72",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
