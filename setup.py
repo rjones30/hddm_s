@@ -151,17 +151,17 @@ if "win" in sysconfig.get_platform():
 else:
     extension_include_dirs = ["hddm_s", "build/include"]
     extension_library_dirs = ["build/lib", "build/lib64"]
-    extension_libraries = ["build/lib/libhdf5_hl.a",
-                           "build/lib/libhdf5.a",
-                           "build/lib/libxstream.a",
-                           "build/lib/libbz2.a",
-                           "build/lib/libz.a",
-                           "build/lib/libxerces-c.a",
-                           "build/lib/libpthread.a",
+    extension_libraries = ["libhdf5_hl.a",
+                           "libhdf5.a",
+                           "libxstream.a",
+                           "libbz2.a",
+                           "libz.a",
+                           "libxerces-c.a",
+                           "libpthread.a",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.63",
+    version = "1.0.64",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
