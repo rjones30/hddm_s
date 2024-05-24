@@ -13,8 +13,8 @@ templates = {
 }
 
 sources = {
-  "zlib.url": "https://github.com/madler/zlib.git",
-  "zlib.tag": "tags/v1.3.1",
+  "zlib.url": "https://github.com/rjones30/zlib.git",
+  "zlib.tag": "",
   "bzip2.url": "https://github.com/rjones30/bzip2.git",
   "bzip2.tag": "",
   "xerces-c.url": "https://github.com/apache/xerces-c.git",
@@ -164,7 +164,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.68",
+    version = "1.0.69",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
