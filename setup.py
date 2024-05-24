@@ -92,6 +92,9 @@ class build_ext_with_cmake(build_ext):
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
                self.spawn(["mv", solib, re.sub("/lib/", "/lib64/", solib)])
+            for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
+               self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
+               self.spawn(["mv", arlib, re.sub("/lib64/", "/lib/", arlib)])
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         self.spawn(["ls", "-l", "-R", "build"])
@@ -157,14 +160,14 @@ else:
     extension_libraries = ["hdf5_hl",
                            "hdf5",
                            "xstream",
-                           "bz2",
+                           "bz2-static",
                            "z",
                            "xerces-c",
                            "pthread",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.70",
+    version = "1.0.71",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
