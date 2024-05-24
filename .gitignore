@@ -165,3 +165,8 @@ cython_debug/
 *.c
 *.cpy
 *.hpp
+
+# history files
+.bash_history
+.python_history
+.osg-container.sh

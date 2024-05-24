@@ -89,6 +89,8 @@ class build_ext_with_cmake(build_ext):
             self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
+            for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
+               self.spawn(["mv", solib, re.sub("/lib/", "/lib64/", solib)])
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         self.spawn(["ls", "-l", "-R", "build"])
