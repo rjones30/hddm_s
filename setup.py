@@ -92,11 +92,11 @@ class build_ext_with_cmake(build_ext):
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
-               self.spawn(["mv", solib, re.sub("/lib/", "/lib64/", solib)])
+               self.spawn(["cp", solib, re.sub("/lib/", "/lib64/", solib)])
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
-               self.spawn(["mv", arlib, re.sub("/lib64/", "/lib/", arlib)])
-            for arlib in glob.glob(os.path.join("build", "lib64", "*_static.a")):
+               self.spawn(["cp", arlib, re.sub("/lib64/", "/lib/", arlib)])
+            for arlib in glob.glob(os.path.join("build", "lib*", "*_static.a")):
                self.spawn(["cp", arlib, re.sub("_static.a", ".a", arlib)])
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
@@ -170,7 +170,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.85",
+    version = "1.0.86",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
