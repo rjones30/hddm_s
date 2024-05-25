@@ -85,10 +85,10 @@ class build_ext_with_cmake(build_ext):
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
         if ext.name == "xerces-c":
-            if "nix" in sysconfig.get_platform():
-                cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=OFF"]
+            if "linux" in sysconfig.get_platform():
+                cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
             else:
-                cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=ON"]
+                cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=on"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
@@ -183,7 +183,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.77",
+    version = "1.0.78",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
