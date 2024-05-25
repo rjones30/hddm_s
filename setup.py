@@ -155,17 +155,6 @@ if "win" in sysconfig.get_platform():
                            "libpthreadVC3",
                            "ws2_32",
                           ]
-elif "mac" in sysconfig.get_platform():
-    extension_include_dirs = ["hddm_s", "build/include"]
-    extension_library_dirs = ["build/lib", "build/lib64"]
-    extension_libraries = ["hdf5_hl",
-                           "hdf5",
-                           "xstream",
-                           "bz2",
-                           "z",
-                           "xerces-c",
-                           "pthread",
-                          ]
 else:
     extension_include_dirs = ["hddm_s", "build/include"]
     extension_library_dirs = ["build/lib"]
@@ -179,7 +168,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.80",
+    version = "1.0.81",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
