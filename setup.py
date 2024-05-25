@@ -183,7 +183,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.78",
+    version = "1.0.79",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
