@@ -21,10 +21,12 @@ sources = {
   "xerces-c.tag": "",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
   "hdf5.tag": "tags/hdf5-1_10_8",
-#  "xrootd.url": "https://github.com/xrootd/xrootd.git",
-#  "xrootd.tag": "tags/v5.6.9",
   "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git",
   "pthread-win32.tag": "version-3.1.0-release",
+  "cpr.url": "https://github.com/cpr.git",
+  "cpr.tag": "",
+  "xrootd.url": "https://github.com/rjones30/xrootd.git",
+  "xrootd.tag": "stable-4.12-for-hddm",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "",
 }
@@ -80,6 +82,8 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
+          f"-DBUILD_SHARED_LIBS:bool=off",
+          f"-DCMAKE_POSITION_INDEPENDENT_CODE:bool=on",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
         if sysconfig.get_platform() == "win32":
@@ -170,7 +174,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.0.86",
+    version = "1.1.0",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
