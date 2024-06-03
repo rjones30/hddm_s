@@ -154,7 +154,10 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 if "win" in sysconfig.get_platform():
-    extension_include_dirs = ["hddm_s", "build\\include"]
+    extension_include_dirs = ["hddm_s",
+                              "build\\include",
+                              "build\\include\\xrootd",
+                             ]
     extension_library_dirs = ["build\\lib",]
     extension_libraries = ["libhdf5_hl",
                            "libhdf5",
@@ -166,7 +169,10 @@ if "win" in sysconfig.get_platform():
                            "ws2_32",
                           ]
 else:
-    extension_include_dirs = ["hddm_s", "build/include"]
+    extension_include_dirs = ["hddm_s",
+                              "build/include",
+                              "build/include/xrootd",
+                             ]
     extension_library_dirs = ["build/lib"]
     extension_libraries = ["hdf5_hl",
                            "hdf5",
@@ -188,7 +194,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.6",
+    version = "2.0.7",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
