@@ -189,12 +189,10 @@ else:
                            "crypto",
                            "xrootdstream",
                            "XrdCl",
-                           "XrdFfs",
-                           "XrdCrypto",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.7",
+    version = "2.0.8",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -228,7 +226,7 @@ setuptools.setup(
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
-           extra_compile_args = ["-std=c++11",
+           extra_compile_args = ["-std=c++17",
                                  "-DHDF5_SUPPORT",
                                  "-DISTREAM_OVER_HTTP",
                                  "-DISTREAM_OVER_XROOTD"
