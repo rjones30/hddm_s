@@ -23,7 +23,7 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
   "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git",
   "pthread-win32.tag": "version-3.1.0-release",
-  "cpr.url": "https://github.com/cpr.git",
+  "cpr.url": "https://github.com/rjones30/cpr.git",
   "cpr.tag": "",
   "xrootd.url": "https://github.com/rjones30/xrootd.git",
   "xrootd.tag": "stable-4.12-for-hddm",
@@ -174,7 +174,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.0",
+    version = "2.0.1",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
