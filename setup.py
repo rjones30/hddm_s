@@ -23,6 +23,8 @@ sources = {
   "hdf5.tag": "tags/hdf5-1_10_8",
   "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git",
   "pthread-win32.tag": "version-3.1.0-release",
+  "libuuid.url": "https://github.com/rjones30/libuuid.git",
+  "libuuid.tag": "",
   "openssl.url": "https://github.com/rjones30/openssl.git",
   "openssl.tag": "",
   "cpr.url": "https://github.com/rjones30/cpr.git",
@@ -176,7 +178,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.3",
+    version = "2.0.4",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -201,6 +203,7 @@ setuptools.setup(
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
       CMakeExtension("pthread-win32"),
+      CMakeExtension("libuuid"),
       CMakeExtension("openssl"),
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
