@@ -28,7 +28,7 @@ sources = {
   "xrootd.url": "https://github.com/rjones30/xrootd.git",
   "xrootd.tag": "stable-4.12-for-hddm",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
-  "HDDM.tag": "",
+  "HDDM.tag": "streaming_input",
 }
 
 class CMakeExtension(setuptools.Extension):
@@ -174,7 +174,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "1.1.7",
+    version = "2.0.0",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -198,8 +198,9 @@ setuptools.setup(
       CMakeExtension("bzip2"),
       CMakeExtension("xerces-c"),
       CMakeExtension("hdf5"),
-      #CMakeExtension("xrootd"),
       CMakeExtension("pthread-win32"),
+      CMakeExtension("cpr"),
+      CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
       setuptools.Extension("hddm_s",
            include_dirs = extension_include_dirs,

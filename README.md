@@ -1,4 +1,4 @@
-# hddm\\_s - i/o library for reading and writing simulated events from the GlueX detector
+# hddm\_s - i/o library for reading and writing simulated events from the GlueX detector
 
 The hddm\_s module is a python wrapper around the c++ library that implements reading 
 and writing of simulated events from the GlueX detector, based on the HDDM event i/o
