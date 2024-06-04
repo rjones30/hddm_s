@@ -27,6 +27,8 @@ sources = {
   "libuuid.tag": "",
   "openssl.url": "https://github.com/rjones30/openssl.git",
   "openssl.tag": "",
+  "libxml2.url": "https://github.com/GNOME/libxml2.git",
+  "libxml2.tag": "v2.12.7",
   "cpr.url": "https://github.com/rjones30/cpr.git",
   "cpr.tag": "",
   "xrootd.url": "https://github.com/rjones30/xrootd.git",
@@ -171,6 +173,7 @@ if "win" in sysconfig.get_platform():
 else:
     extension_include_dirs = ["hddm_s",
                               "build/include",
+                              "build/include/libxml2",
                               "build/include/xrootd",
                              ]
     extension_library_dirs = ["build/lib"]
@@ -191,10 +194,11 @@ else:
                            "XrdCl_static",
                            "XrdUtils_static",
                            "XrdXml_static",
+                           "libxml2",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.12",
+    version = "2.0.13",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -221,6 +225,7 @@ setuptools.setup(
       CMakeExtension("pthread-win32"),
       CMakeExtension("libuuid"),
       CMakeExtension("openssl"),
+      CMakeExtension("libxml2"),
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
