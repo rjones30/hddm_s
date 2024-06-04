@@ -190,10 +190,11 @@ else:
                            "xrootdstream",
                            "XrdCl_static",
                            "XrdUtils_static",
+                           "XrdXml_static",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.11",
+    version = "2.0.12",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
