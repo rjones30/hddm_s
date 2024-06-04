@@ -160,11 +160,11 @@ cython_debug/
 #.idea/
 
 # c/c++ source files
-*.cpp
-*.h
-*.c
-*.cpy
-*.hpp
+#*.cpp
+#*.h
+#*.c
+#*.cpy
+#*.hpp
 
 # history files
 .bash_history
