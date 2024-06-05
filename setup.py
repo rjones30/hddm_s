@@ -174,7 +174,9 @@ else:
                               "build/include/libxml2",
                               "build/include/xrootd",
                              ]
-    extension_library_dirs = ["build/lib"]
+    extension_library_dirs = ["build/lib",
+                              "build/lib64",
+                             ]
     extension_libraries = ["hdf5_hl",
                            "hdf5",
                            "xstream",
@@ -196,7 +198,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.24",
+    version = "2.0.25",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
