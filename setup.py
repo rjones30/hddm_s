@@ -184,7 +184,7 @@ else:
                            "bz2_static",
                            "z_static",
                            "xerces-c_static",
-                           "pthread_static",
+                           "pthread",
                            "httpstream",
                            "cpr_static",
                            "curl_static",
@@ -198,7 +198,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.33",
+    version = "2.0.34",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
