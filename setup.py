@@ -105,7 +105,7 @@ class build_ext_with_cmake(build_ext):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
                self.spawn(["cp", arlib, re.sub("/lib64/", "/lib/", arlib)])
             for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
-               if re.match(r"_static\.a$", arlib):
+               if re.match(r".*_static\.a$", arlib):
                   self.spawn(["cp", arlib, re.sub(r"_static\.a$", ".a", arlib)])
                else:
                   self.spawn(["cp", arlib, re.sub(r"\.a$", "_static.a", arlib)])
@@ -189,7 +189,6 @@ else:
                            "cpr_static",
                            "curl_static",
                            "ssl_static",
-                           "ssl3_static",
                            "crypto_static",
                            "xrootdstream",
                            "XrdCl_static",
@@ -199,7 +198,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.29",
+    version = "2.0.30",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
