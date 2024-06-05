@@ -104,8 +104,11 @@ class build_ext_with_cmake(build_ext):
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
                self.spawn(["cp", arlib, re.sub("/lib64/", "/lib/", arlib)])
-            for arlib in glob.glob(os.path.join("build", "lib*", "*_static.a")):
-               self.spawn(["cp", arlib, re.sub("_static.a", ".a", arlib)])
+            for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
+               if re.match(r"_static\.a$", arlib):
+                  self.spawn(["cp", arlib, re.sub(r"_static\.a$", ".a", arlib)])
+               else:
+                  self.spawn(["cp", arlib, re.sub(r"\.a$", "_static.a", arlib)])
             self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
         os.chdir(cwd)
         self.spawn(["ls", "-l", "-R", "build"])
@@ -174,31 +177,29 @@ else:
                               "build/include/libxml2",
                               "build/include/xrootd",
                              ]
-    extension_library_dirs = ["build/lib",
-                              "build/lib64",
-                             ]
-    extension_libraries = ["hdf5_hl",
-                           "hdf5",
+    extension_library_dirs = ["build/lib"]
+    extension_libraries = ["hdf5_hl_static",
+                           "hdf5_static",
                            "xstream",
                            "bz2_static",
                            "z_static",
-                           "xerces-c",
-                           "pthread",
+                           "xerces-c_static",
+                           "pthread_static",
                            "httpstream",
-                           "cpr",
-                           "curl",
-                           "ssl",
-                           "ssl3",
-                           "crypto",
+                           "cpr_static",
+                           "curl_static",
+                           "ssl_static",
+                           "ssl3_static",
+                           "crypto_static",
                            "xrootdstream",
                            "XrdCl_static",
                            "XrdUtils_static",
                            "XrdXml_static",
-                           "xml2",
+                           "xml2_static",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.25",
+    version = "2.0.26",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
