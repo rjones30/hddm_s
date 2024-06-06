@@ -194,11 +194,12 @@ else:
                            "XrdCl_static",
                            "XrdUtils_static",
                            "XrdXml_static",
+                           "uuid_static",
                            "xml2_static",
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.34",
+    version = "2.0.35",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
