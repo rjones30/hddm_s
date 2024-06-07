@@ -92,7 +92,6 @@ class build_ext_with_cmake(build_ext):
         ]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
-        cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
@@ -199,7 +198,7 @@ else:
                           ]
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.35",
+    version = "2.0.36",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -213,8 +212,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
     python_requires = '>=3.6',              # Minimum version requirement of the package
-    #packages = templates.keys(),           # Name of the python package
-    #install_requires = [                    # Install other dependencies if any
+    #install_requires = [                   # Install other dependencies if any
     #  "setuptools-git",
     #  "xrootd",
     #],
