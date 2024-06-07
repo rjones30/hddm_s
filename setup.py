@@ -214,7 +214,6 @@ setuptools.setup(
     python_requires = '>=3.6',              # Minimum version requirement of the package
     #install_requires = [                   # Install other dependencies if any
     #  "setuptools-git",
-    #  "xrootd",
     #],
     ext_modules = [
       CMakeExtension("zlib"),
