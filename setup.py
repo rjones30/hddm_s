@@ -55,7 +55,9 @@ class build_ext_with_cmake(build_ext):
     def build_with_cmake(self, ext):
         if "win" in ext.name and not "win" in sysconfig.get_platform():
             return 0
-        if "xrootd" in ext.name and "win" in sysconfig.get_platform():
+        elif "xrootd" in ext.name and "win" in sysconfig.get_platform():
+            return 0
+        elif ext.name[:3] == "lib" and "win" in sysconfig.get_platform():
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -215,7 +217,7 @@ else:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.37",
+    version = "2.0.38",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
