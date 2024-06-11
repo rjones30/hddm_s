@@ -55,6 +55,8 @@ class build_ext_with_cmake(build_ext):
     def build_with_cmake(self, ext):
         if "win" in ext.name and not "win" in sysconfig.get_platform():
             return 0
+        if "xrootd" in ext.name and "win" in sysconfig.get_platform():
+            return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
             if not os.path.isdir(ext.name):
@@ -158,7 +160,6 @@ with open("README.md", "r") as fh:
 if "win" in sysconfig.get_platform():
     extension_include_dirs = ["hddm_s",
                               "build\\include",
-                              "build\\include\\xrootd",
                              ]
     extension_library_dirs = ["build\\lib",]
     extension_libraries = ["libhdf5_hl",
@@ -169,7 +170,17 @@ if "win" in sysconfig.get_platform():
                            "xerces-c_3",
                            "libpthreadVC3",
                            "ws2_32",
+                           "cpr",
+                           "libcurl",
+                           "libssl",
+                           "libcrypto",
+                           "Advapi32",
+                           "Crypt32",
                           ]
+    extension_compile_args = ["-std:c++17",
+                              "-DHDF5_SUPPORT",
+                              "-DISTREAM_OVER_HTTP",
+                             ]
 else:
     extension_include_dirs = ["hddm_s",
                               "build/include",
@@ -196,9 +207,15 @@ else:
                            "uuid_static",
                            "xml2_static",
                           ]
+    extension_compile_args = ["-std=c++17",
+                              "-DHDF5_SUPPORT",
+                              "-DISTREAM_OVER_HTTP",
+                              "-DISTREAM_OVER_XROOTD"
+                             ]
+
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.36",
+    version = "2.0.37",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -230,11 +247,7 @@ setuptools.setup(
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
-           extra_compile_args = ["-std=c++17",
-                                 "-DHDF5_SUPPORT",
-                                 "-DISTREAM_OVER_HTTP",
-                                 "-DISTREAM_OVER_XROOTD"
-                                ],
+           extra_compile_args = extension_compile_args,
            sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
     ],
     cmdclass = {
