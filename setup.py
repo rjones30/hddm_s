@@ -92,6 +92,7 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
           f"-DBUILD_SHARED_LIBS:bool=off",
           f"-DCMAKE_POSITION_INDEPENDENT_CODE:bool=on",
+          f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
         if sysconfig.get_platform() == "win32":
@@ -217,7 +218,7 @@ else:
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.70",
+    version = "2.0.71",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
