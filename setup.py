@@ -88,13 +88,14 @@ class build_ext_with_cmake(build_ext):
         os.chdir(build_temp)
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
-          f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
           f"-DBUILD_SHARED_LIBS:bool=off",
           f"-DCMAKE_POSITION_INDEPENDENT_CODE:bool=on",
           f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
+        if "cpr" in ext.name or "xrootd" in ext.name or "HDDM" in ext.name:
+            cmake_args += [f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
@@ -220,7 +221,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.109",
+    version = "2.0.110",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
