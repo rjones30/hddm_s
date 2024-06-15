@@ -36,6 +36,7 @@ jobs:
 
       - name: Clean up previous builds
         run: rm -rf wheelhouse/*
+        shell: bash
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
