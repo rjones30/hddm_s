@@ -215,10 +215,12 @@ else:
                               "-DISTREAM_OVER_HTTP",
                               "-DISTREAM_OVER_XROOTD"
                              ]
+if "macos" in sysconfig.get_platform():
+    extension_compile_args += ["-mmacosx-version-min=10.15"]
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.103",
+    version = "2.0.104",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
