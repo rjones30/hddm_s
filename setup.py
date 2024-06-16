@@ -88,6 +88,7 @@ class build_ext_with_cmake(build_ext):
         os.chdir(build_temp)
         cmake_args = [
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
+          f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
           f"-DBUILD_SHARED_LIBS:bool=off",
           f"-DCMAKE_POSITION_INDEPENDENT_CODE:bool=on",
@@ -95,10 +96,17 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
         if "cpr" in ext.name or "xrootd" in ext.name or "HDDM" in ext.name:
-            cmake_args += [f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
+        for arg in cmake_args:
+            self.spawn(["echo", f"cmake_arg: {arg}"])
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
+        self.spawn(["echo", "cmake shell enviroment is:"])
+        self.spawn(["env"])
+        if "xerces" in ext.name:
+            for inc in glob.glob(os.path.join("build", "include", "uuid", "uuid.h")):
+                self.spawn(["echo", "mv", inc, inc + "idden"])
+                self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
             self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
@@ -221,7 +229,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.115",
+    version = "2.0.116",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
