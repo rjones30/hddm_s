@@ -103,7 +103,7 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["echo", "cmake shell enviroment is:"])
         self.spawn(["env"])
         if "xerces" in ext.name:
-            for inc in glob.glob(os.path.join("build", "include", "uuid", "uuid.h")):
+            for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
                 self.spawn(["echo", "mv", inc, inc + "idden"])
                 self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
@@ -228,7 +228,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.117",
+    version = "2.0.118",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
