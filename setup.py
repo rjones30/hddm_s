@@ -109,7 +109,10 @@ class build_ext_with_cmake(build_ext):
                 self.spawn(["echo", "mv", inc, inc + "idden"])
                 self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
-            self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
+            if "uuid" in ext.name:
+                self.spawn([cmake, "--build", "."] + build_args])
+            else:
+                self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
@@ -230,7 +233,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.120",
+    version = "2.0.121",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
