@@ -110,7 +110,7 @@ class build_ext_with_cmake(build_ext):
                 self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
             if "uuid" in ext.name:
-                self.spawn([cmake, "--build", "."] + build_args])
+                self.spawn([cmake, "--build", "."] + build_args)
             else:
                 self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
             self.spawn([cmake, "--install", "."])
@@ -233,7 +233,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.121",
+    version = "2.0.122",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
