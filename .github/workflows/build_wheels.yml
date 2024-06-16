@@ -41,7 +41,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
@@ -77,7 +77,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
@@ -113,7 +113,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
@@ -185,7 +185,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
@@ -221,7 +221,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
@@ -257,7 +257,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.17.0 --platform ${{ matrix.os }}
+        uses: pypa/cibuildwheel@v2.17.0
 
         # env:
         #   CIBW_SOME_OPTION: value
