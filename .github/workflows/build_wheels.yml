@@ -20,29 +20,20 @@ jobs:
         name: cibw-sdist
         path: dist/*.tar.gz
 
-  build_wheels_36:
+  build_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 840
     strategy:
       matrix:
-        python-version: ["3.6.8", "3.7.17"]
         # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, windows-latest, macos-13]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
-        with:
-          python-version: ${{ matrix.python-version }}
-
         # env:
         #   CIBW_SOME_OPTION: value
         #    ...
@@ -57,7 +48,7 @@ jobs:
           path: ./wheelhouse/*.whl
 
   upload_all:
-    needs: [make_sdist, build_wheels_36]
+    needs: [make_sdist, build_wheels]
     environment: pypi
     permissions:
       id-token: write
