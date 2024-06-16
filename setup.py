@@ -97,6 +97,8 @@ class build_ext_with_cmake(build_ext):
         ]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
+        elif "arm64" in sysconfig.get_platform():
+            cmake_args += [f"-DCMAKE_OSX_ARCHITECTURES=arm64"]
         for arg in cmake_args:
             self.spawn(["echo", f"cmake_arg: {arg}"])
         self.spawn([cmake, f"../{ext.name}"] + cmake_args)
@@ -228,7 +230,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.119",
+    version = "2.0.120",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
