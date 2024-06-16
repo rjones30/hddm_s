@@ -95,7 +95,6 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON",
         ]
-        if "cpr" in ext.name or "xrootd" in ext.name or "HDDM" in ext.name:
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
         for arg in cmake_args:
