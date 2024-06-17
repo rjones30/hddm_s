@@ -76,11 +76,11 @@ class build_ext_with_cmake(build_ext):
         cmake_config = "Debug" if self.debug else "Release"
         build_args = ["--config", cmake_config]
         if shutil.which("cmake"):
-            cmake = "cmake"
+            cmake = ["cmake"]
         else:
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
-            cmake = "cmake.exe"
+            cmake = ["cmake.exe"]
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
@@ -95,42 +95,54 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
         ]
+        echo = ["echo"]
+        mkdir = ["mkdir", "-p"]
+        rmdir = ["rmdir"]
+        rm_rf = ["rm", "-rf"]
+        ls_lR = ["ls", "-lR"]
+        mv = ["mv"]
+        cp = ["cp"]
+        rm = ["rm"]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
+            mkdir = ["mkdir"]
+            rmdir = ["rmdir" "/q"]
+            rm_rf = ["rmdir", "/S", "/q"]
+            ls_lR = ["dir", "/s"]
+            mv = ["move"]
+            cp = ["copy"]
+            rm = ["del", "/q"]
         elif "arm64" in sysconfig.get_platform():
             cmake_args += [f"-DCMAKE_OSX_ARCHITECTURES=arm64"]
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
-        for arg in cmake_args:
-            self.spawn(["echo", f"cmake_arg: {arg}"])
-        self.spawn([cmake, f"../{ext.name}"] + cmake_args)
-        self.spawn(["echo", "cmake shell enviroment is:"])
-        self.spawn(["env"])
-        if "xerces" in ext.name:
+        self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
+        if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
-                self.spawn(["echo", "mv", inc, inc + "idden"])
-                self.spawn(["mv", inc, inc + "idden"])
+                self.spawn(echo + mv + [inc, inc + "idden"])
+                self.spawn(mv + [inc, inc + "idden"])
         if not self.dry_run:
-            if "uuid" in ext.name:
-                self.spawn([cmake, "--build", "."] + build_args)
+            if "uuid" in ext.name or sysconfig.get_platform() == "win32":
+                self.spawn(cmake + ["--build", "."] + build_args)
             else:
-                self.spawn([cmake, "--build", "."] + build_args + ["-j4"])
-            self.spawn([cmake, "--install", "."])
+                self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
+            self.spawn(cmake + ["--install", "."])
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
-               self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
-               self.spawn(["cp", solib, re.sub("/lib/", "/lib64/", solib)])
+               self.spawn(mkdir + [os.path.join("build", "lib64")])
+               self.spawn(cp + [solib, re.sub("/lib/", "/lib64/", solib)])
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
-               self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
-               self.spawn(["cp", arlib, re.sub("/lib64/", "/lib/", arlib)])
+               self.spawn(mkdir + [os.path.join("build", "lib")])
+               self.spawn(cp + [arlib, re.sub("/lib64/", "/lib/", arlib)])
             for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
                if re.match(r".*_static\.a$", arlib):
-                  self.spawn(["cp", arlib, re.sub(r"_static\.a$", ".a", arlib)])
+                  self.spawn(cp + [arlib, re.sub(r"_static\.a$", ".a", arlib)])
                else:
-                  self.spawn(["cp", arlib, re.sub(r"\.a$", "_static.a", arlib)])
-            self.spawn(["rm", "-rf", ext.name, f"build.{ext.name}"])
+                  self.spawn(cp + [arlib, re.sub(r"\.a$", "_static.a", arlib)])
+            self.spawn(rm_rf + [ext.name])
+            self.spawn(rm_rf + [f"build.{ext.name}"])
         os.chdir(cwd)
-        self.spawn(["ls", "-l", "-R", "build"])
+        self.spawn(ls_lR + ["build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
             if "win" in sysconfig.get_platform():
@@ -157,7 +169,7 @@ class build_ext_with_cmake(build_ext):
                     os.chdir(module)
                     self.spawn(["hddm-cpp", model])
                     self.spawn(["hddm-py", model])
-                    self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
+                    self.spawn(cp + [f"py{module}.cpy", f"py{module}.cpp"])
                     os.chdir(cwd)
 
 
@@ -169,7 +181,7 @@ class install_ext_solibs(install_lib):
             for solib in os.listdir(wheel):
                 for mext in re.finditer("^([^/]*).cpython.*", solib):
                     if not mext.group(1) in templates:
-                        self.spawn(["rm", "-f", f"{wheel}/{solib}"])
+                        self.spawn(rm_rf + [f"{wheel}/{solib}"])
  
 
 with open("README.md", "r") as fh:
@@ -235,7 +247,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.143",
+    version = "2.0.144",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
