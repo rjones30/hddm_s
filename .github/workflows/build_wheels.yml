@@ -43,7 +43,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-cp36-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp37:
@@ -69,7 +69,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-cp37-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp38:
@@ -95,7 +95,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-cp38-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp39:
@@ -121,7 +121,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-cp39-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp310:
@@ -147,7 +147,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-cpr310-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp311:
@@ -173,7 +173,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-311-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_cp312:
@@ -199,7 +199,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-312-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_pp37:
@@ -225,7 +225,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-pp37-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_pp38:
@@ -251,7 +251,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-pp38-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_pp39:
@@ -277,7 +277,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-pp39-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_wheels_pp310:
@@ -303,7 +303,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-wheels-pp310-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   upload_all:
