@@ -45,7 +45,6 @@ jobs:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
-        timeout-minutes: 30
 
       - uses: actions/upload-artifact@v4
         with:
