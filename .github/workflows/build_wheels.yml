@@ -31,6 +31,7 @@ jobs:
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
 
     steps:
       - uses: actions/checkout@v4
