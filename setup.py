@@ -184,7 +184,7 @@ if "win" in sysconfig.get_platform():
     extension_include_dirs = ["hddm_s",
                               "build\\include",
                              ]
-    extension_library_dirs = ["build\\lib",]
+    extension_library_dirs = ["build\\lib", "build\\c\\lib"]
     extension_libraries = ["libhdf5_hl",
                            "libhdf5",
                            "xstream",
@@ -240,7 +240,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.177",
+    version = "2.0.178",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
