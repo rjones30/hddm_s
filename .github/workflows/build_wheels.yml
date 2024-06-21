@@ -32,7 +32,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
 
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +60,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -86,6 +91,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -112,6 +122,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -138,6 +153,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -164,6 +184,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -190,6 +215,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -216,6 +246,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -242,6 +277,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -268,6 +308,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 
@@ -294,6 +339,11 @@ jobs:
         # macos-13 is an intel runner, macos-14 is apple silicon
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
     steps:
       - uses: actions/checkout@v4
 

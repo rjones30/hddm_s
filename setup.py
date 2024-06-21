@@ -193,6 +193,7 @@ if "win" in sysconfig.get_platform():
                            "xerces-c_3",
                            "libpthreadVC3",
                            "ws2_32",
+                           "httpstream",
                            "cpr",
                            "libcurl",
                            "libssl",
@@ -240,7 +241,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "hddm_s",
-    version = "2.0.192",
+    version = "2.0.193",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
