@@ -114,7 +114,7 @@ class build_ext_with_cmake(build_ext):
             self.spawn(cmake + ["--install", "."])
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
-               self.spawn(["mkdir", os.path.join("build", "lib64")])
+               self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
                self.spawn(["cp", solib, re.sub("/lib/", "/lib64/", solib)])
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
