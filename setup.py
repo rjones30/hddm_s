@@ -240,7 +240,7 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     #packages = templates.keys(),
-    packages = setuptools.find_namespace_packages(include=['gluex.*']),
+    packages = ['gluex.hddm_s'],
     namespace_packages=['gluex']
     package_data = templates,
     classifiers = [
