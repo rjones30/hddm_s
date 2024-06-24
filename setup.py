@@ -232,14 +232,16 @@ if "macos" in sysconfig.get_platform():
     extension_compile_args += ["-mmacosx-version-min=10.15"]
 
 setuptools.setup(
-    name = "hddm_s",
-    version = "2.0.196",
+    name = "gluex.hddm_s",
+    version = "1.0.0",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    packages = templates.keys(),
+    #packages = templates.keys(),
+    packages = setuptools.find_namespace_packages(include=['gluex.*']),
+    namespace_packages=['gluex']
     package_data = templates,
     classifiers = [
         "Programming Language :: Python :: 3",
@@ -261,12 +263,14 @@ setuptools.setup(
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-      setuptools.Extension("hddm_s",
+      setuptools.Extension("gluex.hddm_s",
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
            extra_compile_args = extension_compile_args,
-           sources = ["hddm_s/hddm_s++.cpp", "hddm_s/pyhddm_s.cpp"]),
+           sources = ["gluex/hddm_s/hddm_s++.cpp",
+                      "gluex/hddm_s/pyhddm_s.cpp"]
+      ),
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
