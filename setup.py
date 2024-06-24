@@ -241,7 +241,7 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     #packages = templates.keys(),
     packages = ['gluex.hddm_s'],
-    namespace_packages=['gluex']
+    namespace_packages=['gluex'],
     package_data = templates,
     classifiers = [
         "Programming Language :: Python :: 3",
