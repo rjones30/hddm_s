@@ -9,7 +9,7 @@ from setuptools.command.build_ext import build_ext as build_ext
 from setuptools.command.install_lib import install_lib as install_lib
 
 templates = {
-  "hddm_s": ["event.xml"],
+  "gluex.hddm_s": ["gluex/hddm_s/event.xml"],
 }
 
 sources = {
@@ -151,9 +151,9 @@ class build_ext_with_cmake(build_ext):
             #os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
-                    os.chdir(os.path.join("gluex", module))
-                    self.spawn(["hddm-cpp", model])
-                    self.spawn(["hddm-py", model])
+                    os.chdir(os.path.join(model.split('/')[:-1]))
+                    self.spawn(["hddm-cpp", model.split('/')[-1]])
+                    self.spawn(["hddm-py", model.split('/')[-1]])
                     self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
                     os.chdir(cwd)
 
@@ -233,14 +233,13 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "1.0.2",
+    version = "1.0.3",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    #packages = templates.keys(),
-    packages = ['gluex.hddm_s'],
+    packages = templates.keys(),
     namespace_packages=['gluex'],
     package_data = templates,
     classifiers = [
