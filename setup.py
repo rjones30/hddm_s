@@ -132,14 +132,14 @@ class build_ext_with_cmake(build_ext):
         if ext.name == "HDDM": # finish construction of the hddm module
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
-                    os.environ["PATH"] += ";../build/bin"
+                    os.environ["PATH"] += f";{cwd}/build/bin"
                 else:
-                    os.environ["PATH"] = "../build/bin"
+                    os.environ["PATH"] = f"{cwd}/build/bin"
             else:
                 if "PATH" in os.environ:
-                    os.environ["PATH"] += ":../build/bin"
+                    os.environ["PATH"] += f":{cwd}/build/bin"
                 else:
-                    os.environ["PATH"] = "../build/bin"
+                    os.environ["PATH"] = f"{cwd}/build/bin"
             for lib in glob.glob("build/lib*"):
                 for ldpath in ["LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"]:
                     if ldpath in os.environ:
@@ -233,7 +233,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "1.0.1",
+    version = "1.0.2",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
