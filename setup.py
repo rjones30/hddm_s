@@ -154,7 +154,8 @@ class build_ext_with_cmake(build_ext):
                     os.chdir(os.path.join(*model.split('/')[:-1]))
                     self.spawn(["hddm-cpp", model.split('/')[-1]])
                     self.spawn(["hddm-py", model.split('/')[-1]])
-                    self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
+                    modname = module.split('.')[-1]
+                    self.spawn(["cp", f"py{modname}.cpy", f"py{modname}.cpp"])
                     os.chdir(cwd)
 
 
@@ -233,7 +234,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "1.0.5",
+    version = "1.0.6",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
