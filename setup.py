@@ -151,7 +151,7 @@ class build_ext_with_cmake(build_ext):
             #os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
-                    os.chdir(module)
+                    os.chdir(os.path.join("gluex", module))
                     self.spawn(["hddm-cpp", model])
                     self.spawn(["hddm-py", model])
                     self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
