@@ -174,7 +174,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 if "win" in sysconfig.get_platform():
-    extension_include_dirs = ["hddm_s",
+    extension_include_dirs = ["gluex\\hddm_s",
                               "build\\include",
                              ]
     extension_library_dirs = ["build\\lib"]
@@ -199,7 +199,7 @@ if "win" in sysconfig.get_platform():
                               "-DISTREAM_OVER_HTTP",
                              ]
 else:
-    extension_include_dirs = ["hddm_s",
+    extension_include_dirs = ["gluex/hddm_s",
                               "build/include",
                               "build/include/libxml2",
                               "build/include/xrootd",
@@ -234,7 +234,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "1.0.6",
+    version = "1.0.7",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
