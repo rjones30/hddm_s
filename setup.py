@@ -151,7 +151,7 @@ class build_ext_with_cmake(build_ext):
             #os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
-                    os.chdir(os.path.join(model.split('/')[:-1]))
+                    os.chdir(*os.path.join(model.split('/')[:-1]))
                     self.spawn(["hddm-cpp", model.split('/')[-1]])
                     self.spawn(["hddm-py", model.split('/')[-1]])
                     self.spawn(["cp", f"py{module}.cpy", f"py{module}.cpp"])
@@ -233,7 +233,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "1.0.3",
+    version = "1.0.4",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
