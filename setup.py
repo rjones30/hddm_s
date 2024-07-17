@@ -111,7 +111,7 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DCMAKE_OSX_ARCHITECTURES=arm64"]
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
-            cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cmd)}/build/include"]
+            cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
@@ -245,7 +245,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.19",
+    version = "2.0.20",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
