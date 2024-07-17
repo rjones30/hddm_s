@@ -82,7 +82,7 @@ class build_ext_with_cmake(build_ext):
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
-        if "zlib" in ext.name:
+        if "zlib" in ext.name and not "win" in sysconfig.get_platform():
             # Needed by xrootd installation scripts
             pyversion = f"python{sys.version_info[0]}.{sys.version_info[1]}"
             modpath = re.sub("/bin/python.*",
@@ -252,7 +252,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.16",
+    version = "2.0.17",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
