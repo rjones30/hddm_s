@@ -91,7 +91,7 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["curl", "https://bootstrap.pypa.io/pip/3.6/get-pip.py",
                                 "-o", "get-pip.py"])
             self.spawn(["python", "get-pip.py"])
-            self.spawn(["ls", "-lR", os.environ["HOME"] + "/.local"])
+            self.spawn(["ls", "-lR", "/usr/local"])
             self.spawn(["python", "-m", "pip", "-V"])
 
         build_temp = f"build.{ext.name}"
@@ -246,7 +246,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.7",
+    version = "2.0.8",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
