@@ -87,7 +87,7 @@ class build_ext_with_cmake(build_ext):
             pyversion = f"python{sys.version_info[0]}.{sys.version_info[1]}"
             modpath = re.sub("/bin/python.*",
                              "/lib/" + pyversion + "/site-packages",
-                             sys.executable))
+                             ys.executable)
             sys.path.append(modpath)
             os.environ['PYTHONPATH'] += f":{modpath}"
             print(f"sys.executable is {sys.executable}")
