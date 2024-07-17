@@ -87,7 +87,7 @@ class build_ext_with_cmake(build_ext):
             pyversion = f"python{sys.version_info[0]}.{sys.version_info[1]}"
             modpath = re.sub("/bin/python.*",
                              "/lib/" + pyversion + "/site-packages",
-                             ys.executable)
+                             sys.executable)
             sys.path.append(modpath)
             os.environ['PYTHONPATH'] += f":{modpath}"
             print(f"sys.executable is {sys.executable}")
@@ -251,7 +251,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.12",
+    version = "2.0.13",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
