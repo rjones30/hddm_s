@@ -88,6 +88,7 @@ class build_ext_with_cmake(build_ext):
             print(f"sys.path is {sys.path}")
             print(f"os.environ['PYTHONPATH'] is {os.environ['PYTHONPATH']}")
             print(f"os.environ['HOME'] is {os.environ['HOME']}")
+            import pip
             self.spawn(["curl", "https://bootstrap.pypa.io/pip/3.6/get-pip.py",
                                 "-o", "get-pip.py"])
             self.spawn(["python", "get-pip.py"])
@@ -246,7 +247,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.8",
+    version = "2.0.9",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
