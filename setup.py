@@ -31,7 +31,7 @@ sources = {
   "cpr.url": "https://github.com/rjones30/cpr.git",
   "cpr.tag": "",
   "xrootd.url": "https://github.com/rjones30/xrootd.git",
-  "xrootd.tag": "",
+  "xrootd.tag": "stable-5.6-for-hddm",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "streaming_input",
 }
@@ -82,22 +82,14 @@ class build_ext_with_cmake(build_ext):
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
-        if "zlib" in ext.name and not "win" in sysconfig.get_platform():
-            # Needed by xrootd installation scripts
+        if "xrootd" in ext.name:
+            # pip module needed by xrootd cmake --install
             pyversion = f"python{sys.version_info[0]}.{sys.version_info[1]}"
             modpath = re.sub("/bin/python.*",
                              "/lib/" + pyversion + "/site-packages",
                              sys.executable)
             sys.path.append(modpath)
             os.environ['PYTHONPATH'] = modpath
-            print(f"sys.executable is {sys.executable}")
-            print(f"sys.path is {sys.path}")
-            print(f"os.environ['PYTHONPATH'] is {os.environ['PYTHONPATH']}")
-            #self.spawn(["curl", "https://bootstrap.pypa.io/pip/3.6/get-pip.py",
-            #                    "-o", "get-pip.py"])
-            #exec(open("get-pip.py").read())
-            import pip
-            self.spawn(["env"])
             self.spawn(["python", "-m", "pip", "-V"])
 
         build_temp = f"build.{ext.name}"
@@ -252,7 +244,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.17",
+    version = "2.0.18",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
