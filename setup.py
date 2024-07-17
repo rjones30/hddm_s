@@ -83,7 +83,7 @@ class build_ext_with_cmake(build_ext):
             cmake = ["cmake.exe"]
         if "xrootd" in ext.name:
             # Needed by xrootd installation scripts
-            self.spawn(["curl", "https://bootstrap.pypa.io/get-pip.py",
+            self.spawn(["curl", "https://bootstrap.pypa.io/pip/3.6/get-pip.py",
                                 "-o", "get-pip.py"])
             self.spawn(["python", "get-pip.py"])
             self.spawn(["python", "-m", "pip", "-V"])
@@ -240,7 +240,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.2",
+    version = "2.0.3",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
