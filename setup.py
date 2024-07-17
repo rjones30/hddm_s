@@ -85,6 +85,8 @@ class build_ext_with_cmake(build_ext):
         if "zlib" in ext.name:
             # Needed by xrootd installation scripts
             print(f"sys.executable is {sys.executable}")
+            print(f"sys.path is {sys.path}")
+            print(f"os.environ['PYTHONPATH'] is {os.environ['PYTHONPATH']}")
             self.spawn([sys.executable, "-m", "pip", "-V"])
             #self.spawn(["curl", "https://bootstrap.pypa.io/pip/3.6/get-pip.py",
             #                    "-o", "get-pip.py"])
@@ -243,7 +245,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.0.5",
+    version = "2.0.6",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
