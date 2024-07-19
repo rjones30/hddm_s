@@ -182,8 +182,11 @@ class install_ext_solibs(install_lib):
             print(f"install_ext_solibs in wheel {wheel}:")
             for mext in glob.glob("build/lib*/python*/site-packages"):
                self.spawn(["ls", "-lR", mext])
-               print(f"install_ext_solibs copying extension modules into gluex...")
-               self.spawn(["cp", "-a", f"{mext}/*", f"{wheel}/gluex"])
+               print(f"install_ext_solibs copying site-packages into gluex...")
+               tarball = "build/site_packages.tar"
+               self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
+               self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex"])
+               self.spawn(["ls", "-lR", f"{wheel}/gluex"])
  
 
 with open("README.md", "r") as fh:
@@ -250,7 +253,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.0",
+    version = "2.1.1",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
