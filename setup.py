@@ -10,7 +10,11 @@ from setuptools.command.build_ext import build_ext as build_ext
 from setuptools.command.install_lib import install_lib as install_lib
 
 templates = {
-  "gluex.hddm_s": ["gluex/hddm_s/event.xml"],
+  "gluex.hddm_s": ["gluex/hddm_s/event.xml",
+                   "gluex/XRootD/client/*",
+                   "gluex/pyxrootd/*",
+                   "gluex/xrootd*",
+                  ]
 }
 
 sources = {
@@ -183,10 +187,9 @@ class install_ext_solibs(install_lib):
             for mext in glob.glob("build/lib*/python*/site-packages"):
                self.spawn(["ls", "-lR", mext])
                print(f"install_ext_solibs copying site-packages into gluex...")
-               tarball1 = "build/site_packages.tar"
-               self.spawn(["tar", "-cf", tarball1, "-C", mext, "."])
-               self.spawn(["tar", "-xf", tarball1, "-C", f"{wheel}/gluex"])
-               tarball2 = "build/solibs.tar"
+               tarball = "build/site_packages.tar"
+               self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
+               self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex"])
                for solibdir in glob.glob("build/lib*"):
                   cwd = os.getcwd()
                   os.chdir(solibdir)
@@ -194,10 +197,8 @@ class install_ext_solibs(install_lib):
                   solibs += glob.glob("*.dylib*")
                   os.chdir(cwd)
                   if len(solibs) > 0:
-                     self.spawn(["tar", "-cf", tarball2, "-C", solibdir] + solibs)
-                     self.spawn(["tar", "-xf", tarball2, "-C", f"{wheel}/gluex/pyxrootd"])
-                     self.spawn(["tar", "-xf", tarball2, "-C", f"{wheel}/gluex/hddm_s"])
-                     self.spawn(["tar", "-xf", tarball2, "-C", f"{wheel}/gluex"])
+                     self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
+                     self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/pyxrootd"])
                self.spawn(["ls", "-lR", f"{wheel}/gluex"])
  
 
@@ -265,7 +266,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.6",
+    version = "2.1.7",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
