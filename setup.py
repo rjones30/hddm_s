@@ -190,7 +190,7 @@ class install_ext_solibs(install_lib):
                for solibdir in glob.glob("build/lib*"):
                   cwd = os.getcwd()
                   os.chdir(solibdir)
-                  solibs = glob.glob("*.so")
+                  solibs = glob.glob("*.so*")
                   os.chdir(cwd)
                   if len(solibs) > 0:
                      self.spawn(["tar", "-cf", tarball2, "-C", solibdir] + solibs)
@@ -262,7 +262,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.3",
+    version = "2.1.4",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
