@@ -13,14 +13,6 @@ templates = {
   "gluex.hddm_s": ["gluex/hddm_s/event.xml"]
 }
 
-package_data = {
-  "gluex.hddm_s": ["event.xml",
-                   "XRootD/client/*",
-                   "pyxrootd/*",
-                   "xrootd*",
-                  ]
-}
-
 sources = {
   "zlib.url": "https://github.com/rjones30/zlib.git",
   "zlib.tag": "",
@@ -193,7 +185,7 @@ class install_ext_solibs(install_lib):
                print(f"copying site-packages into gluex...")
                tarball = "build/site_packages.tar"
                self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
-               self.spawn(["tar", "-xf", tarball, "-C", f"gluex/hddm_s"])
+               self.spawn(["tar", "-xf", tarball, "-C", f"gluex"])
                for solibdir in glob.glob("build/lib*"):
                   cwd = os.getcwd()
                   os.chdir(solibdir)
@@ -202,7 +194,7 @@ class install_ext_solibs(install_lib):
                   os.chdir(cwd)
                   if len(solibs) > 0:
                      self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
-                     self.spawn(["tar", "-xf", tarball, "-C", f"gluex/hddm_s/pyxrootd"])
+                     self.spawn(["tar", "-xf", tarball, "-C", f"gluex/pyxrootd"])
                self.spawn(["ls", "-lR", "gluex"])
  
 
@@ -270,7 +262,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.11",
+    version = "2.1.12",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -278,8 +270,11 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     packages = templates.keys(),
     namespace_packages=['gluex'],
-    package_data = package_data,
-    include_package_data = True,
+    package_data = templates,
+    data_files = [("gluex/pyxrootd", glob.glob("gluex/pyxrootd/*")),
+                  ("gluex/XRootD/client", glob.glob("gluex/XRootD/client/*")),
+                  ("gluex", glob.glob("xrootd*"),
+                 ],
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
