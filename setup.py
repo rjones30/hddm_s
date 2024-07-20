@@ -270,7 +270,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.10",
+    version = "2.1.11",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -279,6 +279,7 @@ setuptools.setup(
     packages = templates.keys(),
     namespace_packages=['gluex'],
     package_data = package_data,
+    include_package_data = True,
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
