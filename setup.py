@@ -273,7 +273,7 @@ setuptools.setup(
     package_data = templates,
     data_files = [("gluex/pyxrootd", glob.glob("gluex/pyxrootd/*")),
                   ("gluex/XRootD/client", glob.glob("gluex/XRootD/client/*")),
-                  ("gluex", glob.glob("xrootd*"),
+                  ("gluex", glob.glob("xrootd*")),
                  ],
     classifiers = [
         "Programming Language :: Python :: 3",
