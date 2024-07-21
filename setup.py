@@ -174,11 +174,11 @@ class install_ext_solibs(install_lib):
 
     def run(self):
         super().run()
-        for wheel in glob.glob("build/bdist.*/wheel"):
-            for solib in os.listdir(wheel):
-                for mext in re.finditer("^([^/]*).cpython.*", solib):
-                    if not mext.group(1) in templates:
-                        self.spawn(["rm", "-f", f"{wheel}/{solib}"])
+        #for wheel in glob.glob("build/bdist.*/wheel"):
+        #    for solib in os.listdir(wheel):
+        #        for mext in re.finditer("^([^/]*).cpython.*", solib):
+        #            if not mext.group(1) in templates:
+        #                self.spawn(["rm", "-f", f"{wheel}/{solib}"])
  
 
 with open("README.md", "r") as fh:
@@ -301,7 +301,7 @@ for wheel in glob.glob("build/bdist.*/wheel"):
                 self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
                 self.spawn(["tar", "-xf", tarball, "-C", f"gluex/hddm_s/pyxrootd"])
 
-package_data = {"gluex.hddm_s": [ "rest.xml",
+package_data = {"gluex.hddm_s": [ "event.xml",
                                   "pyxrootd/*",
                                   "XRootD/*",
                                   "xrootd*/*",
