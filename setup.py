@@ -21,7 +21,7 @@ sources = {
   "xerces-c.url": "https://github.com/rjones30/xerces-c.git",
   "xerces-c.tag": "",
   "hdf5.url": "https://github.com/HDFGroup/hdf5.git",
-  "hdf5.tag": "tags/hdf5-1_10_8",
+  "hdf5.tag": "tags/hdf5_1.14.4.3",
   "pthread-win32.url": "https://github.com/GerHobbelt/pthread-win32.git",
   "pthread-win32.tag": "version-3.1.0-release",
   "libuuid.url": "https://github.com/rjones30/libuuid.git",
