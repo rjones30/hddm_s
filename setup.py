@@ -174,11 +174,32 @@ class install_ext_solibs(install_lib):
 
     def run(self):
         super().run()
-        #for wheel in glob.glob("build/bdist.*/wheel"):
-        #    for solib in os.listdir(wheel):
-        #        for mext in re.finditer("^([^/]*).cpython.*", solib):
-        #            if not mext.group(1) in templates:
-        #                self.spawn(["rm", "-f", f"{wheel}/{solib}"])
+        for wheel in glob.glob("build/bdist.*/wheel"):
+            # Remove any hddm_X modules that were built as part of
+            # the HDDM install, but are not wanted in the wheel.
+            for solib in os.listdir(wheel):
+                for mext in re.finditer("^([^/]*).cpython.*", solib):
+                    if not mext.group(1) in templates:
+                        self.spawn(["rm", "-f", f"{wheel}/{solib}"])
+            # Now copy over bits of the xrootd build that we want
+            # to include in this wheel to provide the xrootd client.
+            for mext in glob.glob("build/lib*/python*/site-packages"):
+                print(f"copying site-packages into gluex:")
+                tarball = "build/site_packages.tar"
+                self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
+                self.spawn(["tar", "-tf", tarball])
+                self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s"])
+            for solibdir in glob.glob("build/lib*"):
+                cwd = os.getcwd()
+                os.chdir(solibdir)
+                solibs = glob.glob("*.so*")
+                solibs += glob.glob("*.dylib*")
+                os.chdir(cwd)
+                print(f"from {solibdir} copied {solibs}:")
+                if len(solibs) > 0:
+                    self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
+                    self.spawn(["tar", "-tf", tarball])
+                    self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s/pyxrootd"])
  
 
 with open("README.md", "r") as fh:
@@ -245,7 +266,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.12",
+    version = "2.1.14",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -271,68 +292,12 @@ setuptools.setup(
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-    ],
-    cmdclass = {
-      "build_ext": build_ext_with_cmake,
-      "install_lib": install_ext_solibs,
-    }
-)
-
-# I need to run setup a second time here because only after the
-# preceeding builds can I know the names of all of the shared
-# libraries and dynamically generated python classes that I need
-# to include as package data in my module.
-
-for wheel in glob.glob("build/bdist.*/wheel"):
-    print(f"install_ext_solibs in gluex tree:")
-    for mext in glob.glob("build/lib*/python*/site-packages"):
-        self.spawn(["ls", "-lR", mext])
-        print(f"copying site-packages into gluex...")
-        tarball = "build/site_packages.tar"
-        self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
-        self.spawn(["tar", "-xf", tarball, "-C", f"gluex/hddm_s"])
-        for solibdir in glob.glob("build/lib*"):
-            cwd = os.getcwd()
-            os.chdir(solibdir)
-            solibs = glob.glob("*.so*")
-            solibs += glob.glob("*.dylib*")
-            os.chdir(cwd)
-            if len(solibs) > 0:
-                self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
-                self.spawn(["tar", "-xf", tarball, "-C", f"gluex/hddm_s/pyxrootd"])
-
-package_data = {"gluex.hddm_s": [ "event.xml",
-                                  "pyxrootd/*",
-                                  "XRootD/*",
-                                  "xrootd*/*",
-                                ]
-               }
-
-setuptools.setup(
-    name = "gluex.hddm_s",
-    version = "2.1.13",
-    url = "https://github.com/rjones30/hddm_s",
-    author = "Richard T. Jones",
-    description = "i/o module for GlueX simulated events",
-    long_description = long_description,
-    long_description_content_type = "text/markdown",
-    packages = templates.keys(),
-    namespace_packages=['gluex'],
-    package_data = package_data,
-    classifiers = [
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],                                      # Information to filter the project on PyPi website
-    python_requires = '>=3.6',              # Minimum version requirement of the package
-    ext_modules = [
       setuptools.Extension("gluex.hddm_s",
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
            extra_compile_args = extension_compile_args,
-           sources = ["gluex/hddm_s/hddm_s++.cpp",
-                      "gluex/hddm_s/pyhddm_s.cpp"]
+           sources = [],
       ),
     ],
     cmdclass = {
