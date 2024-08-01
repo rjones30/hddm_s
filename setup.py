@@ -112,6 +112,8 @@ class build_ext_with_cmake(build_ext):
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
+        if "hdf5" in ext.name:
+            cmake_args += [f"-DZLIB_DIR={os.path.abspath(cwd)}/build"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
