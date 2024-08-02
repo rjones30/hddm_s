@@ -146,6 +146,8 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
+            print(f"LD_LIBRARY_PATH is {os.environ['LD_LIBRARY_PATH']}")
+            print(f"DYLD_LIBRARY_PATH is {os.environ['DYLD_LIBRARY_PATH']}")
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += f";{cwd}/build/bin"
@@ -205,7 +207,6 @@ class install_ext_solibs(install_lib):
                 if len(solibs) > 0:
                     self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
                     self.spawn(["tar", "-tf", tarball])
-                    self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s"])
                     self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s/pyxrootd"])
                     self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s/pyxrootd"])
  

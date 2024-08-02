@@ -30,6 +30,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -61,6 +63,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -92,6 +96,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       CIBW_BUILD_VERBOSITY: 2
@@ -123,6 +129,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -154,6 +162,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -185,6 +195,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -216,6 +228,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -237,36 +251,38 @@ jobs:
           name: cibw-wheels-312-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
-#  build_wheels_pp37:
-#    name: Build wheels pp37 on ${{ matrix.os }}
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 840
-#    strategy:
-#      matrix:
-#        # macos-13 is an intel runner, macos-14 is apple silicon
-#        os: [ubuntu-latest, windows-latest, macos-13]
-#
-#    env:
-#      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
-#      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-#      #CIBW_BUILD_VERBOSITY: 2
-# 
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: Build wheels
-#        uses: pypa/cibuildwheel@v2.17.0
-#        env:
-#          CIBW_BUILD: "pp37-*"
-#        with:
-#          package-dir: .
-#          output-dir: wheelhouse
-#          config-file: "{package}/pyproject.toml"
-#
-#      - uses: actions/upload-artifact@v4
-#        with:
-#          name: cibw-wheels-pp37-${{ matrix.os }}-${{ strategy.job-index }}
-#          path: ./wheelhouse/*.whl
+  build_wheels_pp37:
+    name: Build wheels pp37 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13]
+
+    env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "pp37-*"
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-pp37-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
 
   build_wheels_pp38:
     name: Build wheels pp38 on ${{ matrix.os }}
@@ -278,6 +294,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -309,6 +327,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
@@ -340,6 +360,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
 
     env:
+      LD_LIBRARY_PATH: build/lib64
+      DYLD_LIBRARY_PATH: build/lib64
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
