@@ -108,8 +108,8 @@ class build_ext_with_cmake(build_ext):
         ]
         if "zlib" in ext.name:
             print(f"sysconfig.get_path('include') returns {sysconfig.get_path('include')} on this platform")
-            print("python-config --includes says:")
-            self.spawn(["python-config", "--includes"])
+            print("python3-config --includes says:")
+            self.spawn(["python3-config", "--includes"])
             print("ls -lR /opt/python says:")
             self.spawn(["ls", "-lR", "/opt/python"])
             raise Exception("let us jump out here")
