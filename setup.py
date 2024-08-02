@@ -213,8 +213,8 @@ class install_ext_solibs(install_lib):
                 if len(solibs) > 0:
                     self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
                     self.spawn(["tar", "-tf", tarball])
-                    self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s/pyxrootd"])
-                    self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s/pyxrootd"])
+                    self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s/lib"])
+                    self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s/lib"])
  
 
 with open("README.md", "r") as fh:
