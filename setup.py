@@ -100,10 +100,11 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
-          f"-DBUILD_SHARED_LIBS:bool=off",
-          f"-DCMAKE_POSITION_INDEPENDENT_CODE:bool=on",
+          f"-DBUILD_SHARED_LIBS:BOOL=off",
+          f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
           f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
+          f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
         ]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
@@ -115,7 +116,7 @@ class build_ext_with_cmake(build_ext):
         if "hdf5" in ext.name:
             cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if "HDDM" in ext.name:
-            cmake_args += [f"-DHDF5_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
+            cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
