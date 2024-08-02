@@ -41,7 +41,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp36-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -73,7 +75,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp37-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -105,7 +109,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp38-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -137,7 +143,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp39-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -169,7 +177,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp310-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -201,7 +211,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp311-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -233,7 +245,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp312-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -265,7 +280,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp37-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -297,7 +315,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp38-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -329,7 +350,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp39-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -361,7 +385,10 @@ jobs:
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp310-*"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: "echo Skip repair, check it later"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
         with:
           package-dir: .
           output-dir: wheelhouse
