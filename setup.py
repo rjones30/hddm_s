@@ -146,8 +146,14 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
-            print(f"LD_LIBRARY_PATH is {os.environ['LD_LIBRARY_PATH']}")
-            print(f"DYLD_LIBRARY_PATH is {os.environ['DYLD_LIBRARY_PATH']}")
+            try:
+                print(f"LD_LIBRARY_PATH is {os.environ['LD_LIBRARY_PATH']}")
+            except:
+                print("LD_LIBRARY_PATH is undefined")
+            try:
+                print(f"DYLD_LIBRARY_PATH is {os.environ['DYLD_LIBRARY_PATH']}")
+            except:
+                printf("DYLD_LIBRARY_PATH is undefined")
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += f";{cwd}/build/bin"
