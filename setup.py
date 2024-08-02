@@ -106,13 +106,6 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
           f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
         ]
-        if "zlib" in ext.name:
-            print(f"sysconfig.get_path('include') returns {sysconfig.get_path('include')} on this platform")
-            print("python3-config --includes says:")
-            self.spawn(["python3-config", "--includes"])
-            print(f"ls -lR {sysconfig.get_path('include')} says:")
-            self.spawn(["ls", "-lR", sysconfig.get_path('include')])
-            raise Exception("let us jump out here")
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
         elif "arm64" in sysconfig.get_platform():
