@@ -198,11 +198,8 @@ class install_ext_solibs(install_lib):
             # to include in this wheel to provide the xrootd client.
             for mext in glob.glob("build/lib*/python*/site-packages"):
                 print(f"copying site-packages into gluex:")
-                tarball = "build/site_packages.tar"
-                self.spawn(["tar", "-cf", tarball, "-C", mext, "."])
-                self.spawn(["tar", "-tf", tarball])
-                self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s"])
-                self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s"])
+                tarball = f"{wheel}/gluex/hddm_s/site_packages.tar.gz"
+                self.spawn(["tar", "-zcf", tarball, "-C", mext, "."])
             for solibdir in glob.glob("build/lib*"):
                 cwd = os.getcwd()
                 os.chdir(solibdir)
@@ -211,10 +208,8 @@ class install_ext_solibs(install_lib):
                 os.chdir(cwd)
                 print(f"from {solibdir} copied {solibs}:")
                 if len(solibs) > 0:
-                    self.spawn(["tar", "-cf", tarball, "-C", solibdir] + solibs)
-                    self.spawn(["tar", "-tf", tarball])
-                    self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s/lib"])
-                    self.spawn(["tar", "-xf", tarball, "-C", f"{wheel}/gluex/hddm_s/lib"])
+                    tarball = f"{wheel}/gluex/hddm_s/sharedlibs.tar.gz"
+                    self.spawn(["tar", "-zcf", tarball, "-C", solibdir] + solibs)
  
 
 with open("README.md", "r") as fh:

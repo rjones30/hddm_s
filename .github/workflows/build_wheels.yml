@@ -40,8 +40,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp36-*"
         with:
           package-dir: .
@@ -73,8 +71,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp37-*"
         with:
           package-dir: .
@@ -106,8 +102,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp38-*"
         with:
           package-dir: .
@@ -139,8 +133,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp39-*"
         with:
           package-dir: .
@@ -172,8 +164,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp310-*"
         with:
           package-dir: .
@@ -205,8 +195,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp311-*"
         with:
           package-dir: .
@@ -238,8 +226,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "cp312-*"
         with:
           package-dir: .
@@ -271,8 +257,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "pp37-*"
         with:
           package-dir: .
@@ -304,8 +288,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "pp38-*"
         with:
           package-dir: .
@@ -337,8 +319,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "pp39-*"
         with:
           package-dir: .
@@ -370,8 +350,6 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          LD_LIBRARY_PATH: build/lib64
-          DYLD_LIBRARY_PATH: build/lib64
           CIBW_BUILD: "pp310-*"
         with:
           package-dir: .
