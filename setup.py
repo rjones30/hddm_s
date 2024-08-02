@@ -284,7 +284,11 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     packages = templates.keys(),
     namespace_packages=['gluex'],
-    package_data = templates,
+    package_data = ["gluex.hddm_s": ["event.xml",
+                                     "site_packages.tar.gz",
+                                     "sharedlibs.tar.gz",
+                                    ],
+    ],
     classifiers = [
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
