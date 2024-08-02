@@ -197,7 +197,8 @@ class install_ext_solibs(install_lib):
             # Now copy over bits of the xrootd build that we want
             # to include in this wheel to provide the xrootd client.
             for mext in glob.glob("build/lib*/python*/site-packages"):
-                print(f"copying site-packages into gluex:")
+                print(f"copying site-packages into {wheel}/gluex/hddm_s:")
+                self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s"])
                 tarball = f"{wheel}/gluex/hddm_s/site_packages.tar.gz"
                 self.spawn(["tar", "-zcf", tarball, "-C", mext, "."])
             for solibdir in glob.glob("build/lib*"):
