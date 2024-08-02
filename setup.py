@@ -110,8 +110,8 @@ class build_ext_with_cmake(build_ext):
             print(f"sysconfig.get_path('include') returns {sysconfig.get_path('include')} on this platform")
             print("python3-config --includes says:")
             self.spawn(["python3-config", "--includes"])
-            print("ls -lR /opt/python says:")
-            self.spawn(["ls", "-lR", "/opt/python"])
+            print(f"ls -lR {sysconfig.get_path('include')} says:")
+            self.spawn(["ls", "-lR", sysconfig.get_path('include')])
             raise Exception("let us jump out here")
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
