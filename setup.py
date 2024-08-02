@@ -153,7 +153,7 @@ class build_ext_with_cmake(build_ext):
             try:
                 print(f"DYLD_LIBRARY_PATH is {os.environ['DYLD_LIBRARY_PATH']}")
             except:
-                printf("DYLD_LIBRARY_PATH is undefined")
+                print("DYLD_LIBRARY_PATH is undefined")
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += f";{cwd}/build/bin"
