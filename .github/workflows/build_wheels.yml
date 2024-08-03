@@ -32,7 +32,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
 
     steps:
       - uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
  
     steps:
       - uses: actions/checkout@v4
@@ -102,7 +102,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
  
     steps:
       - uses: actions/checkout@v4
