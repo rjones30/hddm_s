@@ -188,14 +188,19 @@ class install_ext_solibs(install_lib):
     def run(self):
         super().run()
         for wheel in glob.glob("build/bdist.*/wheel"):
-            # Remove any hddm_X modules that were built as part of
-            # the HDDM install, but are not wanted in the wheel.
-            for solib in os.listdir(wheel):
-                for mext in re.finditer("^([^/]*).cpython.*", solib):
-                    if not mext.group(1) in templates:
-                        self.spawn(["rm", "-f", f"{wheel}/{solib}"])
-            # Now copy over bits of the xrootd build that we want
-            # to include in this wheel to provide the xrootd client.
+            print("Remove any hddm_X modules that were built as part of" +
+                  " the HDDM install, but are not wanted in the wheel.")
+            for dirpath, dirnames, filenames in os.walk(wheel):
+                print("found directory", dirpath)
+                for solib in filenames:
+                    print("found file", solib)
+                    for mext in re.finditer("^([^/]*).cpython.*", solib):
+                        if not mext.group(1) in templates:
+                            self.spawn(["echo", "rm", "-f", f"{wheel}/{solib}"])
+                        else:
+                            print(f"preserving {wheel}/{solib}")
+            print("Now copy over bits of the xrootd build that we want" +
+                  " to include in this wheel to provide the xrootd client.")
             for mext in glob.glob("build/lib*/python*/site-packages"):
                 print(f"copying site-packages into {wheel}/gluex/hddm_s:")
                 self.spawn(["mkdir", "-p", f"{wheel}/gluex/hddm_s"])
@@ -277,7 +282,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.14",
+    version = "2.1.15",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
