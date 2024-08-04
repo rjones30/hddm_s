@@ -187,8 +187,8 @@ class install_ext_solibs(install_lib):
         cwd = os.getcwd()
         os.chdir("build")
         moduledir = glob.glob("lib.*")[0] + "/gluex"
-        tarball = f"{moduledir}/hddm_r/sharedlibs.tar.gz"
-        self.spawn(["rm", "-rf", "lib/perl5"])
+        tarball = f"{moduledir}/hddm_s/sharedlibs.tar.gz"
+        self.spawn(["rm", "-rf", "lib/perl5", "lib/python3"])
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
         os.chdir(cwd)
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
@@ -259,7 +259,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.1.27",
+    version = "2.1.28",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -293,8 +293,8 @@ setuptools.setup(
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
            extra_compile_args = extension_compile_args,
-           sources = ["gluex/hddm_r/hddm_r++.cpp",
-                      "gluex/hddm_r/pyhddm_r.cpp"]
+           sources = ["gluex/hddm_s/hddm_s++.cpp",
+                      "gluex/hddm_s/pyhddm_s.cpp"]
       ),
     ],
     cmdclass = {
