@@ -32,7 +32,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
 
     steps:
       - uses: actions/checkout@v4
@@ -55,6 +55,41 @@ jobs:
           name: cibw-wheels-cp36-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
+  build_wheels_cp37:
+    name: Build wheels on cp37 ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, macos-13]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "cp37-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-cp37-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
   build_wheels_cp38:
     name: Build wheels cp38 on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -67,7 +102,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
-      CIBW_BUILD_VERBOSITY: 2
+      #CIBW_BUILD_VERBOSITY: 2
  
     steps:
       - uses: actions/checkout@v4
@@ -90,9 +125,293 @@ jobs:
           name: cibw-wheels-cp38-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
+  build_wheels_cp39:
+    name: Build wheels cp39 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "cp39-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-cp39-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_cp310:
+    name: Build wheels cp310 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "cp310-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-cpr310-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_cp311:
+    name: Build wheels cp311 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "cp311-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
+            cp {wheel} {dest_dir}
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-311-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_cp312:
+    name: Build wheels cp312 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "cp312-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-312-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_pp37:
+    name: Build wheels pp37 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, macos-13]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "pp37-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-pp37-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_pp38:
+    name: Build wheels pp38 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "pp38-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-pp38-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_pp39:
+    name: Build wheels pp39 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "pp39-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-pp39-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_pp310:
+    name: Build wheels pp310 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 840
+    strategy:
+      matrix:
+        # macos-13 is an intel runner, macos-14 is apple silicon
+        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+ 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: "pp310-*"
+          CIBW_SKIP: "*_i686"
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
+            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
+            cp {wheel} {dest_dir}
+
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-pp310-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
   upload_all:
-    #needs: [make_sdist, build_wheels_cp36, build_wheels_cp37, build_wheels_cp38, build_wheels_cp39, build_wheels_cp310, build_wheels_cp311, build_wheels_cp312, build_wheels_pp37, build_wheels_pp38, build_wheels_pp39, build_wheels_pp310]
-    needs: [make_sdist, build_wheels_cp36, build_wheels_cp38]
+    needs: [make_sdist, build_wheels_cp36, build_wheels_cp37, build_wheels_cp38, build_wheels_cp39, build_wheels_cp310, build_wheels_cp311, build_wheels_cp312, build_wheels_pp37, build_wheels_pp38, build_wheels_pp39, build_wheels_pp310]
     environment: pypi
     permissions:
       id-token: write
