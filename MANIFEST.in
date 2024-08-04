@@ -1,2 +1,3 @@
 include gluex/hddm_s/*.xml
+include gluex/xrootd_client/*
 include scripts/*.bat

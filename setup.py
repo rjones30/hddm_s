@@ -51,6 +51,7 @@ class build_ext_with_cmake(build_ext):
             if ext.name in templates:
                 build_extension_solibs.append(ext)
         self.extensions = build_extension_solibs
+        #self.force = True
         super().run()
 
     def build_with_cmake(self, ext):
@@ -146,14 +147,6 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
-            try:
-                print(f"LD_LIBRARY_PATH is {os.environ['LD_LIBRARY_PATH']}")
-            except:
-                print("LD_LIBRARY_PATH is undefined")
-            try:
-                print(f"DYLD_LIBRARY_PATH is {os.environ['DYLD_LIBRARY_PATH']}")
-            except:
-                print("DYLD_LIBRARY_PATH is undefined")
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
                     os.environ["PATH"] += f";{cwd}/build/bin"
@@ -186,20 +179,19 @@ class build_ext_with_cmake(build_ext):
 class install_ext_solibs(install_lib):
 
     def run(self):
-        for mext in glob.glob("build/lib*/python*/site-packages"):
-            print(f"copying site-packages into gluex/hddm_s:")
-            tarball = f"gluex/hddm_s/site_packages.tar.gz"
-            self.spawn(["tar", "-zcf", tarball, "-C", mext, "."])
-        for solibdir in glob.glob("build/lib*"):
-            cwd = os.getcwd()
-            os.chdir(solibdir)
-            solibs = glob.glob("*.so*")
-            solibs += glob.glob("*.dylib*")
-            os.chdir(cwd)
-            print(f"from {solibdir} copied {solibs}:")
-            if len(solibs) > 0:
-                tarball = f"gluex/hddm_s/sharedlibs.tar.gz"
-                self.spawn(["tar", "-zcf", tarball, "-C", solibdir] + solibs)
+        # Include my shared libraries in the bdist wheel by copying what I need
+        # into build/lib.<platform> and then letting install_lib.run() do the rest.
+        # This is not documented anywhere, so it might break in some future release
+        # of setuptools. The package_data and data_file arguments are useless for
+        # files that are not already there prior to the beginning of the build.
+        cwd = os.getcwd()
+        os.chdir("build")
+        moduledir = glob.glob("lib.*")[0] + "/gluex"
+        tarball = f"{moduledir}/hddm_r/sharedlibs.tar.gz"
+        self.spawn(["rm", "-rf", "lib/perl5"])
+        self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
+        os.chdir(cwd)
+        self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
         super().run()
  
 
@@ -274,9 +266,8 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = "text/markdown",
     packages = templates.keys(),
-    namespace_packages=['gluex'],
+    #namespace_packages=['gluex'],
     package_data = {"gluex.hddm_s": ["event.xml",
-                                     "site_packages.tar.gz",
                                      "sharedlibs.tar.gz",
                                     ],
     },
@@ -302,7 +293,8 @@ setuptools.setup(
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
            extra_compile_args = extension_compile_args,
-           sources = [],
+           sources = ["gluex/hddm_r/hddm_r++.cpp",
+                      "gluex/hddm_r/pyhddm_r.cpp"]
       ),
     ],
     cmdclass = {
