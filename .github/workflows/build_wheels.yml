@@ -40,7 +40,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          CIBW_BUILD: "cp36-many*"
+          CIBW_BUILD: "cp36-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
@@ -75,7 +75,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
-          CIBW_BUILD: "cp38-many*"
+          CIBW_BUILD: "cp38-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_IGNORED: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
