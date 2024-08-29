@@ -267,6 +267,7 @@ jobs:
           path: ./wheelhouse/*.whl
 
 # Ubuntu musllinux platforms developed a broken version of setuptools as of August 29, 2024
+# After further testing, the same thing seems to apply on the macos-14 platform, disable those.
 # I disable them for the time being, in hopes that the issue is fixed in the near future.
 
   build_wheels_pp37:
@@ -314,7 +315,7 @@ jobs:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
         #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-        os: [windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -351,7 +352,7 @@ jobs:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
         #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-        os: [windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -388,7 +389,7 @@ jobs:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
         #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-        os: [windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
