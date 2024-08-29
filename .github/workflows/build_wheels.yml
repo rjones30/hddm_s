@@ -418,7 +418,8 @@ jobs:
           path: ./wheelhouse/*.whl
 
   upload_all:
-    needs: [make_sdist, build_wheels_cp36, build_wheels_cp37, build_wheels_cp38, build_wheels_cp39, build_wheels_cp310, build_wheels_cp311, build_wheels_cp312, build_wheels_pp37, build_wheels_pp38, build_wheels_pp39, build_wheels_pp310]
+    #needs: [make_sdist, build_wheels_cp36, build_wheels_cp37, build_wheels_cp38, build_wheels_cp39, build_wheels_cp310, build_wheels_cp311, build_wheels_cp312, build_wheels_pp37, build_wheels_pp38, build_wheels_pp39, build_wheels_pp310]
+    needs: [make_sdist, build_wheels_cp36, build_wheels_cp37, build_wheels_cp38, build_wheels_cp39, build_wheels_cp310, build_wheels_cp311, build_wheels_cp312, build_wheels_pp38, build_wheels_pp39, build_wheels_pp310]
     environment: pypi
     permissions:
       id-token: write
