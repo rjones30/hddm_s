@@ -266,6 +266,9 @@ jobs:
           name: cibw-wheels-312-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
+# Ubuntu musllinux platforms developed a broken version of setuptools as of August 29, 2024
+# I disable them for the time being, in hopes that the issue is fixed in the near future.
+
   build_wheels_pp37:
     name: Build wheels pp37 on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -273,7 +276,8 @@ jobs:
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, macos-13]
+        #os: [ubuntu-latest, macos-13]
+        os: [macos-13]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -309,7 +313,8 @@ jobs:
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13, macos-14]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -345,7 +350,8 @@ jobs:
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13, macos-14]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -381,7 +387,8 @@ jobs:
     strategy:
       matrix:
         # macos-13 is an intel runner, macos-14 is apple silicon
-        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        #os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        os: [windows-latest, macos-13, macos-14]
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
