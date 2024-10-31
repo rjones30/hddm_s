@@ -177,8 +177,6 @@ class build_ext_with_cmake(build_ext):
                     modname = module.split('.')[-1]
                     self.spawn(["cp", f"py{modname}.cpy", f"py{modname}.cpp"])
                     os.chdir(cwd)
-        elif "xrootd" in ext.name:
-            raise Exception("This is as far as you go, brother!")
 
 
 class install_ext_solibs(install_lib):
@@ -264,7 +262,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.2.4",
+    version = "2.2.5",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
