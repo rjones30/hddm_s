@@ -246,9 +246,12 @@ else:
                            "ssl_static",
                            "crypto_static",
                            "xrootdstream",
-                           "XrdCl_static",
-                           "XrdUtils_static",
-                           "XrdXml_static",
+                           #"XrdCl_static",
+                           #"XrdUtils_static",
+                           #"XrdXml_static",
+                           "XrdCl",
+                           "XrdUtils",
+                           "XrdXml",
                            "uuid_static",
                            "xml2_static",
                           ]
@@ -262,7 +265,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.3.0",
+    version = "2.3.1",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
