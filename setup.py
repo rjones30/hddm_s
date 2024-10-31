@@ -65,11 +65,16 @@ class build_ext_with_cmake(build_ext):
         if f"{ext.name}.url" in sources:
             if not os.path.isdir(ext.name):
                 self.spawn(["git", "clone", sources[ext.name + ".url"]])
-            os.chdir(ext.name)
+                os.chdir(ext.name)
+            else:
+                os.chdir(ext.name)
+                self.spawn(["git", "pull", sources[ext.name + ".url"]])
             tag = sources[ext.name + ".tag"]
             if tag:
                 self.spawn(["git", "checkout", tag])
             os.chdir(cwd)
+            if "xrootd" in ext.name:
+                raise Exception("This is as far as you go, brother!")
         else:
             return 0
             raise Exception("missing sources",
