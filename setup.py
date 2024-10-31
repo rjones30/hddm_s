@@ -234,7 +234,7 @@ else:
                               "build/include/libxml2",
                               "build/include/xrootd",
                              ]
-    extension_library_dirs = ["build/lib"]
+    extension_library_dirs = glob.glob("build/lib*"),
     extension_libraries = ["hdf5_hl_static",
                            "hdf5_static",
                            "xstream",
