@@ -30,8 +30,10 @@ sources = {
   "libxml2.tag": "",
   "cpr.url": "https://github.com/rjones30/cpr.git",
   "cpr.tag": "",
-  "xrootd.url": "https://github.com/rjones30/xrootd.git",
-  "xrootd.tag": "stable-5.7.1-for-hddm",
+  #"xrootd.url": "https://github.com/rjones30/xrootd.git",
+  #"xrootd.tag": "stable-5.7.1-for-hddm",
+  "xrootd.url": "https://github.com/xrootd/xrootd.git",
+  "xrootd.tag": "v5.7.1",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "streaming_input",
 }
