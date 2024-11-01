@@ -33,33 +33,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp36-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -79,33 +93,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp37-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -125,33 +153,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp38-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -171,33 +213,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp39-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -217,33 +273,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp310-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:DY$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -263,33 +333,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp311-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -309,33 +393,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "cp312-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -368,11 +466,9 @@ jobs:
 #        env:
 #          CIBW_BUILD: "pp37-*"
 #          CIBW_SKIP: "*_i686"
-#          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
 #          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
 #            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
 #            cp {wheel} {dest_dir}
-#          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
 #          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
 #            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
 #            cp {wheel} {dest_dir}
@@ -400,33 +496,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp38-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -447,33 +557,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp39-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -494,33 +618,47 @@ jobs:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
+      LD_LIBRARY_PATH: $(pwd)/build/lib64:$LD_LIBRARY_PATH
+      DYLD_LIBRARY_PATH: $(pwd)/build/lib64:$DYLD_LIBRARY_PATH
  
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check original value of LD_LIBRARY_PATH
+        run: |
+          echo "original LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "original DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
+
+      - name: Set LD_LIBRARY_PATH for use by auditwheel later on below
+        run: |
+          echo "LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
+
+      - name: Check if LD_LIBRARY_PATH is preserved for us in future steps
+        run: |
+          echo "updated LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "updatd DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: "pp310-*"
           CIBW_SKIP: "*_i686"
-          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
-          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
-            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Check if LD_LIBRARY_PATH is still preserved after the build
+        run: |
+          echo "final LD_LIBRARY_PATH is set to $LD_LIBRARY_PATH"
+          echo "final DYLD_LIBRARY_PATH is set to $DYLD_LIBRARY_PATH"
 
       - uses: actions/upload-artifact@v4
         with:
