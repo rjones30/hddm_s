@@ -43,22 +43,12 @@ jobs:
           CIBW_BUILD: "cp36-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -92,22 +82,12 @@ jobs:
           CIBW_BUILD: "cp37-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -141,22 +121,12 @@ jobs:
           CIBW_BUILD: "cp38-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -190,22 +160,14 @@ jobs:
           CIBW_BUILD: "cp39-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
+            echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            echo "RTJ which ABI the libXrdCl.so library is build for" &&
+            readelf -s --wide build/lib64/libXrdCl.so | c++filt | grep basic_string &&
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -239,22 +201,12 @@ jobs:
           CIBW_BUILD: "cp310-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -288,22 +240,12 @@ jobs:
           CIBW_BUILD: "cp311-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -337,22 +279,12 @@ jobs:
           CIBW_BUILD: "cp312-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -429,22 +361,12 @@ jobs:
           CIBW_BUILD: "pp38-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -479,22 +401,12 @@ jobs:
           CIBW_BUILD: "pp39-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -529,22 +441,12 @@ jobs:
           CIBW_BUILD: "pp310-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo RTJ doing his own auditwheel repair &&
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
             auditwheel show {wheel} &&
-            auditwheel repair -w {dest_dir} {wheel} &&
-            echo RTJ finished auditwheel repair
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo RTJ doing his own auditwheel repair &&
             export LIBRARY_PATH=$(pwd)/build/lib &&
-            echo RTJ_START of shell environments listing &&
-            env &&
-            echo RTJ_END of shell environments listing &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
-            echo RTJ finished auditwheel repair
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
