@@ -192,6 +192,11 @@ class install_ext_solibs(install_lib):
         cwd = os.getcwd()
         os.chdir("build")
         moduledir = glob.glob("lib.*")[0] + "/gluex"
+        if "macos" in sysconfig.get_platform():
+            for elf in glob.glob(f"{moduledir}/*"):
+                if os.path.isfile(elf):
+                    self.spawn(["echo", "install_name_tool", "-add_rpath", f"{cwd}/build/lib64", elf])
+                    self.spawn(["install_name_tool", "-add_rpath", f"{cwd}/build/lib64", elf])
         tarball = f"{moduledir}/hddm_s/sharedlibs.tar.gz"
         self.spawn(["rm", "-rf", "lib/perl5", "lib/python3"])
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))

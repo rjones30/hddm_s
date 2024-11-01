@@ -57,7 +57,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -106,7 +106,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -155,7 +155,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -204,7 +204,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -253,7 +253,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -302,7 +302,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -351,7 +351,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -443,7 +443,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -493,7 +493,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
@@ -543,7 +543,7 @@ jobs:
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
-            DYLD_FALLBACK_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
+            delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel} &&
             echo RTJ finished auditwheel repair
         with:
           package-dir: .
