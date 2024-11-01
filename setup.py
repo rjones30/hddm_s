@@ -197,14 +197,7 @@ class install_ext_solibs(install_lib):
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
         os.chdir(cwd)
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
-        self.spawn(["echo", "RTJ in install_ext_solibs trying to figure out where stuff is being copied..."])
-        self.spawn(["echo", "cwd is", cwd])
-        self.spawn(["ls", "-lR", cwd])
         super().run()
-        self.spawn(["echo", "RTJ back in install_ext_solibs trying to figure out where stuff has gone..."])
-        self.spawn(["echo", "cwd is", cwd])
-        self.spawn(["ls", "-lR", cwd])
-        raise Exception("got to quit here to see the error log")
  
 
 with open("README.md", "r") as fh:
