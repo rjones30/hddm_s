@@ -52,6 +52,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -62,6 +63,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -104,6 +106,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -114,6 +117,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -161,6 +165,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -171,6 +176,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -213,6 +219,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -223,6 +230,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -265,6 +273,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -275,6 +284,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -317,6 +327,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -327,6 +338,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -369,6 +381,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -379,6 +392,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -464,6 +478,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -474,6 +489,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -517,6 +533,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -527,6 +544,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -570,6 +588,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
             echo PATH is $PATH &&
@@ -580,6 +599,7 @@ jobs:
             echo RTJ_END of shell environments listing
             auditwheel show {wheel} &&
             auditwheel -v repair -w {dest_dir} {wheel} &&
+            echo RTJ finished auditwheel repair
         with:
           package-dir: .
           output-dir: wheelhouse
