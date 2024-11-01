@@ -121,6 +121,8 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
             cmake_args += [f"-D_GLIBCXX_USE_CXX11_ABI=1"]
             cmake_args += [f"-DCMAKE_VERBOSE_MAKEFILE=ON"]
+            self.spawn(["g++", "--version"])
+            self.spawn(["gcc", "--version"])
         if "hdf5" in ext.name:
             cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if "HDDM" in ext.name:
@@ -200,6 +202,9 @@ class install_ext_solibs(install_lib):
         os.chdir(cwd)
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
         super().run()
+        self.spawn(["bash", "-c", "readelf -s --wide build/lib64/libXrdCl.so | c++filt | grep basic_string"])
+        raise Exception("Now at the end of install_ext_solibs,",
+                        "time to throw an exception and bomb out")
  
 
 with open("README.md", "r") as fh:
