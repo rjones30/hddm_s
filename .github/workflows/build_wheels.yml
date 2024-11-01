@@ -102,7 +102,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -151,7 +151,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -200,7 +200,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -249,7 +249,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -298,7 +298,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -347,7 +347,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -439,7 +439,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -489,7 +489,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
@@ -539,7 +539,7 @@ jobs:
             echo RTJ finished auditwheel repair
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             echo RTJ doing his own auditwheel repair &&
-            export LIBRARY_PATH=$(pwd)/build/lib64 &&
+            export LIBRARY_PATH=$(pwd)/build/lib &&
             echo RTJ_START of shell environments listing &&
             env &&
             echo RTJ_END of shell environments listing &&
