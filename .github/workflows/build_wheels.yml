@@ -160,7 +160,7 @@ jobs:
           CIBW_BUILD: "cp39-*"
           CIBW_SKIP: "*_i686"
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
             auditwheel show {wheel} &&
             echo "RTJ which ABI the libXrdCl.so library is build for" &&
             readelf -s --wide build/lib64/libXrdCl.so | c++filt | grep basic_string &&

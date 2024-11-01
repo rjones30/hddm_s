@@ -119,6 +119,8 @@ class build_ext_with_cmake(build_ext):
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
+            cmake_args += [f"-D_GLIBCXX_USE_CXX11_ABI=1"]
+            cmake_args += [f"-DCMAKE_VERBOSE_MAKEFILE=ON"]
         if "hdf5" in ext.name:
             cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if "HDDM" in ext.name:
@@ -267,7 +269,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.3.1",
+    version = "2.3.2",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
