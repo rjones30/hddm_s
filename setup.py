@@ -192,17 +192,19 @@ class install_ext_solibs(install_lib):
         cwd = os.getcwd()
         os.chdir("build")
         moduledir = glob.glob("lib.*")[0] + "/gluex"
-        if "macos" in sysconfig.get_platform():
-            for elf in glob.glob(f"{moduledir}/*"):
-                if os.path.isfile(elf):
-                    self.spawn(["echo", "install_name_tool", "-add_rpath", f"{cwd}/build/lib64", elf])
-                    self.spawn(["install_name_tool", "-add_rpath", f"{cwd}/build/lib64", elf])
         tarball = f"{moduledir}/hddm_s/sharedlibs.tar.gz"
         self.spawn(["rm", "-rf", "lib/perl5", "lib/python3"])
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
         os.chdir(cwd)
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
+        self.spawn(["echo", "RTJ in install_ext_solibs trying to figure out where stuff is being copied..."])
+        self.spawn(["echo", "cwd is", cwd])
+        self.spawn(["ls", "-lR", cwd])
         super().run()
+        self.spawn(["echo", "RTJ back in install_ext_solibs trying to figure out where stuff has gone..."])
+        self.spawn(["echo", "cwd is", cwd])
+        self.spawn(["ls", "-lR", cwd])
+        raise Exception("got to quit here to see the error log")
  
 
 with open("README.md", "r") as fh:
