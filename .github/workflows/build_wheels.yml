@@ -47,21 +47,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -99,21 +91,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -151,21 +135,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -203,21 +179,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -255,21 +223,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -307,21 +267,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -359,21 +311,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -456,21 +400,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -509,21 +445,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -562,21 +490,13 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo LD_LIBRARY_PATH is $LD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            echo Debugging repair: why does this auditwheel repair command fail &&
-            echo DYLD_LIBRARY_PATH is $DYLD_LIBRARY_PATH &&
-            echo CWD is $(pwd) &&
-            echo github.workspace is ${{ github.workspace }} &&
-            ls -lR .
+            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
