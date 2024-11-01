@@ -42,10 +42,12 @@ jobs:
         env:
           CIBW_BUILD: "cp36-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -80,10 +82,12 @@ jobs:
         env:
           CIBW_BUILD: "cp37-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -118,10 +122,12 @@ jobs:
         env:
           CIBW_BUILD: "cp38-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -156,10 +162,12 @@ jobs:
         env:
           CIBW_BUILD: "cp39-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -194,10 +202,12 @@ jobs:
         env:
           CIBW_BUILD: "cp310-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -232,10 +242,12 @@ jobs:
         env:
           CIBW_BUILD: "cp311-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
         with:
@@ -270,10 +282,12 @@ jobs:
         env:
           CIBW_BUILD: "cp312-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
 
@@ -313,10 +327,12 @@ jobs:
 #        env:
 #          CIBW_BUILD: "pp37-*"
 #          CIBW_SKIP: "*_i686"
-#          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+#          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+#          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
 #            echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
 #            cp {wheel} {dest_dir}
-#          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+#          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+#          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
 #            echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
 #            cp {wheel} {dest_dir}
 #
@@ -353,10 +369,12 @@ jobs:
         env:
           CIBW_BUILD: "pp38-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
 
@@ -393,10 +411,12 @@ jobs:
         env:
           CIBW_BUILD: "pp39-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
 
@@ -433,10 +453,12 @@ jobs:
         env:
           CIBW_BUILD: "pp310-*"
           CIBW_SKIP: "*_i686"
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+          LD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$LD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+          DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
 
