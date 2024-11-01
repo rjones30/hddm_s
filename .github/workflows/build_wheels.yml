@@ -47,13 +47,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -91,13 +93,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -135,13 +139,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -179,13 +185,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -223,13 +231,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:DY$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -267,13 +277,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -311,13 +323,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -400,13 +414,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -445,13 +461,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -490,13 +508,15 @@ jobs:
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir}&&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export LD_LIBRARY_PATH=$(pwd)/build/lib64:$LD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
           DYLD_LIBRARY_PATH: ${{ github.workspace }}/build/lib64:$DYLD_LIBRARY_PATH
           CIBW_REPAIR_WHEEL_COMMAND_MACOS_DISABLED_BY_RTJ: >
             echo Simplified repair, just a simple copy from {wheel} into {dest_dir} &&
             cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            auditwheel repair --lib-sdir build/lib64 -w {dest_dir} {wheel}
+            export DYLD_LIBRARY_PATH=$(pwd)/build/lib64:$DYLD_LIBRARY_PATH &&
+            auditwheel repair -w {dest_dir} {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
