@@ -118,7 +118,7 @@ class build_ext_with_cmake(build_ext):
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
-            cmake_args += [f"-DCMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tags'"]
+            cmake_args += [f"-DCMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag'"]
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
@@ -138,8 +138,8 @@ class build_ext_with_cmake(build_ext):
             else:
                 self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
             self.spawn(cmake + ["--install", "."])
-            self.spawn(["echo", "RTJ wants to inspect the dependency file and object files for XrdTlsSocket and XrdNetSocket"])
             if "xrootd" in ext.name:
+                self.spawn(["echo", "RTJ wants to inspect the dependency file and object files for XrdTlsSocket and XrdNetSocket"])
                 for obj in ("CMakeFiles/XrdUtils.dir/XrdTls/XrdTlsSocket.cc.o",):
                     self.spawn(["bash", "-c", f"nm src/{obj} | c++filt | grep basic_string"])
                     self.spawn(["cat", f"src/{obj}.d"])
