@@ -126,7 +126,6 @@ class build_ext_with_cmake(build_ext):
         if "HDDM" in ext.name:
             cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
-        self.spawn(["echo", "RTJ needs the cat", "CMakeCache.txt"])
         self.spawn(["cat", "CMakeCache.txt"])
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
@@ -138,11 +137,6 @@ class build_ext_with_cmake(build_ext):
             else:
                 self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
             self.spawn(cmake + ["--install", "."])
-            if "xrootd" in ext.name:
-                self.spawn(["echo", "RTJ wants to inspect the dependency file and object files for XrdTlsSocket and XrdNetSocket"])
-                for obj in ("CMakeFiles/XrdUtils.dir/XrdTls/XrdTlsSocket.cc.o",):
-                    self.spawn(["bash", "-c", f"nm src/{obj} | c++filt | grep basic_string"])
-                    self.spawn(["cat", f"src/{obj}.d"])
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
@@ -207,7 +201,6 @@ class install_ext_solibs(install_lib):
         os.chdir(cwd)
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
         super().run()
-        self.spawn(["bash", "-c", "readelf -s --wide build/lib64/libXrdCl.so | c++filt | grep basic_string"])
         return
         raise Exception("Now at the end of install_ext_solibs,",
                         "time to throw an exception and bomb out")
