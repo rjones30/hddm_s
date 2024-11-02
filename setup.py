@@ -208,6 +208,7 @@ class install_ext_solibs(install_lib):
         self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
         super().run()
         self.spawn(["bash", "-c", "readelf -s --wide build/lib64/libXrdCl.so | c++filt | grep basic_string"])
+        return
         raise Exception("Now at the end of install_ext_solibs,",
                         "time to throw an exception and bomb out")
  
