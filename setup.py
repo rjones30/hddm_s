@@ -115,7 +115,7 @@ class build_ext_with_cmake(build_ext):
             cmake_args += ["-A", "Win32"]
         elif "arm64" in sysconfig.get_platform():
             cmake_args += [f"-DCMAKE_OSX_ARCHITECTURES=arm64"]
-        if "uuid" in ext.name and sysconfig.get_platform() == "linux":
+        if "uuid" in ext.name and "linux" in sysconfig.get_platform():
             cmake_args += ["-DCMAKE_C_FLAGS='-DHAVE_STRNDUP=1'"]
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
