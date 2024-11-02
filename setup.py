@@ -106,7 +106,6 @@ class build_ext_with_cmake(build_ext):
           f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
           f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
           f"-DCMAKE_BUILD_TYPE={cmake_config}",
-          f"-DBUILD_SHARED_LIBS:BOOL=off",
           f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
           f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
           f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
@@ -119,15 +118,16 @@ class build_ext_with_cmake(build_ext):
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
-            cmake_args += [f"-D_GLIBCXX_USE_CXX11_ABI=1"]
-            cmake_args += [f"-DCMAKE_VERBOSE_MAKEFILE=ON"]
-            self.spawn(["g++", "--version"])
-            self.spawn(["gcc", "--version"])
+            cmake_args += [f"-DCMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1'"]
+        else:
+            cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
             cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if "HDDM" in ext.name:
             cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
+        self.spawn(["echo" "RTJ needs the cat", "CMakeCache.txt"])
+        self.spawn(["cat", "CMakeCache.txt"])
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
                 self.spawn(echo + mv + [inc, inc + "idden"])
