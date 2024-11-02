@@ -139,9 +139,10 @@ class build_ext_with_cmake(build_ext):
                 self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
             self.spawn(cmake + ["--install", "."])
             self.spawn(["echo", "RTJ wants to inspect the dependency file and object files for XrdTlsSocket and XrdNetSocket"])
-            for obj in ("CMakeFiles/XrdUtils.dir/XrdTls/XrdTlsSocket.cc.o",):
-                self.spawn(["bash", "-c", f"nm src/{obj} | c++filt | grep basic_string"])
-                self.spawn(["cat", f"src/{obj}.d"])
+            if "xrootd" in ext.name:
+                for obj in ("CMakeFiles/XrdUtils.dir/XrdTls/XrdTlsSocket.cc.o",):
+                    self.spawn(["bash", "-c", f"nm src/{obj} | c++filt | grep basic_string"])
+                    self.spawn(["cat", f"src/{obj}.d"])
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
