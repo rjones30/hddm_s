@@ -126,7 +126,7 @@ class build_ext_with_cmake(build_ext):
         if "HDDM" in ext.name:
             cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
-        self.spawn(["echo" "RTJ needs the cat", "CMakeCache.txt"])
+        self.spawn(["echo", "RTJ needs the cat", "CMakeCache.txt"])
         self.spawn(["cat", "CMakeCache.txt"])
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
