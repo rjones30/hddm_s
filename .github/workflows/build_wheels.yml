@@ -3,6 +3,23 @@ name: Build and Upload Wheels
 on: [push, pull_request]
 
 jobs:
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Optional, use if you use setuptools_scm
+        submodules: true  # Optional, use if you have submodules
+
+    - name: Build SDist
+      run: pipx run build --sdist
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: cibw-sdist
+        path: dist/*.tar.gz
+
   build_wheels:
     name: Build ${{ matrix.build_selector }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -32,6 +49,11 @@ jobs:
             build_selector: "cp3* pp3*"
             macosx_arch: "auto"
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
+      #ACTIONS_STEP_DEBUG: true  # Even more detailed logging
+      #CIBW_BUILD_VERBOSITY: 2
+
     steps:
       - uses: actions/checkout@v4
 
@@ -47,9 +69,17 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
 
           # My custom repair commands
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
+            auditwheel show {wheel} &&
+            auditwheel repair -w {dest_dir} {wheel}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             export LIBRARY_PATH=$(pwd)/build/lib &&
             DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+        with:
+          package-dir: .
+          output-dir: wheelhouse
+          config-file: "{package}/pyproject.toml"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -58,7 +88,7 @@ jobs:
           path: ./wheelhouse/*.whl
 
   upload_all:
-    needs: [build_wheels]
+    needs: [make_sdist, build_wheels]
     runs-on: ubuntu-latest
     # Only upload on tags or master branch
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
