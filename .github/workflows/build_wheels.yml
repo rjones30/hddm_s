@@ -14,19 +14,23 @@ jobs:
           # We use the new macos-15-intel runner to specifically handle x86_64
           - os: macos-15-intel
             build_selector: "cp38-macosx_x86_64"
+            macosx_arch: "x86_64"
 
           # --- Mac ARM (Modern & CP38 ARM) ---
           # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
           - os: macos-latest
             build_selector: "{cp38,cp39,cp310,cp311,cp312,cp313,cp314,pp39,pp310,pp311}-macosx_arm64"
+            macosx_arch: "arm64"
 
           # --- Linux (All versions) ---
           - os: ubuntu-latest
             build_selector: "cp3* pp3*"
+            macosx_arch: "auto"
 
           # --- Windows (All versions) ---
           - os: windows-latest
             build_selector: "cp3* pp3*"
+            macosx_arch: "auto"
 
     steps:
       - uses: actions/checkout@v4
@@ -36,14 +40,13 @@ jobs:
         env:
           CIBW_BUILD: ${{ matrix.build_selector }}
           CIBW_SKIP: "*_i686"
-          CIBW_ENABLE: "pypy cpython-prerelease" # Required for 2025 versions
+          # Enables latest Python features & PyPy
+          CIBW_ENABLE: "pypy cpython-prerelease cpython-freethreading"
           
           # Force macOS to match the runner arch to prevent repair errors
-          CIBW_ARCHS_MACOS: >
-            ${{ contains(matrix.os, 'intel') && 'x86_64' || 
-                matrix.os == 'macos-latest' && 'arm64' || 
-                'auto' }}
+          CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
 
+          # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             export LIBRARY_PATH=$(pwd)/build/lib &&
             DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
