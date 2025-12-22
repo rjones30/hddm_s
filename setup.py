@@ -129,8 +129,8 @@ class build_ext_with_cmake(build_ext):
         self.spawn(["cat", "CMakeCache.txt"])
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
-                self.spawn(echo + mv + [inc, inc + "idden"])
-                self.spawn(mv + [inc, inc + "idden"])
+                self.spawn(["echo", "mv", inc, inc + "idden"])
+                self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
             if "uuid" in ext.name or sysconfig.get_platform() == "win32":
                 self.spawn(cmake + ["--build", "."] + build_args)

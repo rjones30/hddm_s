@@ -68,6 +68,10 @@ jobs:
           # Force macOS to match the runner arch to prevent repair errors
           CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
 
+          CIBW_ENVIRONMENT_MACOS: >
+             LDFLAGS="-Wl,-headerpad_max_install_names"
+             MACOSX_DEPLOYMENT_TARGET="10.9"
+
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
