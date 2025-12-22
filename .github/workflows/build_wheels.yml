@@ -32,12 +32,14 @@ jobs:
           - os: macos-15-intel
             build_selector: "cp38-macosx_x86_64"
             macosx_arch: "x86_64"
+            macosx_target: "15.0"
 
           # --- Mac ARM (Modern & CP38 ARM) ---
           # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
           - os: macos-latest
             build_selector: "{cp38,cp39,cp310,cp311,cp312,cp313,cp314,pp39,pp310,pp311}-macosx_arm64"
             macosx_arch: "arm64"
+            macosx_target: "14.0"
 
           # --- Linux (All versions) ---
           - os: ubuntu-latest
@@ -70,7 +72,7 @@ jobs:
 
           CIBW_ENVIRONMENT_MACOS: >
              LDFLAGS="-Wl,-headerpad_max_install_names"
-             MACOSX_DEPLOYMENT_TARGET="10.9"
+             MACOSX_DEPLOYMENT_TARGET=${{ matrix.macos_target }}
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
