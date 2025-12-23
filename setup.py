@@ -35,7 +35,7 @@ sources = {
   "xrootd.url": "https://github.com/xrootd/xrootd.git",
   "xrootd.tag": "v5.7.1",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
-  "HDDM.tag": "streaming_input",
+  "HDDM.tag": "main",
 }
 
 class CMakeExtension(setuptools.Extension):
@@ -230,7 +230,7 @@ if "win" in sysconfig.get_platform():
                            "Advapi32",
                            "Crypt32",
                           ]
-    extension_compile_args = ["-std:c++17",
+    extension_compile_args = ["-std:c++20",
                               "-DHDF5_SUPPORT",
                               "-DISTREAM_OVER_HTTP",
                              ]
@@ -263,7 +263,7 @@ else:
                            "uuid_static",
                            "xml2_static",
                           ]
-    extension_compile_args = ["-std=c++17",
+    extension_compile_args = ["-std=c++20",
                               "-DHDF5_SUPPORT",
                               "-DISTREAM_OVER_HTTP",
                               "-DISTREAM_OVER_XROOTD"
@@ -273,7 +273,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.3.3",
+    version = "2.4.0",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
@@ -290,7 +290,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],                                      # Information to filter the project on PyPi website
-    python_requires = '>=3.6',              # Minimum version requirement of the package
+    python_requires = '>=3.8',              # Minimum version requirement of the package
     ext_modules = [
       CMakeExtension("zlib"),
       CMakeExtension("bzip2"),
