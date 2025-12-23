@@ -39,7 +39,7 @@ jobs:
           - os: macos-latest
             build_selector: "{cp38,cp39,cp310,cp311,cp312,cp313,cp314,pp39,pp310,pp311}-macosx_arm64"
             macosx_arch: "arm64"
-            macosx_target: "14.0"
+            macosx_target: "15.0"
 
           # --- Linux (All versions) ---
           - os: ubuntu-latest
