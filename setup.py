@@ -47,6 +47,9 @@ class CMakeExtension(setuptools.Extension):
 class build_ext_with_cmake(build_ext):
 
     def run(self):
+        if 'pypy' in sys.version.lower():
+            self._ensure_pypy_compiler_env()
+
         build_extension_solibs = []
         for ext in self.extensions:
             self.build_with_cmake(ext)
@@ -55,6 +58,15 @@ class build_ext_with_cmake(build_ext):
         self.extensions = build_extension_solibs
         #self.force = True
         super().run()
+
+    def _ensure_pypy_compiler_env(self):
+        """Inject missing compiler variables for PyPy targets."""
+        if not os.environ.get('LDSHARED'):
+            if sys.platform == 'darwin':
+                os.environ['LDSHARED'] = "clang -bundle -undefined dynamic_lookup"
+            else:
+                # Standard for Ubuntu/Linux
+                os.environ['LDSHARED'] = "gcc -shared"
 
     def build_with_cmake(self, ext):
         if "win" in ext.name and not "win" in sysconfig.get_platform():
@@ -125,6 +137,8 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
         if "HDDM" in ext.name:
             cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
+            if "win" in sysconfig.get_platform():
+                cmake_args += [f"-DENABLE_ISTREAM_OVER_XROOTD:BOOL=off"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
         self.spawn(["cat", "CMakeCache.txt"])
         if "xerces" in ext.name and sysconfig.get_platform != "win32":
