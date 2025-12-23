@@ -72,7 +72,7 @@ jobs:
 
           CIBW_ENVIRONMENT_MACOS: >
              LDFLAGS="-Wl,-headerpad_max_install_names"
-             MACOSX_DEPLOYMENT_TARGET=${{ matrix.macos_target }}
+             MACOSX_DEPLOYMENT_TARGET=${{ matrix.macosx_target }}
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
