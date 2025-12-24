@@ -60,7 +60,7 @@ jobs:
           # --- Linux (All versions) ---
           - os: ubuntu-latest
             name: "Linux Intel pypy"
-            build_selector: "pp3-*"
+            build_selector: "pp3*"
             macosx_arch: "auto"
             env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib LDSHARED='gcc -shared' CC='gcc' AR='ar'"
 
