@@ -85,7 +85,20 @@ jobs:
 
           # --- Windows (All versions) ---
           - os: windows-latest
-            build_selector: "pp3* cp3*"
+            name: "Windows pypy"
+            build_selector: "pp3*"
+            macosx_arch: "auto"
+            env_vars: ""
+
+          - os: windows-latest
+            name: "Windows AMD cpython"
+            build_selector: "cp3*-win_amd64"
+            macosx_arch: "auto"
+            env_vars: ""
+
+          - os: windows-latest
+            name: "Windows Intel cpython"
+            build_selector: "cp3*-win32"
             macosx_arch: "auto"
             env_vars: ""
 
