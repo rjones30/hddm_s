@@ -78,9 +78,17 @@ jobs:
           CIBW_ENVIRONMENT_MACOS: >
              LDFLAGS="-Wl,-headerpad_max_install_names"
              MACOSX_DEPLOYMENT_TARGET=${{ matrix.macosx_target }}
+             SETUPTOOLS_USE_DISTUTILS=stdlib
 
           # the pp3* targets will not build without this
           SETUPTOOLS_USE_DISTUTILS: stdlib
+
+          CIBW_ENVIRONMENT_LINUX: >
+             SETUPTOOLS_USE_DISTUTILS=stdlib
+             LDSHARED="gcc -shared"
+             LDFLAGS="-Wl,--strip-all"
+             AR="ar"
+             CC="gcc"
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
