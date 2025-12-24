@@ -25,6 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false  # Don't cancel all jobs if one fails
+      max-parallel: 5
       matrix:
         include:
           # --- Mac Intel (Legacy Support) ---
