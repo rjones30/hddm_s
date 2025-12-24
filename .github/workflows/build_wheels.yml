@@ -33,14 +33,18 @@ jobs:
             name: "MacOS Intel pypy"
             build_selector: "pp3*-macosx_x86_64"
             macosx_arch: "x86_64"
-            macosx_target: "15.0"
-            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+              SETUPTOOLS_USE_DISTUTILS=stdlib
 
           - os: macos-15-intel
             name: "Macos Intel cpython"
             build_selector: "cp3*-macosx_x86_64"
             macosx_arch: "x86_64"
-            macosx_target: "15.0"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
 
           # --- Mac ARM (Modern & CP38 ARM) ---
           # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
@@ -48,31 +52,41 @@ jobs:
             name: "Macos ARM pypy"
             build_selector: "pp3*-macosx_arm64"
             macosx_arch: "arm64"
-            macosx_target: "15.0"
-            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+              SETUPTOOLS_USE_DISTUTILS=stdlib
 
           - os: macos-latest
             name: "MacOS ARM cpython"
             build_selector: "cp3*-macosx_arm64"
             macosx_arch: "arm64"
-            macosx_target: "15.0"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
 
           # --- Linux (All versions) ---
           - os: ubuntu-latest
             name: "Linux Intel pypy"
             build_selector: "pp3*"
             macosx_arch: "auto"
-            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib LDSHARED='gcc -shared' CC='gcc' AR='ar'"
+            env_vars: >
+               SETUPTOOLS_USE_DISTUTILS=stdlib
+               LDSHARED="gcc -shared"
+               CC="gcc"
+               AR="ar"
 
           - os: ubuntu-latest
             name: "Linux Intel cpython"
             build_selector: "cp3*"
             macosx_arch: "auto"
+            env_vars: ""
 
           # --- Windows (All versions) ---
           - os: windows-latest
             build_selector: "pp3* cp3*"
             macosx_arch: "auto"
+            env_vars: ""
 
     env:
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
@@ -94,9 +108,7 @@ jobs:
           # Force macOS to match the runner arch to prevent repair errors
           CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
 
-          CIBW_ENVIRONMENT_MACOS: >
-             LDFLAGS="-Wl,-headerpad_max_install_names"
-             MACOSX_DEPLOYMENT_TARGET=${{ matrix.macosx_target }}
+          CIBW_ENVIRONMENT: ${{ matrix.env_vars }}
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
