@@ -30,20 +30,43 @@ jobs:
           # --- Mac Intel (Legacy Support) ---
           # We use the new macos-15-intel runner to specifically handle x86_64
           - os: macos-15-intel
-            build_selector: "pp3*-macosx_x86_64 cp3*-macosx_x86_64"
+            name: "MacOS Intel pypy"
+            build_selector: "pp3*-macosx_x86_64"
+            macosx_arch: "x86_64"
+            macosx_target: "15.0"
+            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib"
+
+          - os: macos-15-intel
+            name: "Macos Intel cpython"
+            build_selector: "cp3*-macosx_x86_64"
             macosx_arch: "x86_64"
             macosx_target: "15.0"
 
           # --- Mac ARM (Modern & CP38 ARM) ---
           # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
+          - os: macOS-latest
+            name: "Macos ARM pypy"
+            build_selector: "pp3*-macosx_arm64"
+            macosx_arch: "arm64"
+            macosx_target: "15.0"
+            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib"
+
           - os: macos-latest
-            build_selector: "pp3*-macosx_arm64 cp3*-macosx_arm64"
+            name: "MacOS ARM cpython"
+            build_selector: "cp3*-macosx_arm64"
             macosx_arch: "arm64"
             macosx_target: "15.0"
 
           # --- Linux (All versions) ---
           - os: ubuntu-latest
-            build_selector: "pp3* cp3*"
+            name: "Linux Intel pypy"
+            build_selector: "pp3-*"
+            macosx_arch: "auto"
+            env_vars: "SETUPTOOLS_USE_DISTUTILS=stdlib LDSHARED='gcc -shared' CC='gcc' AR='ar'"
+
+          - os: ubuntu-latest
+            name: "Linux Intel cpython"
+            build_selector: "cp3-*"
             macosx_arch: "auto"
 
           # --- Windows (All versions) ---
@@ -74,23 +97,13 @@ jobs:
           CIBW_ENVIRONMENT_MACOS: >
              LDFLAGS="-Wl,-headerpad_max_install_names"
              MACOSX_DEPLOYMENT_TARGET=${{ matrix.macosx_target }}
-             SETUPTOOLS_USE_DISTUTILS=stdlib
-
-          # the pp3* targets will not build without this
-          SETUPTOOLS_USE_DISTUTILS: stdlib
-
-          CIBW_ENVIRONMENT_LINUX: >
-             SETUPTOOLS_USE_DISTUTILS=stdlib
-             LDSHARED="gcc -shared"
-             LDFLAGS="-Wl,--strip-all"
-             AR="ar"
-             CC="gcc"
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
             export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
             auditwheel show {wheel} &&
             auditwheel repair -w {dest_dir} {wheel}
+
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
             export LIBRARY_PATH=$(pwd)/build/lib &&
             DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
