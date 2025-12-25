@@ -91,16 +91,16 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=0
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows pypy 310"
-            build_selector: "pp39-*"
+            build_selector: "pp310-*"
             macosx_arch: "auto"
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 38"
@@ -109,7 +109,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=0
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 39"
@@ -118,7 +118,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 310"
@@ -127,7 +127,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 311"
@@ -136,7 +136,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 312"
@@ -145,7 +145,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 313"
@@ -154,7 +154,7 @@ jobs:
             env_vars: |
                DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
-               CL=/MP1
+               CL="/MP1 /w"
 
           - os: windows-latest
             name: "Windows Intel cpython"
