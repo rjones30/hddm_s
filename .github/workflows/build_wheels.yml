@@ -88,13 +88,19 @@ jobs:
             name: "Windows pypy"
             build_selector: "pp3*"
             macosx_arch: "auto"
-            env_vars: ""
+            env_vars: |
+               DISTUTILS_DEBUG=0
+               LINK=/INCREMENTAL:NO
+               CL=/MP1
 
           - os: windows-latest
             name: "Windows AMD cpython"
             build_selector: "cp3*-win_amd64"
             macosx_arch: "auto"
-            env_vars: ""
+            env_vars: |
+               DISTUTILS_DEBUG=0
+               LINK=/INCREMENTAL:NO
+               CL=/MP1
 
           - os: windows-latest
             name: "Windows Intel cpython"
@@ -115,7 +121,7 @@ jobs:
         env:
           CIBW_BEFORE_BUILD: pip install "setuptools>=38.0"
           CIBW_BUILD: ${{ matrix.build_selector }}
-          CIBW_SKIP: "*_i686"
+          CIBW_SKIP: "*_i686 pp38-*"
           # Enables latest Python features & PyPy
           CIBW_ENABLE: "pypy cpython-prerelease cpython-freethreading"
           
