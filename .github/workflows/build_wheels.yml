@@ -89,7 +89,6 @@ jobs:
             build_selector: "pp39-*"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=0
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -98,7 +97,6 @@ jobs:
             build_selector: "pp310-*"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -107,7 +105,6 @@ jobs:
             build_selector: "cp38-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=0
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -116,7 +113,6 @@ jobs:
             build_selector: "cp39-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -125,7 +121,6 @@ jobs:
             build_selector: "cp310-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -134,7 +129,6 @@ jobs:
             build_selector: "cp311-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -143,7 +137,6 @@ jobs:
             build_selector: "cp312-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
@@ -152,7 +145,6 @@ jobs:
             build_selector: "cp313-win_amd64"
             macosx_arch: "auto"
             env_vars: |
-               DISTUTILS_DEBUG=2
                LINK=/INCREMENTAL:NO
                CL="/MP1 /w"
 
