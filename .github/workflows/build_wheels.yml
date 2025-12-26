@@ -191,21 +191,6 @@ jobs:
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
 
-      - name: Sanitize Artifact Name
-        if: always()
-        shell: bash
-        run: |
-          SAFE_NAME=$(echo "full-build-log-${{ matrix.build_selector }}-${{ strategy.job-index }}" | sed 's/\*/x/g')
-          echo "SAFE_ARTIFACT_NAME=$SAFE_NAME" >> $GITHUB_ENV
-
-      - name: Upload Comprehensive Log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.SAFE_ARTIFACT_NAME }}
-          path: |
-            **/build_output.log
-
       - uses: actions/upload-artifact@v4
         with:
           # strategy.job-index ensures every matrix runner has a unique upload name

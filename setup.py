@@ -4,7 +4,6 @@ import sys
 import glob
 import shutil
 import sysconfig
-import subprocess
 
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
@@ -39,25 +38,6 @@ sources = {
   "HDDM.tag": "main",
 }
 
-# Global log file handle
-LOG_FILE = None
-if os.environ.get("GITHUB_ACTIONS") == "true":
-    if "win" in sysconfig.get_platform():
-        log_path = os.path.join(os.environ.get("TEMP", "C:\\"), "build_output.log")
-    else:
-        log_path = "build_output.log"
-    LOG_FILE = open(log_path, "a", buffering=1)
-
-def safe_spawn(cmd_list):
-    """Bypasses the pipe-buffer deadlock by writing directly to disk."""
-    if LOG_FILE:
-        LOG_FILE.write(f"\n--- Executing: {' '.join(cmd_list)} ---\n")
-        LOG_FILE.flush()
-        subprocess.run(cmd_list, stdout=LOG_FILE, stderr=LOG_FILE, check=True)
-    else:
-        # Fallback to standard behavior if not in CI
-        subprocess.run(cmd_list, check=True)
-
 class CMakeExtension(setuptools.Extension):
 
     def __init__(self, name):
@@ -65,13 +45,6 @@ class CMakeExtension(setuptools.Extension):
 
 
 class build_ext_with_cmake(build_ext):
-
-    def spawn(self, cmd):
-        """Override the default spawn to use our safe redirect."""
-        try:
-            safe_spawn(cmd)
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"Subprocess failed: {' '.join(cmd)}") from e
 
     def run(self):
         build_extension_solibs = []
