@@ -90,7 +90,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows pypy 310"
@@ -98,7 +98,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 38"
@@ -106,7 +106,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 39"
@@ -114,7 +114,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 310"
@@ -122,7 +122,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 311"
@@ -130,7 +130,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 312"
@@ -138,7 +138,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows AMD64 cpython 313"
@@ -146,7 +146,7 @@ jobs:
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
-               CL="/MP1 /w"
+               CL="/MP1"
 
           - os: windows-latest
             name: "Windows Intel cpython"
@@ -163,6 +163,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build wheels
+        id: build-step
         uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_BEFORE_BUILD: pip install "setuptools>=38.0"
@@ -189,6 +190,21 @@ jobs:
           package-dir: .
           output-dir: wheelhouse
           config-file: "{package}/pyproject.toml"
+
+      - name: Sanitize Artifact Name
+        if: always()
+        shell: bash
+        run: |
+          SAFE_NAME=$(echo "full-build-log-${{ matrix.build_selector }}-${{ strategy.job-index }}" | sed 's/\*/x/g')
+          echo "SAFE_ARTIFACT_NAME=$SAFE_NAME" >> $GITHUB_ENV
+
+      - name: Upload Comprehensive Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SAFE_ARTIFACT_NAME }}
+          path: |
+            **/build_output.log
 
       - uses: actions/upload-artifact@v4
         with:

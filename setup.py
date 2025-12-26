@@ -4,6 +4,7 @@ import sys
 import glob
 import shutil
 import sysconfig
+import subprocess
 
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
@@ -38,6 +39,25 @@ sources = {
   "HDDM.tag": "main",
 }
 
+# Global log file handle
+LOG_FILE = None
+if os.environ.get("GITHUB_ACTIONS") == "true":
+    if "win" in sysconfig.get_platform():
+        log_path = os.path.join(os.environ.get("TEMP", "C:\\"), "build_output.log")
+    else:
+        log_path = "build_output.log"
+    LOG_FILE = open(log_path, "a", buffering=1)
+
+def safe_spawn(cmd_list):
+    """Bypasses the pipe-buffer deadlock by writing directly to disk."""
+    if LOG_FILE:
+        LOG_FILE.write(f"\n--- Executing: {' '.join(cmd_list)} ---\n")
+        LOG_FILE.flush()
+        subprocess.run(cmd_list, stdout=LOG_FILE, stderr=LOG_FILE, check=True)
+    else:
+        # Fallback to standard behavior if not in CI
+        subprocess.run(cmd_list, check=True)
+
 class CMakeExtension(setuptools.Extension):
 
     def __init__(self, name):
@@ -45,6 +65,13 @@ class CMakeExtension(setuptools.Extension):
 
 
 class build_ext_with_cmake(build_ext):
+
+    def spawn(self, cmd):
+        """Override the default spawn to use our safe redirect."""
+        try:
+            safe_spawn(cmd)
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"Subprocess failed: {' '.join(cmd)}") from e
 
     def run(self):
         build_extension_solibs = []
@@ -128,13 +155,12 @@ class build_ext_with_cmake(build_ext):
             if "win" in sysconfig.get_platform():
                 cmake_args += [f"-DENABLE_ISTREAM_OVER_XROOTD:BOOL=off"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
-        self.spawn(["cat", "CMakeCache.txt"])
-        if "xerces" in ext.name and sysconfig.get_platform != "win32":
+        if "xerces" in ext.name and sysconfig.get_platform() != "win32":
             for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
                 self.spawn(["echo", "mv", inc, inc + "idden"])
                 self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
-            if "uuid" in ext.name or sysconfig.get_platform() == "win32":
+            if "uuid" in ext.name or "win" in sysconfig.get_platform():
                 self.spawn(cmake + ["--build", "."] + build_args)
             else:
                 self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
@@ -142,19 +168,18 @@ class build_ext_with_cmake(build_ext):
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
-               self.spawn(["cp", solib, re.sub("/lib/", "/lib64/", solib)])
+               shutil.copy2(solib, re.sub("/lib/", "/lib64/", solib))
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
-               self.spawn(["cp", arlib, re.sub("/lib64/", "/lib/", arlib)])
+               shutil.copy2(arlib, re.sub("/lib64/", "/lib/", arlib))
             for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
                if re.match(r".*_static\.a$", arlib):
-                  self.spawn(["cp", arlib, re.sub(r"_static\.a$", ".a", arlib)])
+                  shutil.copy2(arlib, re.sub(r"_static\.a$", ".a", arlib))
                else:
-                  self.spawn(["cp", arlib, re.sub(r"\.a$", "_static.a", arlib)])
-            self.spawn(["rm", "-rf", ext.name])
-            self.spawn(["rm", "-rf", f"build.{ext.name}"])
+                  shutil.copy2(arlib, re.sub(r"\.a$", "_static.a", arlib))
+            shutil.rmtree(ext.name, ignore_errors=True)
+            shutil.rmtree(f"build.{ext.name}", ignore_errors=True)
         os.chdir(cwd)
-        self.spawn(["ls", "-l", "-R", "build"])
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
             if "win" in sysconfig.get_platform():
@@ -170,9 +195,9 @@ class build_ext_with_cmake(build_ext):
             for lib in glob.glob("build/lib*"):
                 for ldpath in ["LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"]:
                     if ldpath in os.environ:
-                        os.environ[ldpath] += f":{cwd}/{lib}"
+                        os.environ[ldpath] += f"{os.pathsep}{cwd}/{lib}"
                     else:
-                        os.environ[ldpath] = f":{cwd}/{lib}"
+                        os.environ[ldpath] = f"{cwd}/{lib}"
             #os.environ["DYLD_PRINT_LIBRARIES"] = "1"
             #os.environ["DYLD_PRINT_LIBRARIES_POST_LAUNCH"] = "1"
             #os.environ["DYLD_PRINT_RPATHS"] = "1"
@@ -182,7 +207,7 @@ class build_ext_with_cmake(build_ext):
                     self.spawn(["hddm-cpp", model.split('/')[-1]])
                     self.spawn(["hddm-py", model.split('/')[-1]])
                     modname = module.split('.')[-1]
-                    self.spawn(["cp", f"py{modname}.cpy", f"py{modname}.cpp"])
+                    shutil.copy2(f"py{modname}.cpy", f"py{modname}.cpp")
                     os.chdir(cwd)
 
 
@@ -198,10 +223,11 @@ class install_ext_solibs(install_lib):
         os.chdir("build")
         moduledir = glob.glob("lib.*")[0] + "/gluex"
         tarball = f"{moduledir}/hddm_s/sharedlibs.tar.gz"
-        self.spawn(["rm", "-rf", "lib/perl5", "lib/python3"])
+        shutil.rmtree("lib/perl5", ignore_errors=True)
+        shutil.rmtree("lib/python3", ignore_errors=True)
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
         os.chdir(cwd)
-        self.spawn(["cp", "-r", "gluex/xrootd_client", f"build/{moduledir}"])
+        shutil.copytree("gluex/xrootd_client", f"build/{moduledir}", dirs_exist_ok=True)
         super().run()
         return
         raise Exception("Now at the end of install_ext_solibs,",
