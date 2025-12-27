@@ -30,64 +30,16 @@ jobs:
         include:
           # --- Windows (All versions) ---
           - os: windows-latest
-            name: "Windows pypy 39"
-            build_selector: "pp39-*"
+            name: "Windows pypy"
+            build_selector: "pp3*"
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
                CL="/MP1"
 
           - os: windows-latest
-            name: "Windows pypy 310"
-            build_selector: "pp310-*"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 38"
-            build_selector: "cp38-win_amd64"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 39"
-            build_selector: "cp39-win_amd64"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 310"
-            build_selector: "cp310-win_amd64"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 311"
-            build_selector: "cp311-win_amd64"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 312"
-            build_selector: "cp312-win_amd64"
-            macosx_arch: "auto"
-            env_vars: |
-               LINK=/INCREMENTAL:NO
-               CL="/MP1"
-
-          - os: windows-latest
-            name: "Windows AMD64 cpython 313"
-            build_selector: "cp313-win_amd64"
+            name: "Windows AMD64 cpython"
+            build_selector: "cp3*-win_amd64"
             macosx_arch: "auto"
             env_vars: |
                LINK=/INCREMENTAL:NO
