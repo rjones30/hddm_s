@@ -4,6 +4,7 @@ import sys
 import glob
 import shutil
 import sysconfig
+import stat
 import time
 
 import setuptools
@@ -39,6 +40,11 @@ sources = {
   "HDDM.tag": "main",
 }
 
+def force_rm(func, path, _):
+    """Platform-independent way to handle read-only files during rmtree."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
 class CMakeExtension(setuptools.Extension):
 
     def __init__(self, name):
@@ -67,9 +73,9 @@ class build_ext_with_cmake(build_ext):
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
             if os.path.isdir(ext.name):
-                shutil.rmtree(ext.name, ignore_errors=True)
-                if os.path.isdir(ext.name):
-                   time.sleep(0.5)
+                shutil.rmtree(ext.name, onerror=force_rm)
+                while os.path.isdir(ext.name):
+                   time.sleep(0.1)
             self.spawn(["git", "clone", sources[ext.name + ".url"]])
             os.chdir(ext.name)
             tag = sources[ext.name + ".tag"]

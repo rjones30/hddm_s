@@ -28,61 +28,6 @@ jobs:
       max-parallel: 8
       matrix:
         include:
-          # --- Mac Intel (Legacy Support) ---
-          # We use the new macos-15-intel runner to specifically handle x86_64
-          - os: macos-15-intel
-            name: "MacOS Intel pypy"
-            build_selector: "pp3*-macosx_x86_64"
-            macosx_arch: "x86_64"
-            env_vars: >
-              LDFLAGS="-Wl,-headerpad_max_install_names"
-              MACOSX_DEPLOYMENT_TARGET="15.0"
-              SETUPTOOLS_USE_DISTUTILS=stdlib
-
-          - os: macos-15-intel
-            name: "Macos Intel cpython"
-            build_selector: "cp3*-macosx_x86_64"
-            macosx_arch: "x86_64"
-            env_vars: >
-              LDFLAGS="-Wl,-headerpad_max_install_names"
-              MACOSX_DEPLOYMENT_TARGET="15.0"
-
-          # --- Mac ARM (Modern & CP38 ARM) ---
-          # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
-          - os: macOS-latest
-            name: "Macos ARM pypy"
-            build_selector: "pp3*-macosx_arm64"
-            macosx_arch: "arm64"
-            env_vars: >
-              LDFLAGS="-Wl,-headerpad_max_install_names"
-              MACOSX_DEPLOYMENT_TARGET="15.0"
-              SETUPTOOLS_USE_DISTUTILS=stdlib
-
-          - os: macos-latest
-            name: "MacOS ARM cpython"
-            build_selector: "cp3*-macosx_arm64"
-            macosx_arch: "arm64"
-            env_vars: >
-              LDFLAGS="-Wl,-headerpad_max_install_names"
-              MACOSX_DEPLOYMENT_TARGET="15.0"
-
-          # --- Linux (All versions) ---
-          - os: ubuntu-latest
-            name: "Linux Intel pypy"
-            build_selector: "pp3*"
-            macosx_arch: "auto"
-            env_vars: >
-               SETUPTOOLS_USE_DISTUTILS=stdlib
-               LDSHARED="gcc -shared"
-               CC="gcc"
-               AR="ar"
-
-          - os: ubuntu-latest
-            name: "Linux Intel cpython"
-            build_selector: "cp3*"
-            macosx_arch: "auto"
-            env_vars: ""
-
           # --- Windows (All versions) ---
           - os: windows-latest
             name: "Windows pypy 39"
@@ -151,6 +96,61 @@ jobs:
           - os: windows-latest
             name: "Windows Intel cpython"
             build_selector: "cp3*-win32"
+            macosx_arch: "auto"
+            env_vars: ""
+
+          # --- Mac Intel (Legacy Support) ---
+          # We use the new macos-15-intel runner to specifically handle x86_64
+          - os: macos-15-intel
+            name: "MacOS Intel pypy"
+            build_selector: "pp3*-macosx_x86_64"
+            macosx_arch: "x86_64"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+              SETUPTOOLS_USE_DISTUTILS=stdlib
+
+          - os: macos-15-intel
+            name: "Macos Intel cpython"
+            build_selector: "cp3*-macosx_x86_64"
+            macosx_arch: "x86_64"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+
+          # --- Mac ARM (Modern & CP38 ARM) ---
+          # Building CP38 ARM on an ARM runner fixes the 'Repairing wheel' crash
+          - os: macOS-latest
+            name: "Macos ARM pypy"
+            build_selector: "pp3*-macosx_arm64"
+            macosx_arch: "arm64"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+              SETUPTOOLS_USE_DISTUTILS=stdlib
+
+          - os: macos-latest
+            name: "MacOS ARM cpython"
+            build_selector: "cp3*-macosx_arm64"
+            macosx_arch: "arm64"
+            env_vars: >
+              LDFLAGS="-Wl,-headerpad_max_install_names"
+              MACOSX_DEPLOYMENT_TARGET="15.0"
+
+          # --- Linux (All versions) ---
+          - os: ubuntu-latest
+            name: "Linux Intel pypy"
+            build_selector: "pp3*"
+            macosx_arch: "auto"
+            env_vars: >
+               SETUPTOOLS_USE_DISTUTILS=stdlib
+               LDSHARED="gcc -shared"
+               CC="gcc"
+               AR="ar"
+
+          - os: ubuntu-latest
+            name: "Linux Intel cpython"
+            build_selector: "cp3*"
             macosx_arch: "auto"
             env_vars: ""
 
