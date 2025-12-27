@@ -4,6 +4,7 @@ import sys
 import glob
 import shutil
 import sysconfig
+import time
 
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
