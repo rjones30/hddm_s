@@ -1,3 +1,6 @@
 include gluex/hddm_s/*.xml
 include gluex/xrootd_client/*
 include scripts/*.bat
+recursive-exclude gluex/hddm_s *.cpp
+recursive-exclude gluex/hddm_s *.py
+

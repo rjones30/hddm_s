@@ -281,13 +281,13 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.4.1",
+    version = "2.4.2",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    packages = templates.keys(),
+    packages = list(templates.keys()) + ["gluex.xrootd_client"],
     #namespace_packages=['gluex'],
     package_data = {"gluex.hddm_s": ["event.xml",
                                      "sharedlibs.tar.gz",
