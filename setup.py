@@ -35,7 +35,7 @@ sources = {
   #"xrootd.url": "https://github.com/rjones30/xrootd.git",
   #"xrootd.tag": "stable-5.7.1-for-hddm",
   "xrootd.url": "https://github.com/xrootd/xrootd.git",
-  "xrootd.tag": "v5.7.1",
+  "xrootd.tag": "v5.9.1",
   "HDDM.url": "https://github.com/rjones30/HDDM.git",
   "HDDM.tag": "main",
 }
@@ -281,7 +281,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.4.2",
+    version = "2.4.3",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
