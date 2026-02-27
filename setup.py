@@ -207,7 +207,7 @@ class install_ext_solibs(install_lib):
         shutil.rmtree("lib/python3", ignore_errors=True)
         self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
         os.chdir(cwd)
-        shutil.copytree("gluex/xrootd_client", f"build/{moduledir}", dirs_exist_ok=True)
+        shutil.copytree("gluex/xrootd_client", f"build/{moduledir}/xrootd_client", dirs_exist_ok=True)
         super().run()
         return
         raise Exception("Now at the end of install_ext_solibs,",
@@ -281,7 +281,7 @@ if "macos" in sysconfig.get_platform():
 
 setuptools.setup(
     name = "gluex.hddm_s",
-    version = "2.4.3",
+    version = "2.4.5",
     url = "https://github.com/rjones30/hddm_s",
     author = "Richard T. Jones",
     description = "i/o module for GlueX simulated events",
