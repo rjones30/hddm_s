@@ -6,6 +6,7 @@ import shutil
 import sysconfig
 import stat
 import time
+import importlib.machinery
 
 import setuptools
 from setuptools.command.build_ext import build_ext as build_ext
@@ -59,38 +60,38 @@ class build_ext_with_cmake(build_ext):
         for ext in self.extensions:
             self.build_with_cmake(ext)
             if "xrootd" in ext.name:
-                search_pattern = os.path.join(cwd, "build", "**", "pyxrootd")
-                potential_dirs = [
-                    d for d in glob.glob(search_pattern, recursive=True) 
-                    if os.path.isdir(d) and "site-packages" in d
-                ]
-
-                if potential_dirs:
-                    actual_source = potential_dirs[0]
-                    binary_exists = any(
-                        f.startswith("client") and (f.endswith(".so") or f.endswith(".pyd")) 
-                        for f in os.listdir(actual_source)
-                    )
-                    if not binary_exists:
-                        raise RuntimeError(
-                            f"XRootD directory found at {actual_source}, "
-                            f"but it contains no compiled 'client*' binary!"
-                        )
-                    target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
-                    if os.path.exists(target_dir):
-                        if os.path.isdir(target_dir):
-                            shutil.rmtree(target_dir, onerror=force_rm)
-                        else:
-                            os.remove(target_dir)
-                    shutil.copytree(actual_source, target_dir)
+                if "win" in sysconfig.get_platform():
+                    print(f">>> Skipping XRootD harvesting on Windows")
                 else:
-                    print(f"DEBUG: Search pattern was {search_pattern}")
-                    print(f"DEBUG: Available files in build: ",
-                          f"{glob.glob(os.path.join(cwd, 'build', '**'), recursive=True)[:10]}...")
-                    raise RuntimeError(
-                        f"CRITICAL ERROR: XRootD build failed to produce the natural habitat!\n"
-                        f"Check if python-devel and pcre-devel are installed."
-                    )
+                    search_pattern = os.path.join(cwd, "build", "**", "pyxrootd")
+                    potential_dirs = [
+                        d for d in glob.glob(search_pattern, recursive=True) 
+                        if os.path.isdir(d) and "site-packages" in d
+                    ]
+
+                    if potential_dirs:
+                        actual_source = potential_dirs[0]
+                        binary_exists = any(
+                            f.startswith("client") and (f.endswith(".so") or f.endswith(".pyd")) 
+                            for f in os.listdir(actual_source)
+                        )
+                        if not binary_exists:
+                            raise RuntimeError(
+                                f"XRootD directory found at {actual_source}, "
+                                f"but it contains no compiled 'client*' binary!"
+                            )
+                        target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
+                        if os.path.exists(target_dir):
+                            if os.path.isdir(target_dir):
+                                shutil.rmtree(target_dir, onerror=force_rm)
+                            else:
+                                os.remove(target_dir)
+                        shutil.copytree(actual_source, target_dir)
+                    else:
+                        print(f"DEBUG: Search pattern was {search_pattern}")
+                        raise RuntimeError(
+                            f"CRITICAL ERROR: XRootD build failed to produce the natural habitat!"
+                        )
             if ext.name in templates:
                 build_extension_solibs.append(ext)
         self.extensions = build_extension_solibs
@@ -98,12 +99,15 @@ class build_ext_with_cmake(build_ext):
         super().run()
 
         hddm_dir = os.path.join(cwd, "gluex", "hddm_s")
+        valid_suffixes = importlib.machinery.EXTENSION_SUFFIXES + [".xml", ".py"]
         keep = {"__init__.py", "pyxrootd"}
         for f in os.listdir(hddm_dir):
-            if f not in keep and not f.endswith(".so") and not f.endswith(".xml"):
-                path = os.path.join(hddm_dir, f)
+            if f in keep:
+                continue
+            path = os.path.join(hddm_dir, f)
+            if not any(f.endswith(s) for s in valid_suffixes):
                 if os.path.isdir(path):
-                    shutil.rmtree(path) 
+                    shutil.rmtree(path, onerror=force_rm)
                 else:
                     os.remove(path)
 
@@ -143,36 +147,38 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
         if "xrootd" in ext.name:
-            # pip module needed by xrootd cmake --install
-            pyversion = f"python{sys.version_info[0]}.{sys.version_info[1]}"
-            modpath = re.sub("/bin/python.*",
-                             "/lib/" + pyversion + "/site-packages",
-                             sys.executable)
+            modpath = sysconfig.get_path("purelib")
             sys.path.append(modpath)
-            os.environ['PYTHONPATH'] = modpath
-            self.spawn(["python", "-m", "pip", "-V"])
+            os.environ['PYTHONPATH'] = f"{modpath}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
+            self.spawn([sys.executable, "-m", "pip", "-V"])
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
         os.chdir(build_temp)
+        if "arm64" in sysconfig.get_platform():
+            os.environ["ARCHFLAGS"] = "-arch arm64"
         cmake_args = [
-          f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
-          f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
-          f"-DCMAKE_BUILD_TYPE={cmake_config}",
-          f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
-          f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
-          f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
-          f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
+            f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
+            f"-DPython3_EXECUTABLE={sys.executable}",
+            f"-DPython3_INCLUDE_DIR={sysconfig.get_path('include')}",
+            f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
+            f"-DCMAKE_BUILD_TYPE={cmake_config}",
+            f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
+            f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
+            f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
+            f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
         ]
+        if "arm64" in sysconfig.get_platform():
+            cmake_args += ["-DCMAKE_OSX_ARCHITECTURES=arm64"]
         if sysconfig.get_platform() == "win32":
             cmake_args += ["-A", "Win32"]
-        elif "arm64" in sysconfig.get_platform():
-            cmake_args += [f"-DCMAKE_OSX_ARCHITECTURES=arm64"]
+        if "pypy" in sys.version.lower():
+            cmake_args += ["-DIS_PYPY:BOOL=ON"]
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
-            cmake_args += [f"-DCMAKE_CXX_FLAGS='-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag'"]
+            cmake_args += [f"-DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag"]
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
@@ -195,10 +201,10 @@ class build_ext_with_cmake(build_ext):
             os.chdir(cwd)
             for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
-               shutil.copy2(solib, re.sub("/lib/", "/lib64/", solib))
+               shutil.copy2(solib, re.sub(r"[\\/]lib[\\/]", os.sep + "lib64" + os.sep, solib))
             for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
                self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
-               shutil.copy2(arlib, re.sub("/lib64/", "/lib/", arlib))
+               shutil.copy2(arlib, re.sub(r"[\\/]lib64[\\/]", os.sep + "lib" + os.sep, arlib))
             for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
                if re.match(r".*_static\.a$", arlib):
                   shutil.copy2(arlib, re.sub(r"_static\.a$", ".a", arlib))
