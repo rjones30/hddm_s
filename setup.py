@@ -150,6 +150,19 @@ class build_ext_with_cmake(build_ext):
             modpath = sysconfig.get_path("purelib")
             sys.path.append(modpath)
             os.environ['PYTHONPATH'] = f"{modpath}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
+            site_subdirs = ["site-packages", "dist-packages"]
+            site_packages = None
+            for subdir in site_subdirs:
+                test_path = os.path.join(cwd, "build", "lib", "python" + 
+                                         sysconfig.get_python_version(), subdir)
+                if os.path.exists(test_path):
+                    site_packages = test_path
+                    break
+            if not site_packages:
+                raise RuntimeError("Could not find site-packages or dist-packages in build directory.")
+            local_site = os.path.abspath(site_packages)
+            os.environ['PYTHONPATH'] = f"{local_site}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
+            self.spawn([sys.executable, "-m", "ensurepip", "--upgrade"])
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
