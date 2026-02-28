@@ -150,7 +150,6 @@ class build_ext_with_cmake(build_ext):
             modpath = sysconfig.get_path("purelib")
             sys.path.append(modpath)
             os.environ['PYTHONPATH'] = f"{modpath}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
-            self.spawn([sys.executable, "-m", "pip", "-V"])
 
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
