@@ -147,19 +147,12 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
         if "xrootd" in ext.name:
-            modpath = sysconfig.get_path("purelib")
-            sys.path.append(modpath)
-            os.environ['PYTHONPATH'] = f"{modpath}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
-            site_subdirs = ["site-packages", "dist-packages"]
-            site_packages = None
-            for subdir in site_subdirs:
-                test_path = os.path.join(cwd, "build", "lib", "python" + 
-                                         sysconfig.get_python_version(), subdir)
-                if os.path.exists(test_path):
-                    site_packages = test_path
-                    break
-            if not site_packages:
-                raise RuntimeError("Could not find site-packages or dist-packages in build directory.")
+            purelib = sysconfig.get_path("purelib")
+            prefix = sysconfig.get_config_var("prefix")
+            rel_site_packages = os.path.relpath(purelib, prefix)
+            site_packages = os.path.join(cwd, "build", rel_site_packages)
+            if not os.path.exists(site_packages):
+                os.makedirs(site_packages, exist_ok=True)
             local_site = os.path.abspath(site_packages)
             os.environ['PYTHONPATH'] = f"{local_site}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
             self.spawn([sys.executable, "-m", "ensurepip", "--upgrade"])
