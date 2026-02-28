@@ -1,6 +1,22 @@
-include gluex/hddm_s/*.xml
-include gluex/xrootd_client/*
-include scripts/*.bat
-recursive-exclude gluex/hddm_s *.cpp
-recursive-exclude gluex/hddm_s *.py
+# Include the essential metadata and build scripts
+include README.md
+include pyproject.toml
+recursive-include scripts *.bat
 
+# Include the HDDM template(s)
+include gluex/hddm_s/*.xml
+
+# Ensure the pyxrootd habitat (once harvested) is included
+recursive-include gluex/hddm_s/pyxrootd *
+
+# Exclude generated C++ artifacts so the sdist stays clean
+# (These are regenerated during the build_ext phase anyway)
+recursive-exclude gluex/hddm_s *.cpp
+recursive-exclude gluex/hddm_s *.h
+recursive-exclude gluex/hddm_s *.cpy
+recursive-exclude gluex/hddm_s setup_*.py
+
+# Clean up any potential build artifacts or temp directories
+prune build
+prune build.*
+global-exclude *.py[cod] __pycache__ *.so *.dylib *.dll

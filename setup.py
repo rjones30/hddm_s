@@ -55,13 +55,52 @@ class build_ext_with_cmake(build_ext):
 
     def run(self):
         build_extension_solibs = []
+        cwd = os.getcwd()
         for ext in self.extensions:
             self.build_with_cmake(ext)
+            if "xrootd" in ext.name:
+                py_ver = f"python{sys.version_info.major}.{sys.version_info.minor}"
+                source_package_dir = os.path.join(
+                    cwd, "build", "lib*", py_ver, "site-packages", "pyxrootd"
+                )
+                potential_dirs = glob.glob(source_package_dir)
+                if potential_dirs:
+                    actual_source = potential_dirs[0]
+                    binary_exists = any(f.startswith("client") and f.endswith(".so") 
+                                        for f in os.listdir(actual_source))
+                    if not binary_exists:
+                        raise RuntimeError(
+                            f"XRootD directory found at {actual_source}, "
+                            f"but it contains no compiled 'client*.so' binary!"
+                        )
+                    target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
+                    if os.path.exists(target_dir):
+                        if os.path.isdir(target_dir):
+                            shutil.rmtree(target_dir, onerror=force_rm)
+                        else:
+                            os.remove(target_dir)
+                    shutil.copytree(actual_source, target_dir)
+                else:
+                    raise RuntimeError(
+                        f"CRITICAL ERROR: XRootD build failed to produce the natural habitat!\n"
+                        f"Expected to find it in: {source_package_dir}\n"
+                        f"Check if python-devel and pcre-devel are installed."
+                    )
             if ext.name in templates:
                 build_extension_solibs.append(ext)
         self.extensions = build_extension_solibs
-        #self.force = True
+
         super().run()
+
+        hddm_dir = os.path.join(cwd, "gluex", "hddm_s")
+        keep = {"__init__.py", "pyxrootd"}
+        for f in os.listdir(hddm_dir):
+            if f not in keep and not f.endswith(".so") and not f.endswith(".xml"):
+                path = os.path.join(hddm_dir, f)
+                if os.path.isdir(path):
+                    shutil.rmtree(path) 
+                else:
+                    os.remove(path)
 
     def build_with_cmake(self, ext):
         if "win" in ext.name and not "win" in sysconfig.get_platform():
@@ -69,6 +108,9 @@ class build_ext_with_cmake(build_ext):
         elif "xrootd" in ext.name and "win" in sysconfig.get_platform():
             return 0
         elif ext.name[:3] == "lib" and "win" in sysconfig.get_platform():
+            return 0
+        elif os.getenv("SKIP_BUILD") == "1":
+            print(f">>> Skipping actual build for {ext.name} (Dry Run Mode)")
             return 0
         cwd = os.getcwd()
         if f"{ext.name}.url" in sources:
@@ -183,36 +225,19 @@ class build_ext_with_cmake(build_ext):
             #os.environ["DYLD_PRINT_RPATHS"] = "1"
             for module in templates:
                 for model in templates[module]:
-                    os.chdir(os.path.join(*model.split('/')[:-1]))
-                    self.spawn(["hddm-cpp", model.split('/')[-1]])
-                    self.spawn(["hddm-py", model.split('/')[-1]])
+                    model_dir = os.path.dirname(model)
+                    model_name = os.path.basename(model)
+                    if model_dir:
+                        os.chdir(model_dir)
+                    self.spawn(["hddm-cpp", model_name])
+                    self.spawn(["hddm-py", model_name])
                     modname = module.split('.')[-1]
                     shutil.copy2(f"py{modname}.cpy", f"py{modname}.cpp")
+                    generated_helper = f"setup_{modname}.py"
+                    if os.path.exists(generated_helper):
+                        os.remove(generated_helper)
                     os.chdir(cwd)
 
-
-class install_ext_solibs(install_lib):
-
-    def run(self):
-        # Include my shared libraries in the bdist wheel by copying what I need
-        # into build/lib.<platform> and then letting install_lib.run() do the rest.
-        # This is not documented anywhere, so it might break in some future release
-        # of setuptools. The package_data and data_file arguments are useless for
-        # files that are not already there prior to the beginning of the build.
-        cwd = os.getcwd()
-        os.chdir("build")
-        moduledir = glob.glob("lib.*")[0] + "/gluex"
-        tarball = f"{moduledir}/hddm_s/sharedlibs.tar.gz"
-        shutil.rmtree("lib/perl5", ignore_errors=True)
-        shutil.rmtree("lib/python3", ignore_errors=True)
-        self.spawn(["tar", "-zcf", tarball, "lib"] + glob.glob("lib[!.]*"))
-        os.chdir(cwd)
-        shutil.copytree("gluex/xrootd_client", f"build/{moduledir}/xrootd_client", dirs_exist_ok=True)
-        super().run()
-        return
-        raise Exception("Now at the end of install_ext_solibs,",
-                        "time to throw an exception and bomb out")
- 
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -280,25 +305,11 @@ if "macos" in sysconfig.get_platform():
     extension_compile_args += ["-mmacosx-version-min=10.15"]
 
 setuptools.setup(
-    name = "gluex.hddm_s",
-    version = "2.4.5",
-    url = "https://github.com/rjones30/hddm_s",
-    author = "Richard T. Jones",
-    description = "i/o module for GlueX simulated events",
-    long_description = long_description,
-    long_description_content_type = "text/markdown",
-    packages = list(templates.keys()) + ["gluex.xrootd_client"],
+    packages = list(templates.keys()) + ["gluex.hddm_s.pyxrootd"],
     #namespace_packages=['gluex'],
     package_data = {"gluex.hddm_s": ["event.xml",
-                                     "sharedlibs.tar.gz",
                                     ],
     },
-    classifiers = [
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],                                      # Information to filter the project on PyPi website
-    python_requires = '>=3.8',              # Minimum version requirement of the package
     ext_modules = [
       CMakeExtension("zlib"),
       CMakeExtension("bzip2"),
@@ -321,6 +332,5 @@ setuptools.setup(
     ],
     cmdclass = {
       "build_ext": build_ext_with_cmake,
-      "install_lib": install_ext_solibs,
     }
 )
