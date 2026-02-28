@@ -59,19 +59,22 @@ class build_ext_with_cmake(build_ext):
         for ext in self.extensions:
             self.build_with_cmake(ext)
             if "xrootd" in ext.name:
-                py_ver = f"python{sys.version_info.major}.{sys.version_info.minor}"
-                source_package_dir = os.path.join(
-                    cwd, "build", "lib*", py_ver, "site-packages", "pyxrootd"
-                )
-                potential_dirs = glob.glob(source_package_dir)
+                search_pattern = os.path.join(cwd, "build", "**", "pyxrootd")
+                potential_dirs = [
+                    d for d in glob.glob(search_pattern, recursive=True) 
+                    if os.path.isdir(d) and "site-packages" in d
+                ]
+
                 if potential_dirs:
                     actual_source = potential_dirs[0]
-                    binary_exists = any(f.startswith("client") and f.endswith(".so") 
-                                        for f in os.listdir(actual_source))
+                    binary_exists = any(
+                        f.startswith("client") and (f.endswith(".so") or f.endswith(".pyd")) 
+                        for f in os.listdir(actual_source)
+                    )
                     if not binary_exists:
                         raise RuntimeError(
                             f"XRootD directory found at {actual_source}, "
-                            f"but it contains no compiled 'client*.so' binary!"
+                            f"but it contains no compiled 'client*' binary!"
                         )
                     target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
                     if os.path.exists(target_dir):
@@ -81,9 +84,11 @@ class build_ext_with_cmake(build_ext):
                             os.remove(target_dir)
                     shutil.copytree(actual_source, target_dir)
                 else:
+                    print(f"DEBUG: Search pattern was {search_pattern}")
+                    print(f"DEBUG: Available files in build: ",
+                          f"{glob.glob(os.path.join(cwd, 'build', '**'), recursive=True)[:10]}...")
                     raise RuntimeError(
                         f"CRITICAL ERROR: XRootD build failed to produce the natural habitat!\n"
-                        f"Expected to find it in: {source_package_dir}\n"
                         f"Check if python-devel and pcre-devel are installed."
                     )
             if ext.name in templates:
