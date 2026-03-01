@@ -146,17 +146,6 @@ class build_ext_with_cmake(build_ext):
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
-        if "xrootd" in ext.name:
-            purelib = sysconfig.get_path("purelib")
-            prefix = sysconfig.get_config_var("prefix")
-            rel_site_packages = os.path.relpath(purelib, prefix)
-            site_packages = os.path.join(cwd, "build", rel_site_packages)
-            if not os.path.exists(site_packages):
-                os.makedirs(site_packages, exist_ok=True)
-            local_site = os.path.abspath(site_packages)
-            os.environ['PYTHONPATH'] = f"{local_site}{os.pathsep}{os.environ.get('PYTHONPATH', '')}"
-            self.spawn([sys.executable, "-m", "ensurepip", "--upgrade"])
-
         build_temp = f"build.{ext.name}"
         if not os.path.isdir(build_temp):
             os.mkdir(build_temp)
@@ -184,6 +173,7 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
             cmake_args += [f"-DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag"]
+            cmake_args += [f"-DXRD_SKIP_PYTHON_PIP=ON"] 
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
