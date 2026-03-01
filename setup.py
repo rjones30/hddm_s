@@ -173,7 +173,6 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
             cmake_args += [f"-DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag"]
-            cmake_args += [f"-DXRD_SKIP_PYTHON_PIP=ON"] 
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:

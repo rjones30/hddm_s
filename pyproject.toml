@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools >= 64.0", "wheel"]
+requires = ["setuptools >= 64.0", "wheel", "pip"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "gluex.hddm_s"
-version = "2.5.9"
+version = "2.5.10"
 requires-python = ">= 3.8"
 authors = [
   {name = "Richard T. Jones", email = "richard.t.jones@uconn.edu"},
