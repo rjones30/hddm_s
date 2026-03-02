@@ -315,7 +315,7 @@ setuptools.setup(
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-      setuptools.Extension("gluex.hddm_s.__init__",
+      setuptools.Extension("gluex.hddm_s",
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
