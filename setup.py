@@ -63,44 +63,29 @@ class build_ext_with_cmake(build_ext):
                 if "win" in sysconfig.get_platform():
                     print(f">>> Skipping XRootD harvesting on Windows")
                 else:
-                    search_pattern = os.path.join(cwd, "build", "**", "pyxrootd")
-                    potential_dirs = [
-                        d for d in glob.glob(search_pattern, recursive=True) 
-                        if os.path.isdir(d) and "site-packages" in d
-                    ]
-
-                    if potential_dirs:
-                        actual_source = potential_dirs[0]
-                        binary_exists = any(
-                            f.startswith("client") and (f.endswith(".so") or f.endswith(".pyd")) 
-                            for f in os.listdir(actual_source)
-                        )
-                        if not binary_exists:
-                            raise RuntimeError(
-                                f"XRootD directory found at {actual_source}, "
-                                f"but it contains no compiled 'client*' binary!"
-                            )
-                        target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
-                        if os.path.exists(target_dir):
-                            if os.path.isdir(target_dir):
-                                shutil.rmtree(target_dir, onerror=force_rm)
-                            else:
-                                os.remove(target_dir)
-                        shutil.copytree(actual_source, target_dir)
-                    else:
-                        print(f"DEBUG: Search pattern was {search_pattern}")
-                        raise RuntimeError(
-                            f"CRITICAL ERROR: XRootD build failed to produce the natural habitat!"
-                        )
+                    shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so")) + \
+                             glob.glob(os.path.join(cwd, "build", "**", "*.pyd"))
+                    for shlib in shlibs:
+                        if os.path.basename(shlib).startswith("client"):
+                            target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
+                            shutil.copy2(shlib, target_dir)
             if ext.name in templates:
                 build_extension_solibs.append(ext)
         self.extensions = build_extension_solibs
 
         super().run()
+        time.sleep(0.2)
 
         hddm_dir = os.path.join(cwd, "gluex", "hddm_s")
+        shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so"), recursive=True) + \
+                 glob.glob(os.path.join(cwd, "build", "**", "*.pyd"), recursive=True)
+        for shlib in shlibs:
+            if os.path.basename(shlib).startswith("hddm_s"):
+                target_lib = os.path.basename(shlib)
+                target_lib_renamed = re.sub("^hddm_s", "__init__", target_lib)
+                shutil.copy2(shlib, os.path.join(hddm_dir, target_lib_renamed))
         valid_suffixes = importlib.machinery.EXTENSION_SUFFIXES + [".xml", ".py"]
-        keep = {"__init__.py", "pyxrootd"}
+        keep = {"__init__.py", "pyxrootd", "hddm_s"}
         for f in os.listdir(hddm_dir):
             if f in keep:
                 continue
@@ -314,7 +299,7 @@ if "macos" in sysconfig.get_platform():
 ext_patterns = [f"*{s}" for s in importlib.machinery.EXTENSION_SUFFIXES]
 
 setuptools.setup(
-    packages = list(templates.keys()) + ["gluex.hddm_s.pyxrootd"],
+    packages = ["gluex.hddm_s", "gluex.hddm_s.pyxrootd"],
     #namespace_packages=['gluex'],
     package_data = {"gluex.hddm_s": ["event.xml"],
                     "gluex.hddm_s.pyxrootd": ext_patterns,
