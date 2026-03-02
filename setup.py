@@ -154,14 +154,16 @@ class build_ext_with_cmake(build_ext):
             os.environ["ARCHFLAGS"] = "-arch arm64"
         cmake_args = [
             f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
-            f"-DPython3_EXECUTABLE={sys.executable}",
-            f"-DPython3_INCLUDE_DIR={sysconfig.get_path('include')}",
             f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
             f"-DCMAKE_BUILD_TYPE={cmake_config}",
             f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
             f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
             f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
             f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
+            f"-DPython3_INCLUDE_DIR={sysconfig.get_path('include')}",
+            f"-DPython3_EXECUTABLE={sys.executable}",
+            f"-DPYTHON_EXECUTABLE={sys.executable}",
+            f"-DENABLE_PYTHON=ON",
         ]
         if "arm64" in sysconfig.get_platform():
             cmake_args += ["-DCMAKE_OSX_ARCHITECTURES=arm64"]
@@ -328,7 +330,7 @@ setuptools.setup(
       CMakeExtension("cpr"),
       CMakeExtension("xrootd"),
       CMakeExtension("HDDM"),
-      setuptools.Extension("gluex.hddm_s",
+      setuptools.Extension("gluex.hddm_s.__init__",
            include_dirs = extension_include_dirs,
            library_dirs = extension_library_dirs,
            libraries = extension_libraries,
