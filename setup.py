@@ -63,8 +63,8 @@ class build_ext_with_cmake(build_ext):
                 if "win" in sysconfig.get_platform():
                     print(f">>> Skipping XRootD harvesting on Windows")
                 else:
-                    shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so")) + \
-                             glob.glob(os.path.join(cwd, "build", "**", "*.pyd"))
+                    shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so"), recursive=True) + \
+                             glob.glob(os.path.join(cwd, "build", "**", "*.pyd"), recursive=True)
                     for shlib in shlibs:
                         if os.path.basename(shlib).startswith("client"):
                             target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
@@ -80,10 +80,13 @@ class build_ext_with_cmake(build_ext):
         shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so"), recursive=True) + \
                  glob.glob(os.path.join(cwd, "build", "**", "*.pyd"), recursive=True)
         for shlib in shlibs:
-            if os.path.basename(shlib).startswith("hddm_s"):
-                target_lib = os.path.basename(shlib)
+            target_lib = os.path.basename(shlib)
+            if target_lib.startswith("hddm_s"):
                 target_lib_renamed = re.sub("^hddm_s", "__init__", target_lib)
-                shutil.copy2(shlib, os.path.join(hddm_dir, target_lib_renamed))
+                new_shlib_path = os.path.join(os.path.dirname(shlib), target_lib_renamed)
+                os.rename(shlib, new_shlib_path)
+                shutil.copy2(new_shlib_path, os.path.join(hddm_dir, target_lib_renamed))
+                os.remove(new_shlib_path)
         valid_suffixes = importlib.machinery.EXTENSION_SUFFIXES + [".xml", ".py"]
         keep = {"__init__.py", "pyxrootd", "hddm_s"}
         for f in os.listdir(hddm_dir):
@@ -301,7 +304,7 @@ ext_patterns = [f"*{s}" for s in importlib.machinery.EXTENSION_SUFFIXES]
 setuptools.setup(
     packages = ["gluex.hddm_s", "gluex.hddm_s.pyxrootd"],
     #namespace_packages=['gluex'],
-    package_data = {"gluex.hddm_s": ["event.xml"],
+    package_data = {"gluex.hddm_s": ["event.xml"] + ext_patterns,
                     "gluex.hddm_s.pyxrootd": ext_patterns,
     },
     ext_modules = [
