@@ -77,16 +77,14 @@ class build_ext_with_cmake(build_ext):
         time.sleep(0.2)
 
         hddm_dir = os.path.join(cwd, "gluex", "hddm_s")
-        shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so"), recursive=True) + \
-                 glob.glob(os.path.join(cwd, "build", "**", "*.pyd"), recursive=True)
-        for shlib in shlibs:
-            target_lib = os.path.basename(shlib)
-            if target_lib.startswith("hddm_s"):
-                target_lib_renamed = re.sub("^hddm_s", "__init__", target_lib)
-                new_shlib_path = os.path.join(os.path.dirname(shlib), target_lib_renamed)
-                os.rename(shlib, new_shlib_path)
-                shutil.copy2(new_shlib_path, os.path.join(hddm_dir, target_lib_renamed))
-                os.remove(new_shlib_path)
+        old_path = self.get_ext_fullpath("gluex.hddm_s")
+        new_path = os.path.join(os.path.dirname(old_path), "hddm_s", 
+                                f"__init__{os.path.splitext(old_path)[1]}")
+        if os.path.exists(old_path):
+            os.makedirs(os.path.dirname(new_path), exist_ok=True)
+            shutil.move(old_path, new_path)
+            if hasattr(self, 'outputs'):
+                self.outputs = [new_path if x == old_path else x for x in self.outputs]
         valid_suffixes = importlib.machinery.EXTENSION_SUFFIXES + [".xml", ".py"]
         keep = {"__init__.py", "pyxrootd", "hddm_s"}
         for f in os.listdir(hddm_dir):
