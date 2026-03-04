@@ -41,6 +41,9 @@ sources = {
   "HDDM.tag": "main",
 }
 
+abi_tag = sysconfig.get_config_var('EXT_SUFFIX').lstrip('.').rstrip('.')
+BUILD_TREE = os.path.join(os.getcwd(), f"build-{abi_tag}")
+
 def force_rm(func, path, _):
     """Platform-independent way to handle read-only files during rmtree."""
     os.chmod(path, stat.S_IWRITE)
@@ -63,8 +66,8 @@ class build_ext_with_cmake(build_ext):
                 if "win" in sysconfig.get_platform():
                     print(f">>> Skipping XRootD harvesting on Windows")
                 else:
-                    shlibs = glob.glob(os.path.join(cwd, "build", "**", "*.so"), recursive=True) + \
-                             glob.glob(os.path.join(cwd, "build", "**", "*.pyd"), recursive=True)
+                    shlibs = glob.glob(os.path.join(BUILD_TREE, "**", "*.so"), recursive=True) + \
+                             glob.glob(os.path.join(BUILD_TREE, "**", "*.pyd"), recursive=True)
                     for shlib in shlibs:
                         if os.path.basename(shlib).startswith("client"):
                             target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
@@ -78,8 +81,8 @@ class build_ext_with_cmake(build_ext):
 
         hddm_dir = os.path.join(cwd, "gluex", "hddm_s")
         old_path = self.get_ext_fullpath("gluex.hddm_s")
-        new_path = os.path.join(os.path.dirname(old_path), "hddm_s", 
-                                f"__init__{os.path.splitext(old_path)[1]}")
+        new_name = os.path.basename(old_path).replace("hddm_s", "__init__", 1)
+        new_path = os.path.join(os.path.dirname(old_path), "hddm_s", new_name)
         if os.path.exists(old_path):
             os.makedirs(os.path.dirname(new_path), exist_ok=True)
             shutil.move(old_path, new_path)
@@ -139,13 +142,13 @@ class build_ext_with_cmake(build_ext):
         if "arm64" in sysconfig.get_platform():
             os.environ["ARCHFLAGS"] = "-arch arm64"
         cmake_args = [
-            f"-DCMAKE_INSTALL_PREFIX={os.path.abspath(cwd)}/build",
-            f"-DEXTRA_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include",
+            f"-DCMAKE_INSTALL_PREFIX={BUILD_TREE}",
+            f"-DEXTRA_INCLUDE_DIRS={BUILD_TREE}/include",
             f"-DCMAKE_BUILD_TYPE={cmake_config}",
             f"-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=on",
             f"-DCMAKE_OSX_DEPLOYMENT_TARGET=10.15",
             f"-DCMAKE_VERBOSE_MAKEFILE:BOOL=on",
-            f"-DCMAKE_PREFIX_PATH={os.path.abspath(cwd)}/build/cmake",
+            f"-DCMAKE_PREFIX_PATH={BUILD_TREE}/cmake",
             f"-DPython3_INCLUDE_DIR={sysconfig.get_path('include')}",
             f"-DPython3_EXECUTABLE={sys.executable}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
@@ -159,19 +162,19 @@ class build_ext_with_cmake(build_ext):
             cmake_args += ["-DIS_PYPY:BOOL=ON"]
         if "xrootd" in ext.name:
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
-            cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={os.path.abspath(cwd)}/build/include"]
+            cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={BUILD_TREE}/include"]
             cmake_args += [f"-DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag"]
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
-            cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={os.path.abspath(cwd)}/build/include"]
+            cmake_args += [f"-DHDF5_SRC_INCLUDE_DIRS={BUILD_TREE}/include"]
         if "HDDM" in ext.name:
-            cmake_args += [f"-DHDF5_ROOT:PATH={os.path.abspath(cwd)}/build"]
+            cmake_args += [f"-DHDF5_ROOT:PATH={BUILD_TREE}"]
             if "win" in sysconfig.get_platform():
                 cmake_args += [f"-DENABLE_ISTREAM_OVER_XROOTD:BOOL=off"]
         self.spawn(cmake + [f"../{ext.name}"] + cmake_args)
         if "xerces" in ext.name and sysconfig.get_platform() != "win32":
-            for inc in glob.glob(os.path.join(cwd, "build", "include", "uuid", "uuid.h")):
+            for inc in glob.glob(os.path.join(BUILD_TREE, "include", "uuid", "uuid.h")):
                 self.spawn(["echo", "mv", inc, inc + "idden"])
                 self.spawn(["mv", inc, inc + "idden"])
         if not self.dry_run:
@@ -181,13 +184,13 @@ class build_ext_with_cmake(build_ext):
                 self.spawn(cmake + ["--build", "."] + build_args + ["-j4"])
             self.spawn(cmake + ["--install", "."])
             os.chdir(cwd)
-            for solib in glob.glob(os.path.join("build", "lib", "*.so*")):
-               self.spawn(["mkdir", "-p", os.path.join("build", "lib64")])
+            for solib in glob.glob(os.path.join(BUILD_TREE, "lib", "*.so*")):
+               self.spawn(["mkdir", "-p", os.path.join(BUILD_TREE, "lib64")])
                shutil.copy2(solib, re.sub(r"[\\/]lib[\\/]", os.sep + "lib64" + os.sep, solib))
-            for arlib in glob.glob(os.path.join("build", "lib64", "*.a")):
-               self.spawn(["mkdir", "-p", os.path.join("build", "lib")])
+            for arlib in glob.glob(os.path.join(BUILD_TREE, "lib64", "*.a")):
+               self.spawn(["mkdir", "-p", os.path.join(BUILD_TREE, "lib")])
                shutil.copy2(arlib, re.sub(r"[\\/]lib64[\\/]", os.sep + "lib" + os.sep, arlib))
-            for arlib in glob.glob(os.path.join("build", "lib*", "*.a")):
+            for arlib in glob.glob(os.path.join(BUILD_TREE, "lib*", "*.a")):
                if re.match(r".*_static\.a$", arlib):
                   shutil.copy2(arlib, re.sub(r"_static\.a$", ".a", arlib))
                else:
@@ -199,15 +202,15 @@ class build_ext_with_cmake(build_ext):
         if ext.name == "HDDM": # finish construction of the hddm module
             if "win" in sysconfig.get_platform():
                 if "PATH" in os.environ:
-                    os.environ["PATH"] += f";{cwd}/build/bin"
+                    os.environ["PATH"] += f";{BUILD_TREE}/bin"
                 else:
-                    os.environ["PATH"] = f"{cwd}/build/bin"
+                    os.environ["PATH"] = f"{BUILD_TREE}/bin"
             else:
                 if "PATH" in os.environ:
-                    os.environ["PATH"] += f":{cwd}/build/bin"
+                    os.environ["PATH"] += f":{BUILD_TREE}/bin"
                 else:
-                    os.environ["PATH"] = f"{cwd}/build/bin"
-            for lib in glob.glob("build/lib*"):
+                    os.environ["PATH"] = f"{BUILD_TREE}/bin"
+            for lib in glob.glob(f"{BUILD_TREE}/lib*"):
                 for ldpath in ["LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"]:
                     if ldpath in os.environ:
                         os.environ[ldpath] += f"{os.pathsep}{cwd}/{lib}"
@@ -237,9 +240,9 @@ with open("README.md", "r") as fh:
 
 if "win" in sysconfig.get_platform():
     extension_include_dirs = ["gluex\\hddm_s",
-                              "build\\include",
+                              f"{BUILD_TREE}\\include",
                              ]
-    extension_library_dirs = ["build\\lib"]
+    extension_library_dirs = [f"{BUILD_TREE}\\lib"]
     extension_libraries = ["libhdf5_hl",
                            "libhdf5",
                            "xstream",
@@ -262,11 +265,11 @@ if "win" in sysconfig.get_platform():
                              ]
 else:
     extension_include_dirs = ["gluex/hddm_s",
-                              "build/include",
-                              "build/include/libxml2",
-                              "build/include/xrootd",
+                              f"{BUILD_TREE}/include",
+                              f"{BUILD_TREE}/include/libxml2",
+                              f"{BUILD_TREE}/include/xrootd",
                              ]
-    extension_library_dirs = ["build/lib", "build/lib64"]
+    extension_library_dirs = [f"{BUILD_TREE}/lib", f"{BUILD_TREE}/lib64"]
     extension_libraries = ["hdf5_hl_static",
                            "hdf5_static",
                            "xstream",
