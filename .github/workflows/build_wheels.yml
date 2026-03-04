@@ -133,16 +133,18 @@ jobs:
           # Force macOS to match the runner arch to prevent repair errors
           CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
 
-          CIBW_ENVIRONMENT: ${{ matrix.env_vars }}
+          CIBW_ENVIRONMENT: >
+             BUILD_TREE=build-{build_id}-${{ strategy.job-index }}
+             ${{ matrix.env_vars }}
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build/lib64 &&
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/$BUILD_TREE/lib64 &&
             auditwheel show {wheel} &&
             auditwheel repair -w {dest_dir} {wheel}
 
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export LIBRARY_PATH=$(pwd)/build/lib &&
+            export LIBRARY_PATH=$(pwd)/$BUILD_TREE/lib &&
             DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
         with:
           package-dir: .

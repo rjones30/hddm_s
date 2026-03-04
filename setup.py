@@ -41,8 +41,7 @@ sources = {
   "HDDM.tag": "main",
 }
 
-abi_tag = sysconfig.get_config_var('EXT_SUFFIX').lstrip('.').rstrip('.')
-BUILD_TREE = os.path.join(os.getcwd(), f"build-{abi_tag}")
+BUILD_TREE = os.path.join(os.getcwd(), os.environ.get("BUILD_TREE", "build-local"))
 
 def force_rm(func, path, _):
     """Platform-independent way to handle read-only files during rmtree."""
