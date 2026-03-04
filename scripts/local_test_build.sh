@@ -11,6 +11,7 @@ set -e
 BUILD_DIR="test_workspace"
 VENV_DIR="test_venv"
 PYTHON_EXE=$(which python3)
+export CIBW_BUILD_ID=local-test
 
 echo "=== Starting Local Dry-Run of gluex.hddm_s ==="
 echo "Target Platform: $(uname -a)"

@@ -41,7 +41,8 @@ sources = {
   "HDDM.tag": "main",
 }
 
-BUILD_TREE = os.path.join(os.getcwd(), os.environ.get("BUILD_TREE", "build-local"))
+cibw_build_id = os.environ.get("CIBW_BUILD_ID", "unknown")
+BUILD_TREE = os.path.join(os.getcwd(), f"build-{cibw_build_id}")
 
 def force_rm(func, path, _):
     """Platform-independent way to handle read-only files during rmtree."""
@@ -238,10 +239,10 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 if "win" in sysconfig.get_platform():
-    extension_include_dirs = ["gluex\\hddm_s",
-                              f"{BUILD_TREE}\\include",
+    extension_include_dirs = [os.path.join("gluex", "hddm_s"),
+                              os.path.join(BUILD_TREE, "include"),
                              ]
-    extension_library_dirs = [f"{BUILD_TREE}\\lib"]
+    extension_library_dirs = [os.path.join(BUILD_TREE, "lib")]
     extension_libraries = ["libhdf5_hl",
                            "libhdf5",
                            "xstream",
