@@ -41,8 +41,8 @@ sources = {
   "HDDM.tag": "main",
 }
 
-cibw_build_id = os.environ.get("CIBW_BUILD_ID", "unknown")
-BUILD_TREE = os.path.join(os.getcwd(), f"build-{cibw_build_id}")
+cibw_build = os.environ.get("CIBW_BUILD", "unknown")
+BUILD_TREE = os.path.join(os.getcwd(), f"build-{cibw_build}")
 
 def force_rm(func, path, _):
     """Platform-independent way to handle read-only files during rmtree."""
