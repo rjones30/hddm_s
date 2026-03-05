@@ -156,7 +156,11 @@ class build_ext_with_cmake(build_ext):
             f"-DCMAKE_PREFIX_PATH={BUILD_ROOT}/cmake",
             f"-DPython3_INCLUDE_DIR={sysconfig.get_path('include')}",
             f"-DPython3_EXECUTABLE={sys.executable}",
+            f"-DPython3_ROOT_DIR={os.path.dirname(os.path.dirname(sys.executable))}",
+            f"-DPython_EXECUTABLE={sys.executable}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
+            f"-DPython_ROOT_DIR={os.path.dirname(os.path.dirname(sys.executable))}",
+            f"-DPython_FIND_STRATEGY=LOCATION",
             f"-DENABLE_PYTHON=ON",
         ]
         if "arm64" in sysconfig.get_platform():
