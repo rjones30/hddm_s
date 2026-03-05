@@ -124,11 +124,12 @@ jobs:
         id: build-step
         uses: pypa/cibuildwheel@v2.22.0
         env:
-          CIBW_BEFORE_BUILD: pip install "setuptools>=38.0"
           CIBW_BUILD: ${{ matrix.build_selector }}
           CIBW_SKIP: "*_i686 pp38-*"
           # Enables latest Python features & PyPy
           CIBW_ENABLE: "pypy cpython-prerelease cpython-freethreading"
+
+          CIBW_BEFORE_BUILD: pip install "setuptools>=38.0"
           
           # Force macOS to match the runner arch to prevent repair errors
           CIBW_ARCHS_MACOS: ${{ matrix.macosx_arch }}
@@ -137,13 +138,17 @@ jobs:
 
           # My custom repair commands
           CIBW_REPAIR_WHEEL_COMMAND_LINUX: >
-            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/build-$CIBW_BUILD/lib64 &&
+            export BUILD_ROOT={project}/build-$(python -c 'import sys, platform; impl = "pp" if "pypy" in platform.python_implementation().lower() else "cp"; ver = "".join(map(str, sys.version_info[:2])); print(f"{impl}{ver}-{platform.machine()}")') &&
+            ls -lR $BUILD_DIR &&
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BUILD_DIR/lib64 &&
             auditwheel show {wheel} &&
             auditwheel repair -w {dest_dir} {wheel}
 
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
-            export LIBRARY_PATH=$(pwd)/build-$CIBW_BUILD/lib &&
-            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -w {dest_dir} -v {wheel}
+            export BUILD_DIR={project}/build-$(python -c 'import sys, platform; impl = "pp" if "pypy" in platform.python_implementation().lower() else "cp"; ver = "".join(map(str, sys.version_info[:2])); print(f"{impl}{ver}-{platform.machine()}")') &&
+            ls -lR $BUILD_DIR &&
+            export LIBRARY_PATH=$BUILD_DIR/lib &&
+            DYLD_LIBRARY_PATH=$LIBRARY_PATH delocate-wheel --require-archs {delocate_archs} -L "$BUILD_DIR" -w {dest_dir} -v {wheel}
         with:
           package-dir: .
           output-dir: wheelhouse
