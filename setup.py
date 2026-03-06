@@ -66,6 +66,7 @@ class build_ext_with_cmake(build_ext):
         build_extension_solibs = []
         cwd = os.getcwd()
         for ext in self.extensions:
+            print(f"NOTICE - building {ext.name} in {BUILD_ROOT}")
             self.build_with_cmake(ext)
             if "xrootd" in ext.name:
                 if "win" in sysconfig.get_platform():
@@ -75,7 +76,8 @@ class build_ext_with_cmake(build_ext):
                              glob.glob(os.path.join(BUILD_ROOT, "**", "*.pyd"), recursive=True)
                     for shlib in shlibs:
                         if os.path.basename(shlib).startswith("client"):
-                            target_dir = os.path.join(cwd, "gluex", "hddm_s", "pyxrootd")
+                            target_dir = os.path.join(self.build_lib, "gluex", "hddm_s", "pyxrootd")
+                            print(f"NOTICE - saving {shlib} to target_dir {target_dir}")
                             shutil.copy2(shlib, target_dir)
             if ext.name in templates:
                 build_extension_solibs.append(ext)
@@ -116,11 +118,13 @@ class build_ext_with_cmake(build_ext):
             print(f">>> Skipping actual build for {ext.name} (Dry Run Mode)")
             return 0
         cwd = os.getcwd()
+        os.mkdir(BUILD_ROOT, exist_ok=True)
         if f"{ext.name}.url" in sources:
             if os.path.isdir(ext.name):
                 shutil.rmtree(ext.name, onerror=force_rm)
                 while os.path.isdir(ext.name):
                    time.sleep(0.1)
+            os.chdir(BUILD_ROOT)
             self.spawn(["git", "clone", sources[ext.name + ".url"]])
             os.chdir(ext.name)
             tag = sources[ext.name + ".tag"]
@@ -140,9 +144,8 @@ class build_ext_with_cmake(build_ext):
             # Only happens on Windows, try to install it
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
-        build_temp = f"build.{ext.name}"
-        if not os.path.isdir(build_temp):
-            os.mkdir(build_temp)
+        build_temp = os.path.join(BUILD_ROOT, f"build.{ext.name}")
+        os.mkdir(build_temp, exist_ok=True)
         os.chdir(build_temp)
         if "arm64" in sysconfig.get_platform():
             os.environ["ARCHFLAGS"] = "-arch arm64"
@@ -173,6 +176,11 @@ class build_ext_with_cmake(build_ext):
             cmake_args += [f"-DXRDCL_LIB_ONLY:bool=on"]
             cmake_args += [f"-DOPENSSL_INCLUDE_DIR:path={BUILD_ROOT}/include"]
             cmake_args += [f"-DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=1 -Wabi-tag"]
+            #cmake_args += ["--log-level=VERBOSE",                 # Tell CMake to be chatty
+            #               "-DPython_FIND_DEBUG=ON",              # Special debug mode for the Python module
+            #               "-DCMAKE_MESSAGE_INDENT_LEVEL=2",      # Make logs readable
+            #               "-DCMAKE_MESSAGE_CONTEXT_SHOW=ON",     # Show where messages are coming from
+            #              ]
         else:
             cmake_args += [f"-DBUILD_SHARED_LIBS:BOOL=off"]
         if "hdf5" in ext.name:
@@ -205,7 +213,7 @@ class build_ext_with_cmake(build_ext):
                else:
                   shutil.copy2(arlib, re.sub(r"\.a$", "_static.a", arlib))
             shutil.rmtree(ext.name, ignore_errors=True)
-            shutil.rmtree(f"build.{ext.name}", ignore_errors=True)
+            shutil.rmtree(build_temp, ignore_errors=True)
         os.chdir(cwd)
         print("build target architecture is", sysconfig.get_platform())
         if ext.name == "HDDM": # finish construction of the hddm module
@@ -315,7 +323,6 @@ setuptools.setup(
     packages = ["gluex.hddm_s", "gluex.hddm_s.pyxrootd"],
     #namespace_packages=['gluex'],
     package_data = {"gluex.hddm_s": ["event.xml"] + ext_patterns,
-                    "gluex.hddm_s.pyxrootd": ext_patterns,
     },
     ext_modules = [
       CMakeExtension("zlib"),
