@@ -113,12 +113,23 @@ jobs:
             env_vars: ""
 
     env:
+      VIRTUALENV_OVERRIDE_APP_DATA: 1
       ACTIONS_RUNNER_DEBUG: true  # Enable detailed logging
       #ACTIONS_STEP_DEBUG: true  # Even more detailed logging
       #CIBW_BUILD_VERBOSITY: 2
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Cache cibuildwheel
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/AppData/Local/pypa/cibuildwheel/Cache
+            ~/.cache/cibuildwheel
+          key: ${{ runner.os }}-cibw-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-cibw
 
       - name: Build wheels
         id: build-step
