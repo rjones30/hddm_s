@@ -118,7 +118,7 @@ class build_ext_with_cmake(build_ext):
             print(f">>> Skipping actual build for {ext.name} (Dry Run Mode)")
             return 0
         cwd = os.getcwd()
-        os.mkdir(BUILD_ROOT, exist_ok=True)
+        os.makedirs(BUILD_ROOT, exist_ok=True)
         if f"{ext.name}.url" in sources:
             if os.path.isdir(ext.name):
                 shutil.rmtree(ext.name, onerror=force_rm)
@@ -145,7 +145,7 @@ class build_ext_with_cmake(build_ext):
             self.spawn(["scripts/install_cmake.bat"])
             cmake = ["cmake.exe"]
         build_temp = os.path.join(BUILD_ROOT, f"build.{ext.name}")
-        os.mkdir(build_temp, exist_ok=True)
+        os.makedirs(build_temp, exist_ok=True)
         os.chdir(build_temp)
         if "arm64" in sysconfig.get_platform():
             os.environ["ARCHFLAGS"] = "-arch arm64"
