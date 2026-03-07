@@ -120,6 +120,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Pre-seed virtualenv (Bypass 429)
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" == "macOS" ]; then
+            DEST="$HOME/Library/Caches/cibuildwheel/virtualenv-20.27.1.pyz"
+          elif [ "${{ runner.os }}" == "Windows" ]; then
+            DEST="$LOCALAPPDATA/pypa/cibuildwheel/Cache/virtualenv-20.27.1.pyz"
+          else
+            DEST="$HOME/.cache/cibuildwheel/virtualenv-20.27.1.pyz"
+          fi
+          mkdir -p "$(dirname "$DEST")"
+          curl -L "https://zeus.phys.uconn.edu/tmp/virtualenv-20.27.1.pyz" -o "$DEST"
+          ls -l "$DEST"
+
       - name: Build wheels
         id: build-step
         uses: pypa/cibuildwheel@v2.22.0
