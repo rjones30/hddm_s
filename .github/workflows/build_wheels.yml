@@ -31,7 +31,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false  # Don't cancel all jobs if one fails
-      max-parallel: 3
+      max-parallel: 1
       matrix:
         include:
           # --- Windows (All versions) ---
